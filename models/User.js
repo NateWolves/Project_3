@@ -11,12 +11,6 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  destinations: [
-    {
-      type: ObjectId,
-      ref: "Destination"
-    }
-  ],
   events: [
     {
       type: ObjectId,
