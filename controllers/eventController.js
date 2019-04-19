@@ -16,8 +16,13 @@ module.exports = {
       .then(dbUser => res.json(dbUser))
       .catch(err => res.status(422).json(err));
   },
+  update: function(req, res) {
+    db.Event.findOne({ eventId: req.params.eventId }, req.body)
+      .then(dbEvent => res.json(dbEvent))
+      .catch(err => res.status(422).json(err));
+  },
   delete: function(req, res) {
-    db.User.update({ userId: req.params.userId }, { $pull: { events: req.params.eventId } })
+    db.User.findOne({ userId: req.params.userId }, { $pull: { events: req.params.eventId } })
       .then(dbUser => { 
         db.Event.deleteOne({ _id: req.params.eventId })
           .then(dbEvent => res.json(dbEvent))
