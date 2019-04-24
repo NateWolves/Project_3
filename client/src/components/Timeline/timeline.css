@@ -120,6 +120,14 @@ img {
     margin-right: 10px;
 }
 
+.event-item-btns {
+    float: left;
+}
+
 .timeline-item:nth-child(even) .event-item img {
+    float: right;
+}
+
+.timeline-item:nth-child(even) .event-item .event-item-btns {
     float: right;
 }

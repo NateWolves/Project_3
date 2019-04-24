@@ -131,6 +131,8 @@ const TimelineItem = (day) => (
             {day.data.events.map((event) => (
                 <EventItem data={event} key={event.id} />
             ))}
+            <button>Add an Event</button>
+            <button>Add a Meal</button>
             <span className="circle" />
         </div>
     </div>
@@ -144,6 +146,11 @@ const EventItem = ({ data }) => (
         <div>
             <h4>{data.text}</h4>
             <time>{data.time.start}-{data.time.end}</time>
+            <div className="event-item-btns">
+                <button>Edit</button>
+                <span>  </span>
+                <button>Remove</button>
+            </div>
         </div>
 
         <br />
