@@ -21,8 +21,6 @@ const checkJwt = jwt({
   algorithms: ['RS256']
 });
 
-console.log(process.env.AUTH0_DOMAIN)
-
 // router.route("/:userId")
 //   .get(eventController.findAll)
 //   .post(eventController.create);

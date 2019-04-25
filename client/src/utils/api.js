@@ -1,6 +1,11 @@
 import axios from "axios";
 
 export default {
+  findUser: function(userId) {
+    return axios.get(`/api/users/${userId}`);
+  },
+
+
   findAllEvents: function(userId) {
     return axios.get(`/api/events/${userId}`);
   },
