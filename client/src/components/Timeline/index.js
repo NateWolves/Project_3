@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './timeline.css';
+import { Button, ButtonToolbar } from 'react-bootstrap';
 import dummyData from './dummydata';
+import Event from '../Event';
+import Meal from '../Meal';
 
 import explore from './images/explore.png';
 import meal from './images/meal.png';
@@ -55,13 +58,14 @@ const TimelineItem = (day) => (
                 <EventItem data={event} key={event.id} />
             ))}
 
-            <Link to="/event">
+            {/* <Link to="/event">
                 <button>Add an Event</button>
-            </Link>
+            </Link> */}
+
+            <AddEvent />
+
+            <AddMeal />
             
-            <Link to="/meal">
-                <button>Add a Meal</button>
-            </Link>
             <span className="circle" />
         </div>
     </div>
@@ -85,5 +89,70 @@ const EventItem = ({ data }) => (
         <br />
     </div>
 )
+
+const btnStyle = {
+    background: "none",
+    color: "black",
+    border: "1px solid black",
+    margin: "5px"
+}
+
+class AddEvent extends React.Component {
+	constructor(...args) {
+		super(...args);
+
+		this.state = { modalShow: false };
+	}
+
+	render() {
+		let modalClose = () => this.setState({ modalShow: false });
+
+		return (
+			<ButtonToolbar>
+				<Button
+					variant="primary"
+                    onClick={() => this.setState({ modalShow: true })}
+                    style={btnStyle}
+				>
+					Add Event
+    			</Button>
+
+				<Event
+					show={this.state.modalShow}
+					onHide={modalClose}
+				/>
+			</ButtonToolbar>
+		);
+	}
+}
+
+class AddMeal extends React.Component {
+	constructor(...args) {
+		super(...args);
+
+		this.state = { modalShow: false };
+	}
+
+	render() {
+		let modalClose = () => this.setState({ modalShow: false });
+
+		return (
+			<ButtonToolbar>
+				<Button
+					variant="primary"
+                    onClick={() => this.setState({ modalShow: true })}
+                    style={btnStyle}
+				>
+					Add Meal
+    			</Button>
+
+				<Meal
+					show={this.state.modalShow}
+					onHide={modalClose}
+				/>
+			</ButtonToolbar>
+		);
+	}
+}
 
 export default Timeline;
