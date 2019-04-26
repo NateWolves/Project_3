@@ -1,8 +1,8 @@
 import React from 'react';
-import { Modal, Button, ButtonToolbar } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 
 
-class AddEvent extends React.Component {
+class Event extends React.Component {
 	render() {
 		return (
 			<Modal
@@ -39,32 +39,6 @@ class AddEvent extends React.Component {
 	}
 }
 
-class Event extends React.Component {
-	constructor(...args) {
-		super(...args);
 
-		this.state = { modalShow: false };
-	}
-
-	render() {
-		let modalClose = () => this.setState({ modalShow: false });
-
-		return (
-			<ButtonToolbar>
-				<Button
-					variant="primary"
-					onClick={() => this.setState({ modalShow: true })}
-				>
-					Add Event
-          </Button>
-
-				<AddEvent
-					show={this.state.modalShow}
-					onHide={modalClose}
-				/>
-			</ButtonToolbar>
-		);
-	}
-}
 
 export default Event;
