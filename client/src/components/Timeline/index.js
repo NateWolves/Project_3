@@ -16,143 +16,145 @@ import movie from './images/movie.png';
 import theater from './images/theater.png';
 import sports from './images/sports.png';
 
+import API from '../../utils/api';
+
 const getEventIcon = (type) => {
-    switch (type) {
-        case "meal":
-            return meal;
-        case "explore":
-            return explore;
-        case "monument":
-            return monument
-        case "museum":
-            return museum;
-        case "park":
-            return park;
-        case "concert":
-            return concert;
-        case "movie":
-            return movie;
-        case "theater":
-            return theater;
-        case "sports":
-            return sports;
-        default:
-            return null;
-    }
+  switch (type) {
+    case "meal":
+      return meal;
+    case "explore":
+      return explore;
+    case "monument":
+      return monument
+    case "museum":
+      return museum;
+    case "park":
+      return park;
+    case "concert":
+      return concert;
+    case "movie":
+      return movie;
+    case "theater":
+      return theater;
+    case "sports":
+      return sports;
+    default:
+      return null;
+  }
 }
 
 const Timeline = () =>
-    dummyData.length > 0 && (
-        <div className="timeline-container">
-            {dummyData.map((day) => (
-                <TimelineItem data={day} key={day.title} />
-            ))}
-        </div>
-    );
+  dummyData.length > 0 && (
+    <div className="timeline-container">
+      {dummyData.map((day) => (
+        <TimelineItem data={day} key={day.title} />
+      ))}
+    </div>
+  );
 
 const TimelineItem = (day) => (
-    <div className="timeline-item">
-        <div className="timeline-item-content">
-            <h3>{day.data.title}</h3>
-            {day.data.events.map((event) => (
-                <EventItem data={event} key={event.id} />
-            ))}
+  <div className="timeline-item">
+    <div className="timeline-item-content">
+      <h3>{day.data.title}</h3>
+      {day.data.events.map((event) => (
+        <EventItem data={event} key={event.id} />
+      ))}
 
-            {/* <Link to="/event">
+      {/* <Link to="/event">
                 <button>Add an Event</button>
             </Link> */}
 
-            <AddEvent />
+      <AddEvent />
 
-            <AddMeal />
-            
-            <span className="circle" />
-        </div>
+      <AddMeal />
+
+      <span className="circle" />
     </div>
+  </div>
 )
 
 const EventItem = ({ data }) => (
-    <div className="event-item">
-        <span>
-            <img src={getEventIcon(data.type)} alt="Event icon" />
-        </span>
-        <div>
-            <h4>{data.text}</h4>
-            <time>{data.time.start}-{data.time.end}</time>
-            <div className="event-item-btns">
-                <button>Edit</button>
-                <span>  </span>
-                <button>Remove</button>
-            </div>
-        </div>
-
-        <br />
+  <div className="event-item">
+    <span>
+      <img src={getEventIcon(data.type)} alt="Event icon" />
+    </span>
+    <div>
+      <h4>{data.text}</h4>
+      <time>{data.time.start}-{data.time.end}</time>
+      <div className="event-item-btns">
+        <button>Edit</button>
+        <span>  </span>
+        <button>Remove</button>
+      </div>
     </div>
+
+    <br />
+  </div>
 )
 
 const btnStyle = {
-    background: "none",
-    color: "black",
-    border: "1px solid black",
-    margin: "5px"
+  background: "none",
+  color: "black",
+  border: "1px solid black",
+  margin: "5px"
 }
 
 class AddEvent extends React.Component {
-	constructor(...args) {
-		super(...args);
+  constructor(...args) {
+    super(...args);
 
-		this.state = { modalShow: false };
-	}
+    this.state = { modalShow: false };
+  }
 
-	render() {
-		let modalClose = () => this.setState({ modalShow: false });
+  render() {
+    let modalClose = () => this.setState({ modalShow: false });
 
-		return (
-			<ButtonToolbar>
-				<Button
-					variant="primary"
-                    onClick={() => this.setState({ modalShow: true })}
-                    style={btnStyle}
-				>
-					Add Event
+    return (
+      <ButtonToolbar>
+        <Button
+          variant="primary"
+          onClick={() => this.setState({ modalShow: true })}
+          style={btnStyle}
+        >
+          Add Event
     			</Button>
 
-				<Event
-					show={this.state.modalShow}
-					onHide={modalClose}
-				/>
-			</ButtonToolbar>
-		);
-	}
+        <Event
+          show={this.state.modalShow}
+          onHide={modalClose}
+        />
+      </ButtonToolbar>
+    );
+  }
 }
 
 class AddMeal extends React.Component {
-	constructor(...args) {
-		super(...args);
+  constructor(...args) {
+    super(...args);
 
-		this.state = { modalShow: false };
-	}
+    this.state = { modalShow: false };
+  }
 
-	render() {
-		let modalClose = () => this.setState({ modalShow: false });
+  render() {
+    let modalClose = () => this.setState({ modalShow: false });
 
-		return (
-			<ButtonToolbar>
-				<Button
-					variant="primary"
-                    onClick={() => this.setState({ modalShow: true })}
-                    style={btnStyle}
-				>
-					Add Meal
+    return (
+      <ButtonToolbar>
+        <Button
+          variant="primary"
+          onClick={() => this.setState({ modalShow: true })}
+          style={btnStyle}
+        >
+          Add Meal
     			</Button>
 
-				<Meal
-					show={this.state.modalShow}
-					onHide={modalClose}
-				/>
-			</ButtonToolbar>
-		);
-	}
+        <Meal
+          show={this.state.modalShow}
+          onHide={modalClose}
+        />
+      </ButtonToolbar>
+    );
+  }
 }
 
 export default Timeline;

@@ -2,6 +2,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const EventSchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  type: {
+    type: String,
+    required: true,
+    defualt: "event"
+  },
   location: {
     name: {
       type: String,
@@ -16,7 +25,10 @@ const EventSchema = new Schema({
       require: true
     }
   },
-  date: {
+  startDate: {
+    type: Date
+  },
+  endDate: {
     type: Date
   }
 });
