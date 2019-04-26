@@ -17,5 +17,12 @@ export default {
   },
   deleteEvent: function(userId, eventId) {
     return axios.delete(`/api/events/${userId}/${eventId}`);
+  },
+  nearBySearch: function(queryObj){
+    return axios.get("/api/nearby", queryObj );
+  },
+  findPlaceFromText: function(search){
+  return axios.get("/api/location/"+ search);
   }
+
 }
