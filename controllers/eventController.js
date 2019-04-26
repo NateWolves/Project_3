@@ -1,5 +1,7 @@
 const db = require("../models");
 
+// req.user.name
+
 module.exports = {
   findAll: function(req, res) {
     db.User.findOne({ userId: req.params.userId })

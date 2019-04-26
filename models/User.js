@@ -7,14 +7,6 @@ const UserSchema = new Schema({
     type: String,
     unique: true
   },
-  password: {
-    type: String,
-    requried: true
-  },
-  name: {
-    type: String,
-    required: true
-  },
   events: [
     {
       type: ObjectId,

@@ -1,20 +1,21 @@
 import axios from "axios";
 
 export default {
+  findUser: function(userId) {
+    return axios.get(`/api/users/${userId}`);
+  },
+
+
   findAllEvents: function(userId) {
-    axios.get(`/api/events/${userId}`)
-      .then(res => console.log(res.data));
+    return axios.get(`/api/events/${userId}`);
   },
   createEvent: function(userId) {
-    axios.post(`/api/events/${userId}`)
-      .then(res => res.data);
+    return axios.post(`/api/events/${userId}`);
   },
   updateEvent:  function(userId, eventId) {
-    axios.put(`/api/events/${userId}/${eventId}`)
-      .then(res => res.data);
+    return axios.put(`/api/events/${userId}/${eventId}`);
   },
   deleteEvent: function(userId, eventId) {
-    axios.delete(`/api/events/${userId}/${eventId}`)
-      .then(res => res.data);
+    return axios.delete(`/api/events/${userId}/${eventId}`);
   }
 }
