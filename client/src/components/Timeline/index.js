@@ -74,18 +74,21 @@ const TimelineItem = (day) => (
 )
 
 const EventItem = ({ data }) => (
-  <div className="event-item">
-    <span>
-      <img src={getEventIcon(data.type)} alt="Event icon" />
-    </span>
-    <div>
-      <h4>{data.text}</h4>
-      <time>{data.time.start}-{data.time.end}</time>
-      <div className="event-item-btns">
-        <button>Edit</button>
-        <span>  </span>
-        <button>Remove</button>
-      </div>
+    <div className="event-item">
+        <span>
+            <img className="iconImage" src={getEventIcon(data.type)} alt="Event icon" />
+        </span>
+        <div>
+            <h4>{data.text}</h4>
+            <time>{data.time.start}-{data.time.end}</time>
+            <div className="event-item-btns">
+                <button>Edit</button>
+                <span>  </span>
+                <button>Remove</button>
+            </div>
+        </div>
+
+        <br />
     </div>
 
     <br />
