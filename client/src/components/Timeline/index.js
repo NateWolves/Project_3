@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './timeline.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import dummyData from './dummydata';
@@ -16,7 +15,7 @@ import movie from './images/movie.png';
 import theater from './images/theater.png';
 import sports from './images/sports.png';
 
-import API from '../../utils/api';
+// import API from '../../utils/api';
 
 const getEventIcon = (type) => {
   switch (type) {
