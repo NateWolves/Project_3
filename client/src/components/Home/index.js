@@ -2,15 +2,16 @@ import React from 'react';
 import Plan from '../Plan';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 
-function Home() {
-    return (
-        <div id="home">
-            <PlanTrip />
-        </div>
-    )
-}
+// function Home() {
+//     return (
+//         <div id="home">
+// 		<br/><br/><br/>
+//             <PlanTrip />
+//         </div>
+//     )
+// }
 
-class PlanTrip extends React.Component {
+class Home extends React.Component {
 	constructor(...args) {
 		super(...args);
 
