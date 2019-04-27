@@ -1,6 +1,6 @@
 import React from 'react';
 import API from '../../utils/api';
-import Auth from '../../utils/Auth';
+// import Auth from '../../utils/Auth';
 
 const printData = () => {
   API.findUser("1")

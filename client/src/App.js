@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 // import Header from './components/Header';
-import NavBar from './components/Navbar';
+import Navbar from './components/Navbar';
 import Home from './pages/Homepage';
 import Login from './components/Login';
 import User from './components/User';
@@ -16,7 +16,7 @@ class App extends Component {
     return (
       <div>
         <Router>
-          <NavBar />
+          <Navbar />
           <Route exact path='/' component={Home} />
           <Route exact path='/login' component={Login} />
           <Route exact path='/timeline' component={Timeline} />

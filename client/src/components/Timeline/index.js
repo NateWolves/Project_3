@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import './timeline.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import dummyData from './dummydata';
