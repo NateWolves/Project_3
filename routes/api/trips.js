@@ -5,7 +5,7 @@ router.route("/:userId")
   .get(tripController.findAllByUser)
   .post(tripController.create)
 
-router.route("/:tripId")
+router.route("/:userId/:tripId")
   .put(tripController.update)
   .delete(tripController.delete);
 

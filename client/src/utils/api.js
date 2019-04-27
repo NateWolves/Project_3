@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export default {
+  // User methods
   findUser: function(userId) {
     return axios.get(`/api/users/${userId}`);
   },
@@ -8,8 +9,22 @@ export default {
     return axios.post(`/api/users/${userId}`);
   },
 
+  // Trip methods
+  findTripsByUser: function(userId) {
+    return axios.get(`/api/trips/${userId}`);
+  },
+  createTrip: function(userId) {
+    return axios.post(`/api/trips/${userId}`);
+  },
+  updateTrip: function(userId, tripId) {
+    return axios.put(`/api/trips/${userId}/${tripId}`)
+  },
+  deleteTrip: function(userId, tripId) {
+    return axios.delete(`/api/trips/${userId}/${tripId}`)
+  },
 
-  findAllEvents: function(userId) {
+  // Event methods
+  findEventsByUser: function(userId) {
     return axios.get(`/api/events/${userId}`);
   },
   createEvent: function(userId, data) {
@@ -21,6 +36,7 @@ export default {
   deleteEvent: function(userId, eventId, data) {
     return axios.delete(`/api/events/${userId}/${eventId}`, data);
   },
+
   nearbySearch: function(searchObj) {
     return axios.get(`/api/nearby`, searchObj)
   },

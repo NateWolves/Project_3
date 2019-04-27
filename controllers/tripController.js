@@ -22,6 +22,8 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   delete: function (req, res) {
-    db.User.findOne({ $in: {  } })
+    db.Trip.findOneAndDelete({ _id: req.params.tripId })
+      .then(dbTrip => res.json(dbTrip))
+      .catch(err => res.status(422).json(err));
   }
 }

@@ -82,33 +82,24 @@ class Timeline extends Component {
       })
       .catch(err => console.log(err));
   }
-// const Timeline = () =>
-//   dummyData.length > 0 && (
-//     <div>
-
-//       <br /><br /><br /><br /><br /><br />
-//       <div className="timeline-container">
-//         {dummyData.map((day) => (
-//           <TimelineItem data={day} key={day.title} />
-//         ))}
-//       </div>
-//     </div>
-
-//   );
 
   render() {
     return (
       // <div className="timeline-container">
       //   {dummyData.map((day) => {
-      //     return <TimelineItem data={day} key={day.title} />
+      //     return <TimelineItem data={day} key={day.title} dayNum={1}/>
       //   })}
       // </div>
 
       <div className="timeline-container">
         {
-          this.state.days.map((event, i) => {
-            return <TimelineItem data={event} key={`ti-${i}`} dayNum={i + 1} />;
-          })
+          this.state.days.length > 0 ? (
+            this.state.days.map((event, i) => {
+              return <TimelineItem data={event} key={`ti-${i}`} dayNum={i + 1} />;
+            })
+          ) : (
+            <AddEvent />
+          )
         }
       </div>
     );
