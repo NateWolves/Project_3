@@ -4,8 +4,6 @@ export default {
   findUser: function(userId) {
     return axios.get(`/api/users/${userId}`);
   },
-
-
   findAllEvents: function(userId) {
     return axios.get(`/api/events/${userId}`);
   },
@@ -17,5 +15,11 @@ export default {
   },
   deleteEvent: function(userId, eventId, data) {
     return axios.delete(`/api/events/${userId}/${eventId}`, data);
+  },
+  nearbySearch: function(searchObj) {
+    return axios.get(`/api/nearby`, searchObj)
+  },
+  textSearch: function(query) {
+    return axios.get(`/api/location/${query}`)
   }
 }
