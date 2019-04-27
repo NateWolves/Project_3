@@ -45,11 +45,16 @@ const getEventIcon = (type) => {
 
 const Timeline = () =>
   dummyData.length > 0 && (
-    <div className="timeline-container">
-      {dummyData.map((day) => (
-        <TimelineItem data={day} key={day.title} />
-      ))}
+    <div>
+
+      <br /><br /><br /><br /><br /><br />
+      <div className="timeline-container">
+        {dummyData.map((day) => (
+          <TimelineItem data={day} key={day.title} />
+        ))}
+      </div>
     </div>
+
   );
 
 const TimelineItem = (day) => (
@@ -74,22 +79,21 @@ const TimelineItem = (day) => (
 )
 
 const EventItem = ({ data }) => (
-    <div className="event-item">
-        <span>
-            <img className="iconImage" src={getEventIcon(data.type)} alt="Event icon" />
-        </span>
-        <div>
-            <h4>{data.text}</h4>
-            <time>{data.time.start}-{data.time.end}</time>
-            <div className="event-item-btns">
-                <button>Edit</button>
-                <span>  </span>
-                <button>Remove</button>
-            </div>
-        </div>
-
-        <br />
+  <div className="event-item">
+    <span>
+      <img className="iconImage" src={getEventIcon(data.type)} alt="Event icon" />
+    </span>
+    <div>
+      <h4>{data.text}</h4>
+      <time>{data.time.start}-{data.time.end}</time>
+      <div className="event-item-btns">
+        <button>Edit</button>
+        <span>  </span>
+        <button>Remove</button>
+      </div>
     </div>
+
+    <br />
 
     <br />
   </div>
