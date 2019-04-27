@@ -21,11 +21,11 @@ if (process.env.NODE_ENV !== 'production') {
 //   algorithms: ['RS256']
 // });
 
-router.route("/:userId")
-  .get(eventController.findAll)
+router.route("/:tripId")
+  .get(eventController.findAllByTrip)
   .post(eventController.create);
 
-router.route("/:userId/:eventId")
+router.route("/:tripId/:eventId")
   .put(eventController.update)
   .delete(eventController.delete);
 
