@@ -13,22 +13,28 @@ const EventSchema = new Schema({
   location: {
     name: {
       type: String,
-      required: true
+      // required: true
     },
     lat: {
       type: Number,
-      require: true
+      // require: true
     },
     lon: {
       type: Number,
-      require: true
+      // require: true
     }
   },
+  // startDate: {
+  //   type: Date
+  // },
+  // endDate: {
+  //   type: Date
+  // }
   startDate: {
-    type: Date
+    type: String
   },
   endDate: {
-    type: Date
+    type: String
   }
 });
 
