@@ -29,13 +29,25 @@ class Plan extends React.Component {
 		// converts dates to date objects
 		var startDateType = new Date(this.state.startDate);
 		var endDateType = new Date(this.state.endDate);
-		
+
 		// saves the number of days between start and end
 		var days = endDate.diff(startDate, "days");
+
+		// just to console log to see what the data looks like
+		var sendToDatabase = {
+			location: this.state.place,
+			time: {
+				start: startDateType,
+				end: endDateType,
+				days: days
+			}
+		}
+
+		console.log(sendToDatabase);
 	}
 
 	render() {
-		
+
 		return (
 			<Modal
 				{...this.props}
@@ -49,35 +61,50 @@ class Plan extends React.Component {
         		    </Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<h4>Where are you going?</h4>
+					<h5>Where are you going?</h5>
 
 					<form>
 						<div className="form-group">
 							<label htmlFor="destination"></label>
-							<input type="text" className="form-control" id="destinationInput" placeholder="Paris France"></input>
+							<input
+								name="place"
+								type="text"
+								style={inputStyle}
+								className="form-control"
+								id="destinationInput"
+								onChange={this.handleChange}
+								placeholder="Paris France">
+							</input>
 						</div>
 						<div className="form-group">
-							<label htmlFor="Start" className="col-2 col-form-label">Start Date</label>
-							<div className="col-4">
-								<input
-									name="startDate"
-									className="form-control"
-									type="date"
-									value={this.state.startDate}
-									onChange={this.handleChange}
-									id="start-date-input">
-								</input>
+
+							<div style={dateStyle}>
+								<label htmlFor="Start" className="col-6 col-form-label">Start Date</label>
+								<div className="col-5">
+									<input
+										name="startDate"
+										className="form-control"
+										type="date"
+										value={this.state.startDate}
+										onChange={this.handleChange}
+										id="start-date-input">
+									</input>
+								</div>
+
 							</div>
-							<label htmlFor="End" className="col-2 col-form-label">Return Date</label>
-							<div className="col-4">
-								<input
-									name="endDate"
-									className="form-control"
-									type="date"
-									value={this.state.endDate}
-									onChange={this.handleChange}
-									id="end-date-input">
-								</input>
+
+							<div style={dateStyle}>
+								<label htmlFor="End" className="col-6 col-form-label">Return Date</label>
+								<div className="col-5">
+									<input
+										name="endDate"
+										className="form-control"
+										type="date"
+										value={this.state.endDate}
+										onChange={this.handleChange}
+										id="end-date-input">
+									</input>
+								</div>
 							</div>
 						</div>
 					</form>
@@ -85,7 +112,7 @@ class Plan extends React.Component {
 				<Modal.Footer>
 					<Button style={btnStyle} onClick={this.props.onHide}>Close</Button>
 					<Button style={btnStyle} onClick={this.handleSubmit} >
-						<Link style={style} to="/timeline">
+						<Link style={saveStyle} to="/timeline">
 							Save
                         </Link>
 					</Button>
@@ -95,7 +122,16 @@ class Plan extends React.Component {
 	}
 }
 
-const style = {
+const inputStyle = {
+	width: "90%"
+}
+
+const dateStyle = {
+	display: "inline-block",
+	width: "50%"
+}
+
+const saveStyle = {
 	color: "black"
 }
 
