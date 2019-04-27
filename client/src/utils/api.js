@@ -18,7 +18,7 @@ export default {
   updateEvent:  function(userId, eventId, data) {
     return axios.put(`/api/events/${userId}/${eventId}`, data);
   },
-  deleteEvent: function(userId, eventId, data) {
-    return axios.delete(`/api/events/${userId}/${eventId}`, data);
+  deleteEvent: function(userId, eventId) {
+    return axios.delete(`/api/events/${userId}/${eventId}`);
   }
 }
