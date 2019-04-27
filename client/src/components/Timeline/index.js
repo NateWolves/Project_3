@@ -43,6 +43,7 @@ const getEventIcon = (type) => {
   }
 }
 
+<<<<<<< HEAD
 class Timeline extends Component {
   state = {
     events: [],
@@ -82,6 +83,21 @@ class Timeline extends Component {
       })
       .catch(err => console.log(err));
   }
+=======
+const Timeline = () =>
+  dummyData.length > 0 && (
+    <div>
+
+      <br /><br /><br /><br /><br /><br />
+      <div className="timeline-container">
+        {dummyData.map((day) => (
+          <TimelineItem data={day} key={day.title} />
+        ))}
+      </div>
+    </div>
+
+  );
+>>>>>>> master
 
   render() {
     return (
