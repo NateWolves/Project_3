@@ -5,7 +5,7 @@ const googleRoutes = require("./googleSearch");
 
 router.use("/users", userRoutes)
 router.use("/events", eventRoutes)
-router.use("/api/location", googleRoutes)
-router.use("/api/nearby", googleRoutes)
+router.use("/location", googleRoutes)
+router.use("/nearby", googleRoutes)
 
 module.exports = router;

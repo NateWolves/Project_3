@@ -3,6 +3,24 @@ import { Modal, Button } from 'react-bootstrap';
 
 
 class Event extends React.Component {
+	state = {
+		event: "",
+		start: "",
+		end: ""
+	};
+
+	handleChange = event => {
+		const { name, value } = event.target;
+
+		this.setState({
+			[name]: value
+		});
+	};
+
+	handleSubmit = () => {
+		
+	};
+
 	render() {
 		return (
 			<Modal

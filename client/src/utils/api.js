@@ -4,6 +4,9 @@ export default {
   findUser: function(userId) {
     return axios.get(`/api/users/${userId}`);
   },
+  createUser: function(userId) {
+    return axios.post(`/api/users/${userId}`);
+  },
 
 
   findAllEvents: function(userId) {
