@@ -31,8 +31,8 @@ module.exports = {
       .then(dbModel => {
         db.Trip.findOneAndDelete({ _id: req.params.tripId })
           .then(dbModel => {
-            db.User.findOneAndUpdate({ $in: { trips: req.params.tripId } }, 
-              { $pull: { trips: req.params.tripId } })
+            db.User.findOneAndUpdate({ trips: req.params.tripId }, 
+              { $pull: { trips: req.params.tripId } }, { new: true })
               .then(dbUser => res.json(dbUser))
               .catch(err => res.status(422).json(err));
           })

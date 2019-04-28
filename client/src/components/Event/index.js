@@ -4,6 +4,7 @@ import API from '../../utils/api';
 
 class Event extends React.Component {
 	state = {
+		tripId: this.props.tripId,
 		event: "",
 		start: "",
 		end: ""
@@ -22,8 +23,9 @@ class Event extends React.Component {
 
 		this.props.onHide();
 
-		API.createEvent("testUser", {
+		API.createEvent({
 			name: this.state.event,
+			tripId: this.state.tripId,
 			type: "event",
 			startDate: this.state.start,
 			endDate: this.state.end

@@ -46,16 +46,18 @@ const getEventIcon = (type) => {
     case "sports":
       return sports;
     default:
-      return null;
+      return explore;
   }
 }
 
 class Timeline extends Component {
   state = {
+    tripId: "",
     events: []
   };
 
   divideIntoDays = () => {
+    // Temp: dividing into 4 events per day
     let days = [];
     let events = this.state.events.slice();
 
@@ -70,6 +72,7 @@ class Timeline extends Component {
     API.findTripsByUser("testUser")
       .then(res => {
         this.setState({
+          tripId: res.data.trips[0]._id,
           events: res.data.trips[0].events
         });
       })
@@ -77,18 +80,18 @@ class Timeline extends Component {
   }
  
   render() {
-    console.log(this.state.events);
     return (
       <div className="timeline-container">
         <br /><br /><br /><br />
         {
           this.state.events.length > 0 ? (
-            this.state.events.map((event, i) => {
+            this.divideIntoDays().map((events, i) => {
               return (
                 <TimelineItem 
                   key={`ti-${i}`} 
                   dayNum={i + 1} 
-                  events={this.state.events}
+                  events={events}
+                  tripId={this.state.tripId}
                 />
               );
             })
@@ -104,7 +107,7 @@ class Timeline extends Component {
 class TimelineItem extends Component {
 
   handleDelete = id => {
-    // API.deleteEvent();
+    API.deleteEvent(id);
   };
 
   render() {
@@ -121,6 +124,7 @@ class TimelineItem extends Component {
                 startDate={event.startDate}
                 endDate={event.endDate}
                 type={event.type}
+                eventId={event._id}
               />
             );
           })}
@@ -129,7 +133,7 @@ class TimelineItem extends Component {
                     <button>Add an Event</button>
                 </Link> */}
 
-          <AddEvent />
+          <AddEvent tripId={this.props.tripId} />
           <AddMeal />
 
           <span className="circle" />
@@ -143,7 +147,7 @@ const EventItem = props => {
   return (
     <div className="event-item">
       <span>
-        <img src={getEventIcon(props.type)} alt="Event icon" />
+        <img className="iconImage" src={getEventIcon(props.type)} alt="Event icon" />
       </span>
       <div>
         <h4>{props.name}</h4>
@@ -151,7 +155,7 @@ const EventItem = props => {
         <div className="event-item-btns">
           <button>Edit</button>
           <span>  </span>
-          <button>Remove</button>
+          <button onClick={() => props.handleDelete(props.eventId)}>Remove</button>
         </div>
       </div>
 
@@ -176,7 +180,6 @@ class AddEvent extends React.Component {
 
   render() {
     let modalClose = () => this.setState({ modalShow: false });
-
     return (
       <ButtonToolbar>
         <Button
@@ -190,6 +193,7 @@ class AddEvent extends React.Component {
         <Event
           show={this.state.modalShow}
           onHide={modalClose}
+          tripId={this.props.tripId}
         />
       </ButtonToolbar>
     );

@@ -25,9 +25,9 @@ module.exports = {
   delete: function (req, res) {
     db.Event.findOneAndDelete({ _id: req.params.eventId })
       .then(dbModel => {
-        db.Trip.findAndUpdate({ $in: { events: req.params.eventId } }, 
-          { $pull: { events: req.params.eventId } })
-          .then(dbModel => res.json(dbModel))
+        db.Trip.findOneAndUpdate({ events: req.params.eventId }, 
+          { $pull: { events: req.params.eventId }}, { new: true })
+          .then(dbTrip => res.json(dbModel))
           .catch(err => res.status(422).json(err));
       })
       .catch(err => res.status(422).json(err));

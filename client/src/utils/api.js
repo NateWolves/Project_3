@@ -33,8 +33,8 @@ export default {
   updateEvent:  function(eventId, data) {
     return axios.put(`/api/events/${eventId}`, data);
   },
-  deleteEvent: function(eventId, data) {
-    return axios.delete(`/api/events/${eventId}`, data);
+  deleteEvent: function(eventId) {
+    return axios.delete(`/api/events/${eventId}`);
   },
 
   nearbySearch: function(searchObj) {
