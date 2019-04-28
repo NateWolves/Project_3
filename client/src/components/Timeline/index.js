@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import './timeline.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import dummyData from './dummydata';
@@ -87,15 +86,19 @@ class Timeline extends Component {
     return (
       // <div className="timeline-container">
       //   {dummyData.map((day) => {
-      //     return <TimelineItem data={day} key={day.title} />
+      //     return <TimelineItem data={day} key={day.title} dayNum={1}/>
       //   })}
       // </div>
 
       <div className="timeline-container">
         {
-          this.state.days.map((event, i) => {
-            return <TimelineItem data={event} key={`ti-${i}`} dayNum={i + 1} />;
-          })
+          this.state.days.length > 0 ? (
+            this.state.days.map((event, i) => {
+              return <TimelineItem data={event} key={`ti-${i}`} dayNum={i + 1} />;
+            })
+          ) : (
+            <AddEvent />
+          )
         }
       </div>
     );

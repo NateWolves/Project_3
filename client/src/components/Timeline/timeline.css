@@ -131,3 +131,7 @@
 .timeline-item:nth-child(even) .event-item .event-item-btns {
     float: right;
 }
+
+*, ::before, ::after {
+    box-sizing: content-box;
+}

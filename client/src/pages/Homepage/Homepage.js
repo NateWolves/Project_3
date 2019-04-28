@@ -3,7 +3,7 @@ import { Row, Col, Media, Container} from 'react-bootstrap';
 import outlineTimeline from './images/outlineTimeline.png';
 import compass from './images/compass.jpg';
 import traveller from './images/traveller.jpg';
-import Home from '../../components/Home';
+// import Home from '../../components/Home';
 
 import './Homepage.css';
 const styles = {
@@ -18,15 +18,15 @@ const styles = {
 function Homepage() {
     return (
         <div id="home" >
-            <div class="header">
-                <div class="header-wrap">
-                    <div class="title-wrap">
-                        <div class="img-src" style={styles.root}>
+            <div className="header">
+                <div className="header-wrap">
+                    <div className="title-wrap">
+                        <div className="img-src" style={styles.root}>
                         </div>
                     </div>
                 </div>
-                <div class="title">
-                    <div class="title-text">
+                <div className="title">
+                    <div className="title-text">
                         <h1>Compass</h1>
                         <h3>Give your plans a sense of direction</h3>
                     </div>
