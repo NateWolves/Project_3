@@ -24,7 +24,7 @@ class Home extends React.Component {
 		return (
 			<ButtonToolbar>
 				<Button
-					variant="primary"
+					variant="dark"
                     onClick={() => this.setState({ modalShow: true })}
                     style={btnStyle}
 				>
@@ -41,10 +41,11 @@ class Home extends React.Component {
 }
 
 const btnStyle = {
-    background: "none",
-    color: "black",
-    border: "1px solid black",
-    margin: "5px"
+    background: "#d5bd97",
+    color: "white",
+	border: "1px solid #d4bb94",
+	boxShadow: "2px 2px 4px #000000",
+	margin: "auto",
 }
 
 export default Home;
