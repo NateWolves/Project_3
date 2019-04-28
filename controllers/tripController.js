@@ -27,10 +27,9 @@ module.exports = {
       .then(dbModel => {
         db.Trip.findOneAndDelete({ _id: req.params.tripId })
           .then(dbModel => {
-            db.User.findOneAndUpdate({ $in: { trips: tripId } }, { $pull: { trips: tripId } })
-              .then(dbModel => {
-                res.json(dbModel);
-              })
+            db.User.findOneAndUpdate({ $in: { trips: req.params.tripId } }, 
+              { $pull: { trips: req.params.tripId } })
+              .then(dbUser => res.json(dbUser))
               .catch(err => res.status(422).json(err));
           })
           .catch(err => res.status(422).json(err));
