@@ -10,10 +10,11 @@ module.exports = {
   create: function (req, res) {
     db.Trip.create(req.body)
       .then(dbTrip => {
-        return db.User.findOneAndUpdate({ userId: req.params.userId },
-          { $push: { trips: dbTrip._id } }, { new: true });
+        db.User.findOneAndUpdate({ _id: dbTrip.userId },
+          { $push: { trips: dbTrip._id } }, { new: true })
+          .then(dbModel => res.json(dbTrip))
+          .catch(err => res.status(422).json(err));
       })
-      .then(dbUser => res.json(dbUser))
       .catch(err => res.status(422).json(err));
   },
   update: function (req, res) {
@@ -22,8 +23,18 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   delete: function (req, res) {
-    db.Trip.findOneAndDelete({ _id: req.params.tripId })
-      .then(dbTrip => res.json(dbTrip))
+    db.Event.deleteMany({ tripId: req.params.tripId })
+      .then(dbModel => {
+        db.Trip.findOneAndDelete({ _id: req.params.tripId })
+          .then(dbModel => {
+            db.User.findOneAndUpdate({ $in: { trips: tripId } }, { $pull: { trips: tripId } })
+              .then(dbModel => {
+                res.json(dbModel);
+              })
+              .catch(err => res.status(422).json(err));
+          })
+          .catch(err => res.status(422).json(err));
+      })
       .catch(err => res.status(422).json(err));
   }
-}
+};

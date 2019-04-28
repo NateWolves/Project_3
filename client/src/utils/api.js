@@ -5,8 +5,8 @@ export default {
   findUser: function(userId) {
     return axios.get(`/api/users/${userId}`);
   },
-  createUser: function() {
-    return axios.post(`/api/users`);
+  createUser: function(data) {
+    return axios.post(`/api/users`, data);
   },
 
   // Trip methods
