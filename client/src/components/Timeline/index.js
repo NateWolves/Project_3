@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './timeline.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
-import dummyData from './dummydata';
 import Event from '../Event';
 import Meal from '../Meal';
 
@@ -16,6 +15,15 @@ import theater from './images/theater.png';
 import sports from './images/sports.png';
 
 import API from '../../utils/api';
+import dummy from '../../utils/dummy';
+
+// Generate dummy data
+API.findUser("testUser")
+  .then(res => {
+    if (!res.data) {
+      dummy.createData();
+    }
+  });
 
 const getEventIcon = (type) => {
   switch (type) {
@@ -42,61 +50,115 @@ const getEventIcon = (type) => {
   }
 }
 
-const Timeline = () =>
-  dummyData.length > 0 && (
-    <div>
+class Timeline extends Component {
+  state = {
+    events: []
+  };
 
-      <br /><br /><br /><br /><br /><br />
+  divideIntoDays = () => {
+    let days = [];
+    let events = this.state.events.slice();
+
+    for (let i = 0; i < events.length; i += 4) {
+      days.push(events.slice(i, i + 4))
+    }
+
+    return days;
+  };
+
+  componentDidMount() {
+    API.findTripsByUser("testUser")
+      .then(res => {
+        this.setState({
+          events: res.data.trips[0].events
+        });
+      })
+      .catch(err => console.log(err));
+  }
+ 
+  render() {
+    console.log(this.state.events);
+    return (
       <div className="timeline-container">
-        {dummyData.map((day) => (
-          <TimelineItem data={day} key={day.title} />
-        ))}
+        <br /><br /><br /><br />
+        {
+          this.state.events.length > 0 ? (
+            this.state.events.map((event, i) => {
+              return (
+                <TimelineItem 
+                  key={`ti-${i}`} 
+                  dayNum={i + 1} 
+                  events={this.state.events}
+                />
+              );
+            })
+          ) : (
+            <AddEvent />
+          )
+        }
       </div>
-    </div>
+    );
+  }
+};
 
+class TimelineItem extends Component {
+
+  handleDelete = id => {
+    // API.deleteEvent();
+  };
+
+  render() {
+    return (
+      <div className="timeline-item">
+        <div className="timeline-item-content">
+          <h3>Day {this.props.dayNum}</h3>
+          {this.props.events.map((event, i) => {
+            return (
+              <EventItem
+                key={`ei-${i}`}
+                handleDelete={this.handleDelete}
+                name={event.name}
+                startDate={event.startDate}
+                endDate={event.endDate}
+                type={event.type}
+              />
+            );
+          })}
+
+          {/* <Link to="/event">
+                    <button>Add an Event</button>
+                </Link> */}
+
+          <AddEvent />
+          <AddMeal />
+
+          <span className="circle" />
+        </div>
+      </div>
+    );
+  }
+};
+
+const EventItem = props => {
+  return (
+    <div className="event-item">
+      <span>
+        <img src={getEventIcon(props.type)} alt="Event icon" />
+      </span>
+      <div>
+        <h4>{props.name}</h4>
+        <time>{props.startDate}-{props.endDate}</time>
+        <div className="event-item-btns">
+          <button>Edit</button>
+          <span>  </span>
+          <button>Remove</button>
+        </div>
+      </div>
+
+      <br />
+    </div>
   );
-
-const TimelineItem = (day) => (
-  <div className="timeline-item">
-    <div className="timeline-item-content">
-      <h3>{day.data.title}</h3>
-      {day.data.events.map((event) => (
-        <EventItem data={event} key={event.id} />
-      ))}
-
-      {/* <Link to="/event">
-                <button>Add an Event</button>
-            </Link> */}
-
-      <AddEvent />
-
-      <AddMeal />
-
-      <span className="circle" />
-    </div>
-  </div>
-)
-
-const EventItem = ({ data }) => (
-  <div className="event-item">
-    <span>
-      <img className="iconImage" src={getEventIcon(data.type)} alt="Event icon" />
-    </span>
-    <div>
-      <h4>{data.text}</h4>
-      <time>{data.time.start}-{data.time.end}</time>
-      <div className="event-item-btns">
-        <button>Edit</button>
-        <span>  </span>
-        <button>Remove</button>
-      </div>
-    </div>
-
-    <br />
-
-    <br />
-  </div>
-)
+};
 
 const btnStyle = {
   background: "none",

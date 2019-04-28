@@ -3,7 +3,7 @@ const db = require("../models");
 module.exports = {
   findAllByTrip: function(req, res) {
     db.Trip.findOne({ _id: req.params.tripId })
-      .populate({ path: "events", options: { sort: { date: 1 } } })
+      .populate({ path: "events", options: { sort: { date: 1 } }})
       .then(dbTrip => res.json(dbTrip))
       .catch(err => res.status(422).json(err));
   },
