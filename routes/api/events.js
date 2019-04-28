@@ -3,9 +3,9 @@ const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 const eventController = require("../../controllers/eventController");
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config();
+// }
 
 // const checkJwt = jwt({
 //   secret: jwksRsa.expressJwtSecret({
@@ -22,10 +22,12 @@ if (process.env.NODE_ENV !== 'production') {
 // });
 
 router.route("/:tripId")
-  .get(eventController.findAllByTrip)
+  .get(eventController.findAllByTrip);
+
+router.route("/")
   .post(eventController.create);
 
-router.route("/:tripId/:eventId")
+router.route("/:eventId")
   .put(eventController.update)
   .delete(eventController.delete);
 

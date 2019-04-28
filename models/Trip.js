@@ -5,17 +5,18 @@ const ObjectId = Schema.Types.ObjectId;
 const TripSchema = new Schema({
   userId: {
     type: ObjectId,
-    ref: "User"
+    ref: "User",
+    required: true
   },
   name: {
     type: String,
     required: true
   },
   startDate: {
-    type: String
+    type: Date
   },
   endDate: {
-    type: String
+    type: Date
   },
   events: [
     {

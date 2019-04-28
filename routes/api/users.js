@@ -3,9 +3,9 @@ const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 const userController = require("../../controllers/userController");
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config();
+// }
 
 // const checkJwt = jwt({
 //   secret: jwksRsa.expressJwtSecret({
@@ -22,7 +22,9 @@ if (process.env.NODE_ENV !== 'production') {
 // });
 
 router.route("/:userId")
-  .get(userController.findOne)
+  .get(userController.findOne);
+
+router.route("/")
   .post(userController.create);
 
 // router.get("/:userId", checkJwt, userController.findOne);

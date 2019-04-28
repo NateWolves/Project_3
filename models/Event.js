@@ -5,7 +5,8 @@ const ObjectId = Schema.Types.ObjectId;
 const EventSchema = new Schema({
   tripId: {
     type: ObjectId,
-    ref: "Trip"
+    ref: "Trip",
+    required: true
   },
   name: {
     type: String,
@@ -18,28 +19,19 @@ const EventSchema = new Schema({
   location: {
     name: {
       type: String,
-      // required: true
     },
     lat: {
       type: Number,
-      // require: true
     },
     lon: {
       type: Number,
-      // require: true
     }
   },
-  // startDate: {
-  //   type: Date
-  // },
-  // endDate: {
-  //   type: Date
-  // }
   startDate: {
-    type: String
+    type: Date
   },
   endDate: {
-    type: String
+    type: Date
   }
 });
 
