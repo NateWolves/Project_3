@@ -1,9 +1,9 @@
 import React from 'react';
-import { Row, Col, Media, Container} from 'react-bootstrap';
+import { Row, Col, Image, Container} from 'react-bootstrap';
 import outlineTimeline from './images/outlineTimeline.png';
 import compass from './images/compass.jpg';
 import traveller from './images/traveller.jpg';
-// import Home from '../../components/Home';
+import Home from '../../components/Home';
 
 import './Homepage.css';
 const styles = {
@@ -27,61 +27,41 @@ function Homepage() {
                 </div>
                 <div className="title">
                     <div className="title-text">
-                        <h1>Compass</h1>
-                        <h3>Give your plans a sense of direction</h3>
+                        <h1 className="hdrText">Compass</h1>
+                        <h3 className="subText">Give your plans a sense of direction</h3>
+                        <br/>
+                        <Home/>
                     </div>
                 </div>
             </div>
             <br />
-            <Container fluid={true}>
-                <Row className="justify-content-md-center">
-                    <Col xs lg="6">
-                        <Media>
-                            <img
-                                width={400}
-                                height={500}
-                                className="contentImg"
-                                src={traveller}
-                                alt={"traveller"}
-                            />
-                        </Media>
+            <Container fluid={true}> 
+                <Row className="contentRow justify-content-md-center">
+                    <Col xs={12} md={6} className="contentCol">
+                        <Image className="contentImg" src={traveller} fluid/>
                     </Col>
-                    <Col xs lg="6">
+                    <Col xs={12} md={6} className="contentCol">
                         <div className="textContainer">
-                            <h4>Make planning your next trip easy</h4>
-                            <h4>Easily search for top attractions, local eateries, and more!</h4>
+                            <h4 className="contentText">Make planning your next trip easier.</h4>
+                            <h4 className="contentText">Search for top attractions, local eateries, and more!</h4>
                         </div>
                     </Col>
                 </Row>
                 <br/>
-                <Row className="timeLine justify-content-md-center">
-                    <Col xs lg="6">
+                <Row className="timeLine contentRow justify-content-md-center">
+                    <Col xs={12} md={6} className="contentCol">
                         <div className="textContainer">
-                            <h4>Just look up your destination and enter the duration of your stay.</h4>
-                            <h4>And Compass will generate a timeline for you to fill in and keep track
+                            <h4 className="contentText">Just look up your destination and enter the duration of your stay.</h4>
+                            <h4 className="contentText">And Compass will generate a timeline for you to fill in and keep track
                                 of your day-to-day activities.</h4>
                         </div>
                     </Col>
-                    <Col xs lg="6">
-                        <Media>
-                            <img
-                                width={400}
-                                height={500}
-                                className="contentImg"
-                                src={outlineTimeline}
-                                alt={"outlineTimeline"}
-                            />
-                        </Media>
+                    <Col xs={12} md={6}className="contentCol">
+                        <Image src={outlineTimeline} fluid/>
                     </Col>
                 </Row>
-                <br/>
-
             </Container>
-                
-            
-
         </div>
-
     )
 }
 
