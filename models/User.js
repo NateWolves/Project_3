@@ -7,10 +7,10 @@ const UserSchema = new Schema({
     type: String,
     unique: true
   },
-  events: [
+  trips: [
     {
       type: ObjectId,
-      ref: "Event"
+      ref: "Trip"
     }
   ]
 });

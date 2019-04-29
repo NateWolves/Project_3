@@ -1,21 +1,42 @@
 import axios from "axios";
 
 export default {
+  // User methods
   findUser: function(userId) {
     return axios.get(`/api/users/${userId}`);
   },
-  findAllEvents: function(userId) {
-    return axios.get(`/api/events/${userId}`);
+  createUser: function(data) {
+    return axios.post(`/api/users`, data);
   },
-  createEvent: function(userId, data) {
-    return axios.post(`/api/events/${userId}`, data);
+
+  // Trip methods
+  findTripsByUser: function(userId) {
+    return axios.get(`/api/trips/${userId}`);
   },
-  updateEvent:  function(userId, eventId, data) {
-    return axios.put(`/api/events/${userId}/${eventId}`, data);
+  createTrip: function(data) {
+    return axios.post(`/api/trips`, data);
   },
-  deleteEvent: function(userId, eventId, data) {
-    return axios.delete(`/api/events/${userId}/${eventId}`, data);
+  updateTrip: function(tripId, data) {
+    return axios.put(`/api/trips/${tripId}`, data)
   },
+  deleteTrip: function(tripId) {
+    return axios.delete(`/api/trips/${tripId}`)
+  },
+
+  // Event methods
+  findEventsByTrip: function(tripId) {
+    return axios.get(`/api/events/${tripId}`);
+  },
+  createEvent: function(data) {
+    return axios.post(`/api/events`, data);
+  },
+  updateEvent:  function(eventId, data) {
+    return axios.put(`/api/events/${eventId}`, data);
+  },
+  deleteEvent: function(eventId) {
+    return axios.delete(`/api/events/${eventId}`);
+  },
+
   nearbySearch: function(searchObj) {
     return axios.get(`/api/nearby`, searchObj)
   },

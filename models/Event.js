@@ -1,28 +1,30 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const ObjectId = Schema.Types.ObjectId;
 
 const EventSchema = new Schema({
+  tripId: {
+    type: ObjectId,
+    ref: "Trip",
+    required: true
+  },
   name: {
     type: String,
     required: true
   },
   type: {
     type: String,
-    required: true,
-    defualt: "event"
+    defualt: "explore"
   },
   location: {
     name: {
       type: String,
-      required: true
     },
     lat: {
       type: Number,
-      require: true
     },
     lon: {
       type: Number,
-      require: true
     }
   },
   startDate: {

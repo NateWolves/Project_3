@@ -1,21 +1,20 @@
 const db = require("../models");
 
-// req.user.name
-
 module.exports = {
-  findAll: function(req, res) {
-    db.User.findOne({ userId: req.params.userId })
-      .populate({ path: "events", options: { sort: { date: 1 } } })
-      .then(dbUserData => res.json(dbUserData))
+  findAllByTrip: function(req, res) {
+    db.Trip.findOne({ _id: req.params.tripId })
+      .populate({ path: "events", options: { sort: { date: 1 } }})
+      .then(dbTrip => res.json(dbTrip))
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
     db.Event.create(req.body)
       .then(dbEvent => {
-        return db.User.findOneAndUpdate({ userId: req.params.userId }, 
-          { $push: { events: dbEvent._id } }, { new: true });
+        db.Trip.findOneAndUpdate({ _id: dbEvent.tripId }, 
+          { $push: { events: dbEvent._id } }, { new: true })
+          .then(dbModel => res.json(dbEvent))
+          .catch(err => res.status(422).json(err));
       })
-      .then(dbUser => res.json(dbUser))
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {
@@ -23,13 +22,14 @@ module.exports = {
       .then(dbEvent => res.json(dbEvent))
       .catch(err => res.status(422).json(err));
   },
-  delete: function(req, res) {
-    db.User.findOneAndUpdate({ userId: req.params.userId }, { $pull: { events: req.params.eventId } })
-      .then(dbUser => { 
-        db.Event.deleteOne({ _id: req.params.eventId })
-          .then(dbEvent => res.json(dbEvent))
+  delete: function (req, res) {
+    db.Event.findOneAndDelete({ _id: req.params.eventId })
+      .then(dbModel => {
+        db.Trip.findOneAndUpdate({ events: req.params.eventId }, 
+          { $pull: { events: req.params.eventId }}, { new: true })
+          .then(dbTrip => res.json(dbModel))
           .catch(err => res.status(422).json(err));
       })
       .catch(err => res.status(422).json(err));
   }
-}
+};

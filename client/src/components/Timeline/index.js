@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './timeline.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
-import dummyData from './dummydata';
 import Event from '../Event';
 import Meal from '../Meal';
 
@@ -15,7 +14,16 @@ import movie from './images/movie.png';
 import theater from './images/theater.png';
 import sports from './images/sports.png';
 
-// import API from '../../utils/api';
+import API from '../../utils/api';
+import dummy from '../../utils/dummy';
+
+// Generate dummy data
+API.findUser("testUser")
+  .then(res => {
+    if (!res.data) {
+      dummy.createData();
+    }
+  });
 
 const getEventIcon = (type) => {
   switch (type) {
@@ -38,65 +46,123 @@ const getEventIcon = (type) => {
     case "sports":
       return sports;
     default:
-      return null;
+      return explore;
   }
 }
 
-const Timeline = () =>
-  dummyData.length > 0 && (
-    <div>
+class Timeline extends Component {
+  state = {
+    tripId: "",
+    events: []
+  };
 
-      <br /><br /><br /><br /><br /><br />
+  divideIntoDays = () => {
+    // Temp: dividing into 4 events per day
+    let days = [];
+    let events = this.state.events.slice();
+
+    for (let i = 0; i < events.length; i += 4) {
+      days.push(events.slice(i, i + 4))
+    }
+
+    return days;
+  };
+
+  componentDidMount() {
+    API.findTripsByUser("testUser")
+      .then(res => {
+        this.setState({
+          tripId: res.data.trips[0]._id,
+          events: res.data.trips[0].events
+        });
+      })
+      .catch(err => console.log(err));
+  }
+ 
+  render() {
+    return (
       <div className="timeline-container">
-        {dummyData.map((day) => (
-          <TimelineItem data={day} key={day.title} />
-        ))}
+        <br /><br /><br /><br />
+        {
+          this.state.events.length > 0 ? (
+            this.divideIntoDays().map((events, i) => {
+              return (
+                <TimelineItem 
+                  key={`ti-${i}`} 
+                  dayNum={i + 1} 
+                  events={events}
+                  tripId={this.state.tripId}
+                />
+              );
+            })
+          ) : (
+            <AddEvent />
+          )
+        }
       </div>
-    </div>
+    );
+  }
+};
 
+class TimelineItem extends Component {
+
+  handleDelete = id => {
+    API.deleteEvent(id);
+  };
+
+  render() {
+    return (
+      <div className="timeline-item">
+        <div className="timeline-item-content">
+          <h3>Day {this.props.dayNum}</h3>
+          {this.props.events.map((event, i) => {
+            return (
+              <EventItem
+                key={`ei-${i}`}
+                handleDelete={this.handleDelete}
+                name={event.name}
+                startDate={event.startDate}
+                endDate={event.endDate}
+                type={event.type}
+                eventId={event._id}
+              />
+            );
+          })}
+
+          {/* <Link to="/event">
+                    <button>Add an Event</button>
+                </Link> */}
+
+          <AddEvent tripId={this.props.tripId} />
+          <AddMeal />
+
+          <span className="circle" />
+        </div>
+      </div>
+    );
+  }
+};
+
+const EventItem = props => {
+  return (
+    <div className="event-item">
+      <span>
+        <img className="iconImage" src={getEventIcon(props.type)} alt="Event icon" />
+      </span>
+      <div>
+        <h4>{props.name}</h4>
+        <time>{props.startDate}-{props.endDate}</time>
+        <div className="event-item-btns">
+          <button>Edit</button>
+          <span>  </span>
+          <button onClick={() => props.handleDelete(props.eventId)}>Remove</button>
+        </div>
+      </div>
+
+      <br />
+    </div>
   );
-
-const TimelineItem = (day) => (
-  <div className="timeline-item">
-    <div className="timeline-item-content">
-      <h3>{day.data.title}</h3>
-      {day.data.events.map((event) => (
-        <EventItem data={event} key={event.id} />
-      ))}
-
-      {/* <Link to="/event">
-                <button>Add an Event</button>
-            </Link> */}
-
-      <AddEvent />
-
-      <AddMeal />
-
-      <span className="circle" />
-    </div>
-  </div>
-)
-
-const EventItem = ({ data }) => (
-  <div className="event-item">
-    <span>
-      <img className="iconImage" src={getEventIcon(data.type)} alt="Event icon" />
-    </span>
-    <div>
-      <h4>{data.text}</h4>
-      <time>{data.time.start}-{data.time.end}</time>
-      <div className="event-item-btns">
-        <button>Edit</button>
-        <span>  </span>
-        <button>Remove</button>
-      </div>
-    </div>
-
-    <br />
-
-    <br />
-  </div>
-)
+};
 
 const btnStyle = {
   background: "none",
@@ -114,7 +180,6 @@ class AddEvent extends React.Component {
 
   render() {
     let modalClose = () => this.setState({ modalShow: false });
-
     return (
       <ButtonToolbar>
         <Button
@@ -128,6 +193,7 @@ class AddEvent extends React.Component {
         <Event
           show={this.state.modalShow}
           onHide={modalClose}
+          tripId={this.props.tripId}
         />
       </ButtonToolbar>
     );
