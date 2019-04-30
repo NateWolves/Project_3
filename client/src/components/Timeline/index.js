@@ -3,6 +3,7 @@ import './timeline.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import Event from '../Event';
 import Meal from '../Meal';
+import NearbyModal from '../Nearby';
 
 import explore from './images/explore.png';
 import meal from './images/meal.png';
@@ -135,7 +136,7 @@ class TimelineItem extends Component {
 
           <AddEvent tripId={this.props.tripId} />
           <AddMeal />
-
+          <AddNearby tripId={this.props.tripID} />      
           <span className="circle" />
         </div>
       </div>
@@ -221,6 +222,35 @@ class AddMeal extends React.Component {
     			</Button>
 
         <Meal
+          show={this.state.modalShow}
+          onHide={modalClose}
+        />
+      </ButtonToolbar>
+    );
+  }
+}
+
+class AddNearby extends React.Component {
+  constructor(...args) {
+    super(...args);
+
+    this.state = { modalShow: false };
+  }
+
+  render() {
+    let modalClose = () => this.setState({ modalShow: false });
+
+    return (
+      <ButtonToolbar>
+        <Button
+          variant="primary"
+          onClick={() => this.setState({ modalShow: true })}
+          style={btnStyle}
+        >
+          Search Nearby
+    			</Button>
+
+        <NearbyModal
           show={this.state.modalShow}
           onHide={modalClose}
         />
