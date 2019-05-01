@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './timeline.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
+import moment from 'moment';
 import Event from '../Event';
 import Meal from '../Meal';
 import NearbyModal from '../Nearby';
@@ -54,19 +55,57 @@ const getEventIcon = (type) => {
 class Timeline extends Component {
   state = {
     tripId: "",
-    events: []
+    events: [],
+    days: []
   };
 
   divideIntoDays = () => {
-    // Temp: dividing into 4 events per day
     let days = [];
     let events = this.state.events.slice();
 
-    for (let i = 0; i < events.length; i += 4) {
-      days.push(events.slice(i, i + 4))
+    let newDay = [events[0]];    
+    let dayStartMoment = moment(events[0].startDate);
+    let newDayMoment;
+
+    for (let i = 1; i < events.length; i++) {
+      newDayMoment =  moment(events[i].startDate);
+      
+      if (dayStartMoment.isSame(newDayMoment, 'day')) {
+        newDay.push(events[i])
+      } else {
+        days.push(newDay);
+        dayStartMoment = newDayMoment;
+        newDay = [events[i]];
+      }
+
+      if (i + 1 === events.length) {
+        days.push(newDay)
+      }
     }
 
     return days;
+  };
+
+  handleEventAdd = eventObj => {
+    this.setState({
+      events: [...this.state.events, eventObj]
+    }, () => {
+      this.setState({
+        days: this.divideIntoDays()
+      });
+      API.createEvent(eventObj);
+    });
+  };
+
+  handleEventDelete = id => {
+    this.setState({
+      events: this.state.events.filter(event => event._id !== id)
+    }, () => {
+      this.setState({
+        days: this.divideIntoDays()
+      });
+      API.deleteEvent(id);
+    });
   };
 
   componentDidMount() {
@@ -75,30 +114,36 @@ class Timeline extends Component {
         this.setState({
           tripId: res.data.trips[0]._id,
           events: res.data.trips[0].events
+        }, () => {
+          this.setState({
+            days: this.divideIntoDays()
+          });
         });
       })
       .catch(err => console.log(err));
   }
- 
+
   render() {
     return (
       <div className="timeline-container">
         <br /><br /><br /><br />
         {
           this.state.events.length > 0 ? (
-            this.divideIntoDays().map((events, i) => {
+            this.state.days.map((events, i) => {
               return (
-                <TimelineItem 
-                  key={`ti-${i}`} 
-                  dayNum={i + 1} 
+                <TimelineItem
+                  key={`ti-${i}`}
+                  dayNum={i + 1}
                   events={events}
                   tripId={this.state.tripId}
+                  handleEventDelete={this.handleEventDelete}
+                  handleEventAdd={this.handleEventAdd}
                 />
               );
             })
           ) : (
-            <AddEvent />
-          )
+              <AddEvent />
+            )
         }
       </div>
     );
@@ -107,20 +152,17 @@ class Timeline extends Component {
 
 class TimelineItem extends Component {
 
-  handleDelete = id => {
-    API.deleteEvent(id);
-  };
-
   render() {
     return (
       <div className="timeline-item">
         <div className="timeline-item-content">
-          <h3>Day {this.props.dayNum}</h3>
+          <h3>Day {this.props.dayNum} - {moment(this.props.events[0].startDate).format("dddd M/D")} </h3>
           {this.props.events.map((event, i) => {
             return (
               <EventItem
                 key={`ei-${i}`}
-                handleDelete={this.handleDelete}
+                handleEventDelete={this.props.handleEventDelete}
+                handleEventAdd={this.props.handleEventAdd}
                 name={event.name}
                 startDate={event.startDate}
                 endDate={event.endDate}
@@ -134,7 +176,7 @@ class TimelineItem extends Component {
                     <button>Add an Event</button>
                 </Link> */}
 
-          <AddEvent tripId={this.props.tripId} />
+          <AddEvent tripId={this.props.tripId} handleEventAdd={this.props.handleEventAdd} />
           <AddMeal />
           <AddNearby tripId={this.props.tripID} />      
           <span className="circle" />
@@ -152,11 +194,11 @@ const EventItem = props => {
       </span>
       <div>
         <h4>{props.name}</h4>
-        <time>{props.startDate}-{props.endDate}</time>
+        <time>{moment(props.startDate).format('h:mma')}-{moment(props.endDate).format('h:mma')}</time>
         <div className="event-item-btns">
           <button>Edit</button>
           <span>  </span>
-          <button onClick={() => props.handleDelete(props.eventId)}>Remove</button>
+          <button onClick={() => props.handleEventDelete(props.eventId)}>Remove</button>
         </div>
       </div>
 
@@ -195,6 +237,7 @@ class AddEvent extends React.Component {
           show={this.state.modalShow}
           onHide={modalClose}
           tripId={this.props.tripId}
+          handleEventAdd={this.props.handleEventAdd}
         />
       </ButtonToolbar>
     );
