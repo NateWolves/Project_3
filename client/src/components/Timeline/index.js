@@ -81,7 +81,7 @@ class Timeline extends Component {
         days.push(newDay)
       }
     }
-    
+
     return days;
   };
 
@@ -89,6 +89,9 @@ class Timeline extends Component {
     this.setState({
       events: [...this.state.events, eventObj]
     }, () => {
+      this.setState({
+        days: this.divideIntoDays()
+      });
       API.createEvent(eventObj);
     });
   };
@@ -97,6 +100,9 @@ class Timeline extends Component {
     this.setState({
       events: this.state.events.filter(event => event._id !== id)
     }, () => {
+      this.setState({
+        days: this.divideIntoDays()
+      });
       API.deleteEvent(id);
     });
   };
@@ -149,7 +155,7 @@ class TimelineItem extends Component {
     return (
       <div className="timeline-item">
         <div className="timeline-item-content">
-          <h3>Day {this.props.dayNum}</h3>
+          <h3>Day {this.props.dayNum} - {moment(this.props.events[0].startDate).format("dddd M/D")} </h3>
           {this.props.events.map((event, i) => {
             return (
               <EventItem
