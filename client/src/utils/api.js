@@ -37,10 +37,10 @@ export default {
     return axios.delete(`/api/events/${eventId}`);
   },
 
-  nearbySearch: function(searchObj) {
-    return axios.get(`/api/nearby`, searchObj)
+  nearbySearch: function(search) {
+    return axios.get(`/api/googleSearch/nearby/${search}`)
   },
   textSearch: function(query) {
-    return axios.get(`/api/location/${query}`)
+    return axios.get(`/api/googleSearch/location/${query}`)
   }
 }

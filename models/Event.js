@@ -14,7 +14,7 @@ const EventSchema = new Schema({
   },
   type: {
     type: String,
-    defualt: "explore"
+    default: "explore"
   },
   location: {
     name: {
