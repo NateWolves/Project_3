@@ -68,6 +68,22 @@ class Timeline extends Component {
     return days;
   };
 
+  handleEventAdd = eventObj => {
+    this.setState({
+      events: [...this.state.events, eventObj]
+    }, () => {
+      API.createEvent(eventObj);
+    });
+  };
+
+  handleEventDelete = id => {
+    this.setState({
+      events: this.state.events.filter(event => event._id !== id)
+    }, () => {
+      API.deleteEvent(id);
+    });
+  };
+
   componentDidMount() {
     API.findTripsByUser("testUser")
       .then(res => {
@@ -78,7 +94,7 @@ class Timeline extends Component {
       })
       .catch(err => console.log(err));
   }
- 
+
   render() {
     return (
       <div className="timeline-container">
@@ -87,17 +103,19 @@ class Timeline extends Component {
           this.state.events.length > 0 ? (
             this.divideIntoDays().map((events, i) => {
               return (
-                <TimelineItem 
-                  key={`ti-${i}`} 
-                  dayNum={i + 1} 
+                <TimelineItem
+                  key={`ti-${i}`}
+                  dayNum={i + 1}
                   events={events}
                   tripId={this.state.tripId}
+                  handleEventDelete={this.handleEventDelete}
+                  handleEventAdd={this.handleEventAdd}
                 />
               );
             })
           ) : (
-            <AddEvent />
-          )
+              <AddEvent />
+            )
         }
       </div>
     );
@@ -105,10 +123,6 @@ class Timeline extends Component {
 };
 
 class TimelineItem extends Component {
-
-  handleDelete = id => {
-    API.deleteEvent(id);
-  };
 
   render() {
     return (
@@ -119,7 +133,8 @@ class TimelineItem extends Component {
             return (
               <EventItem
                 key={`ei-${i}`}
-                handleDelete={this.handleDelete}
+                handleEventDelete={this.props.handleEventDelete}
+                handleEventAdd={this.props.handleEventAdd}
                 name={event.name}
                 startDate={event.startDate}
                 endDate={event.endDate}
@@ -133,7 +148,7 @@ class TimelineItem extends Component {
                     <button>Add an Event</button>
                 </Link> */}
 
-          <AddEvent tripId={this.props.tripId} />
+          <AddEvent tripId={this.props.tripId} handleEventAdd={this.props.handleEventAdd} />
           <AddMeal />
 
           <span className="circle" />
@@ -155,7 +170,7 @@ const EventItem = props => {
         <div className="event-item-btns">
           <button>Edit</button>
           <span>  </span>
-          <button onClick={() => props.handleDelete(props.eventId)}>Remove</button>
+          <button onClick={() => props.handleEventDelete(props.eventId)}>Remove</button>
         </div>
       </div>
 
@@ -194,6 +209,7 @@ class AddEvent extends React.Component {
           show={this.state.modalShow}
           onHide={modalClose}
           tripId={this.props.tripId}
+          handleEventAdd={this.props.handleEventAdd}
         />
       </ButtonToolbar>
     );
