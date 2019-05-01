@@ -23,20 +23,19 @@ class Event extends React.Component {
 
 		this.props.onHide();
 
-		API.createEvent({
+		this.props.handleEventAdd({
 			name: this.state.event,
 			tripId: this.state.tripId,
 			type: "event",
 			startDate: this.state.start,
 			endDate: this.state.end
-		})
-			.then(res => {
-				this.setState({
-					event: "",
-					start: "",
-					end: ""
-				});
-			});
+		});
+		
+		this.setState({
+			event: "",
+			start: "",
+			end: ""
+		});
 	};
 
 	render() {
@@ -76,7 +75,5 @@ class Event extends React.Component {
 		);
 	}
 }
-
-
 
 export default Event;
