@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react"
 import moment from "moment";
-import { Link } from "react-router-dom";
+import { BrowserRouter as Link } from "react-router-dom";
 import { Container } from "react-bootstrap"
 
 import API from "../../utils/api";
