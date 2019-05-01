@@ -1,6 +1,5 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import API from '../../utils/api';
 
 class Event extends React.Component {
 	state = {
