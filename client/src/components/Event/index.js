@@ -5,10 +5,11 @@ import { Modal, Button } from 'react-bootstrap';
 class Event extends React.Component {
 	state = {
 		tripId: this.props.tripId,
-		event: "",
-		start: "",
-		end: ""
+		event: this.props.name,
+		start: this.props.startDate,
+		end: this.props.endDate
 	};
+	
 
 	handleChange = event => {
 		const { name, value } = event.target;
@@ -39,6 +40,7 @@ class Event extends React.Component {
 	};
 
 	render() {
+		console.log(this.state)
 		return (
 			<Modal
 				{...this.props}
