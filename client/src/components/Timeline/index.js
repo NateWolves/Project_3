@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './timeline.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
+import moment from 'moment';
 import Event from '../Event';
 import Meal from '../Meal';
 
@@ -53,18 +54,34 @@ const getEventIcon = (type) => {
 class Timeline extends Component {
   state = {
     tripId: "",
-    events: []
+    events: [],
+    days: []
   };
 
   divideIntoDays = () => {
-    // Temp: dividing into 4 events per day
     let days = [];
     let events = this.state.events.slice();
 
-    for (let i = 0; i < events.length; i += 4) {
-      days.push(events.slice(i, i + 4))
-    }
+    let newDay = [events[0]];    
+    let dayStartMoment = moment(events[0].startDate);
+    let newDayMoment;
 
+    for (let i = 1; i < events.length; i++) {
+      newDayMoment =  moment(events[i].startDate);
+      
+      if (dayStartMoment.isSame(newDayMoment, 'day')) {
+        newDay.push(events[i])
+      } else {
+        days.push(newDay);
+        dayStartMoment = newDayMoment;
+        newDay = [events[i]];
+      }
+
+      if (i + 1 === events.length) {
+        days.push(newDay)
+      }
+    }
+    
     return days;
   };
 
@@ -90,6 +107,10 @@ class Timeline extends Component {
         this.setState({
           tripId: res.data.trips[0]._id,
           events: res.data.trips[0].events
+        }, () => {
+          this.setState({
+            days: this.divideIntoDays()
+          });
         });
       })
       .catch(err => console.log(err));
@@ -101,7 +122,7 @@ class Timeline extends Component {
         <br /><br /><br /><br />
         {
           this.state.events.length > 0 ? (
-            this.divideIntoDays().map((events, i) => {
+            this.state.days.map((events, i) => {
               return (
                 <TimelineItem
                   key={`ti-${i}`}
@@ -166,7 +187,7 @@ const EventItem = props => {
       </span>
       <div>
         <h4>{props.name}</h4>
-        <time>{props.startDate}-{props.endDate}</time>
+        <time>{moment(props.startDate).format('h:mma')}-{moment(props.endDate).format('h:mma')}</time>
         <div className="event-item-btns">
           <button>Edit</button>
           <span>  </span>
