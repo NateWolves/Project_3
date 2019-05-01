@@ -4,7 +4,7 @@ import { Button, ButtonToolbar } from 'react-bootstrap';
 import Event from '../Event';
 import Meal from '../Meal';
 import NearbyModal from '../Nearby';
-
+import SearchModal from '../Search'
 import explore from './images/explore.png';
 import meal from './images/meal.png';
 import monument from './images/monument.png';
@@ -98,6 +98,7 @@ class Timeline extends Component {
             })
           ) : (
             <AddEvent />
+            
           )
         }
       </div>
@@ -135,8 +136,8 @@ class TimelineItem extends Component {
                 </Link> */}
 
           <AddEvent tripId={this.props.tripId} />
-          <AddMeal />
-          <AddNearby tripId={this.props.tripID} />      
+          {/* <AddSearchModal /> */}
+            
           <span className="circle" />
         </div>
       </div>
@@ -154,9 +155,10 @@ const EventItem = props => {
         <h4>{props.name}</h4>
         <time>{props.startDate}-{props.endDate}</time>
         <div className="event-item-btns">
-          <button>Edit</button>
+          <button className="btn" style={btnStyle} >Edit</button>
           <span>  </span>
-          <button onClick={() => props.handleDelete(props.eventId)}>Remove</button>
+          <button  className="btn" onClick={() => props.handleDelete(props.eventId)} style={btnStyle}>Remove</button>
+          <AddNearby  />  
         </div>
       </div>
 
@@ -201,34 +203,34 @@ class AddEvent extends React.Component {
   }
 }
 
-class AddMeal extends React.Component {
-  constructor(...args) {
-    super(...args);
+// class AddSearchModal extends React.Component {
+//   constructor(...args) {
+//     super(...args);
 
-    this.state = { modalShow: false };
-  }
+//     this.state = { modalShow: false };
+//   }
 
-  render() {
-    let modalClose = () => this.setState({ modalShow: false });
+//   render() {
+//     let modalClose = () => this.setState({ modalShow: false });
 
-    return (
-      <ButtonToolbar>
-        <Button
-          variant="primary"
-          onClick={() => this.setState({ modalShow: true })}
-          style={btnStyle}
-        >
-          Add Meal
-    			</Button>
+//     return (
+//       <ButtonToolbar>
+//         <Button
+//           variant="primary"
+//           onClick={() => this.setState({ modalShow: true })}
+//           style={btnStyle}
+//         >
+//           Search for Place
+//     			</Button>
 
-        <Meal
-          show={this.state.modalShow}
-          onHide={modalClose}
-        />
-      </ButtonToolbar>
-    );
-  }
-}
+//         <SearchModal
+//           show={this.state.modalShow}
+//           onHide={modalClose}
+//         />
+//       </ButtonToolbar>
+//     );
+//   }
+// }
 
 class AddNearby extends React.Component {
   constructor(...args) {
