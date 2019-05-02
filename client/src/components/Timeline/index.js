@@ -97,6 +97,17 @@ class Timeline extends Component {
     });
   };
 
+  handleEventEdit = id => {
+    this.setState({
+      events: this.state.events.filter(event => event._id !== id)
+    }, () => {
+      this.setState({
+        days: this.divideIntoDays()
+      });
+      API.updateEvent(id)
+    })
+  }
+
   handleEventDelete = id => {
     this.setState({
       events: this.state.events.filter(event => event._id !== id)
@@ -180,9 +191,9 @@ class TimelineItem extends Component {
                 </Link> */}
 
 
-          <AddEvent tripId={this.props.tripId} />
-          {/* <AddSearchModal /> */}
-            
+          <AddEvent tripId={this.props.tripId} handleEventAdd={this.props.handleEventAdd} />
+          <AddNearby tripId={this.props.tripID} />      
+
           <span className="circle" />
         </div>
       </div>
@@ -200,7 +211,14 @@ const EventItem = props => {
         <h4>{props.name}</h4>
         <time>{moment(props.startDate).format('h:mma')}-{moment(props.endDate).format('h:mma')}</time>
         <div className="event-item-btns">
-          <button className="btn" style={btnStyle} >Edit</button>
+
+          <EditEvent 
+            name={props.name}
+            startDate={props.startDate}
+            endDate={props.endDate}
+            type={props.type}
+            />
+
           <span>  </span>
 
           <button  className="btn" onClick={() => props.handleDelete(props.eventId)} style={btnStyle}>Remove</button>
@@ -251,34 +269,40 @@ class AddEvent extends React.Component {
   }
 }
 
-// class AddSearchModal extends React.Component {
-//   constructor(...args) {
-//     super(...args);
 
-//     this.state = { modalShow: false };
-//   }
+class EditEvent extends React.Component {
+  constructor(...args) {
+    super(...args);
 
-//   render() {
-//     let modalClose = () => this.setState({ modalShow: false });
+    this.state = { modalShow: false };
+  }
 
-//     return (
-//       <ButtonToolbar>
-//         <Button
-//           variant="primary"
-//           onClick={() => this.setState({ modalShow: true })}
-//           style={btnStyle}
-//         >
-//           Search for Place
-//     			</Button>
+  render() {
+    let modalClose = () => this.setState({ modalShow: false });
 
-//         <SearchModal
-//           show={this.state.modalShow}
-//           onHide={modalClose}
-//         />
-//       </ButtonToolbar>
-//     );
-//   }
-// }
+    return (
+      <ButtonToolbar>
+        <Button
+          variant="primary"
+          onClick={() => this.setState({ modalShow: true })}
+          style={btnStyle}
+        >
+          Edit Event
+    			</Button>
+
+        <Event
+          name={this.props.name}
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
+          type={this.props.type}
+          show={this.state.modalShow}
+          onHide={modalClose}
+        />
+      </ButtonToolbar>
+    );
+  }
+}
+
 
 class AddNearby extends React.Component {
   constructor(...args) {
