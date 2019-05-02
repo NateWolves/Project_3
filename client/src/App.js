@@ -22,8 +22,9 @@ class App extends Component {
           <Route exact path='/' component={Home} />
           <Route exact path='/login' component={Login} />
           <Route exact path='/timeline' component={Timeline} />
-          <Route exact path='/trips' component={Trips} />
           <Route exact path='/callback' component={Callback} />
+          <Route exact path='/trips' component={Trips} />
+          <Route exact path='/trips/:id' component={Timeline} />
           <SecuredRoute exact path='/user' component={User} />
           <Footer />
         </Router>

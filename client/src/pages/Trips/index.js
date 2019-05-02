@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react"
 import moment from "moment";
-import { BrowserRouter as Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap"
 
 import API from "../../utils/api";
@@ -30,7 +30,7 @@ class Trips extends Component {
               this.state.trips.map(trip => {
                 return (
                   <li key={`trip-${trip._id}`}>
-                    <Link to="/timeline">
+                    <Link to={`/trips/${trip._id}`}>
                       <h2>{trip.name}</h2>
                       <p>{moment(trip.startDate).format("M/D")}-{moment(trip.endDate).format("M/D")}</p>
                     </Link>

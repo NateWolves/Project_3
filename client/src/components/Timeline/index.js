@@ -87,8 +87,18 @@ class Timeline extends Component {
   };
 
   handleEventAdd = eventObj => {
+    let newEvents = [...this.state.events]
+    
+    for (let i = 0; i < newEvents.length; i++) {
+      if (new Date(eventObj.startDate).getTime() < 
+          new Date(newEvents[i].startDate).getTime()) {
+        newEvents.splice(i, 0, eventObj)
+        break;
+      }
+    }
+
     this.setState({
-      events: [...this.state.events, eventObj]
+      events: newEvents
     }, () => {
       this.setState({
         days: this.divideIntoDays()
@@ -109,11 +119,11 @@ class Timeline extends Component {
   };
 
   componentDidMount() {
-    API.findTripsByUser("testUser")
+    API.findEventsByTrip(this.props.match.params.id)
       .then(res => {
         this.setState({
-          tripId: res.data.trips[0]._id,
-          events: res.data.trips[0].events
+          tripId: res.data._id,
+          events: res.data.events
         }, () => {
           this.setState({
             days: this.divideIntoDays()

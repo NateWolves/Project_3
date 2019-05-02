@@ -26,8 +26,8 @@ class Event extends React.Component {
 			name: this.state.event,
 			tripId: this.state.tripId,
 			type: "event",
-			startDate: this.state.start,
-			endDate: this.state.end
+			startDate: this.state.start || Date.now(),
+			endDate: this.state.end || Date.now()
 		});
 		
 		this.setState({
@@ -40,7 +40,8 @@ class Event extends React.Component {
 	render() {
 		return (
 			<Modal
-				{...this.props}
+				onHide={this.props.onHide}
+				show={this.props.show}
 				size="lg"
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
