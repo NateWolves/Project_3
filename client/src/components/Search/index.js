@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button, ButtonToolbar } from 'react-bootstrap';
-import Event from "../Event"
+import Event from "../AddEventModal"
 import api from '../../utils/api';
 
 

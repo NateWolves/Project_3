@@ -1,19 +1,8 @@
 import React, { Component } from 'react';
 import './timeline.css';
-import { Button, ButtonToolbar } from 'react-bootstrap';
 import moment from 'moment';
-import Event from '../../components/Event';
-import NearbyModal from '../../components/Nearby';
-import SearchModal from '../../components/Search';
-import explore from './images/explore.png';
-import meal from './images/meal.png';
-import monument from './images/monument.png';
-import museum from './images/museum.png';
-import park from './images/park.png'
-import concert from './images/concert.png';
-import movie from './images/movie.png';
-import theater from './images/theater.png';
-import sports from './images/sports.png';
+import TimelineItem from '../../components/TimelineItem';
+import AddEventButton from '../../components/AddEventButton';
 
 import API from '../../utils/api';
 import dummy from '../../utils/dummy';
@@ -25,31 +14,6 @@ API.findUser("testUser")
       dummy.createData();
     }
   });
-
-const getEventIcon = (type) => {
-  switch (type) {
-    case "meal":
-      return meal;
-    case "explore":
-      return explore;
-    case "monument":
-      return monument
-    case "museum":
-      return museum;
-    case "park":
-      return park;
-    case "concert":
-      return concert;
-    case "movie":
-      return movie;
-    case "theater":
-      return theater;
-    case "sports":
-      return sports;
-    default:
-      return explore;
-  }
-}
 
 class Timeline extends Component {
   state = {
@@ -94,7 +58,7 @@ class Timeline extends Component {
   handleEventAdd = eventObj => {
     let newEvents = [];
 
-    if (this.state.events > 0) {
+    if (this.state.events.length > 0) {
       newEvents = [...this.state.events];
 
       for (let i = 0; i < newEvents.length; i++) {
@@ -173,7 +137,7 @@ class Timeline extends Component {
           ) : (
               <div>
                 <br></br><br></br><br></br><br></br>
-                <AddEvent tripId={this.state.tripId} handleEventAdd={this.handleEventAdd} />
+                <AddEventButton tripId={this.state.tripId} handleEventAdd={this.handleEventAdd} />
               </div>
             )
         }
@@ -181,170 +145,5 @@ class Timeline extends Component {
     );
   }
 };
-
-class TimelineItem extends Component {
-
-  render() {
-    return (
-      <div className="timeline-item">
-        <div className="timeline-item-content">
-          <h3>Day {this.props.dayNum} - {moment(this.props.events[0].startDate).format("dddd M/D")} </h3>
-          {this.props.events.map((event, i) => {
-            return (
-              <EventItem
-                key={`ei-${i}`}
-                handleEventDelete={this.props.handleEventDelete}
-                handleEventAdd={this.props.handleEventAdd}
-                name={event.name}
-                startDate={event.startDate}
-                endDate={event.endDate}
-                type={event.type}
-                eventId={event._id}
-              />
-            );
-          })}
-
-          <AddEvent tripId={this.props.tripId} handleEventAdd={this.props.handleEventAdd} />
-          <AddNearby tripId={this.props.tripID} />
-
-          <span className="circle" />
-        </div>
-      </div>
-    );
-  }
-};
-
-const EventItem = props => {
-  return (
-    <div className="event-item">
-      <span>
-        <img className="iconImage" src={getEventIcon(props.type)} alt="Event icon" />
-      </span>
-      <div>
-        <h4>{props.name}</h4>
-        <time>{moment(props.startDate).format('h:mma')}-{moment(props.endDate).format('h:mma')}</time>
-        <div className="event-item-btns">
-
-          <EditEvent
-            name={props.name}
-            startDate={props.startDate}
-            endDate={props.endDate}
-            type={props.type}
-          />
-
-          <span>  </span>
-
-          <button className="btn" onClick={() => props.handleDelete(props.eventId)} style={btnStyle}>Remove</button>
-          <AddNearby />
-
-        </div>
-      </div>
-
-      <br />
-    </div>
-  );
-};
-
-const btnStyle = {
-  background: "none",
-  color: "black",
-  border: "1px solid black",
-  margin: "5px"
-}
-
-class AddEvent extends React.Component {
-  constructor(...args) {
-    super(...args);
-
-    this.state = { modalShow: false };
-  }
-
-  render() {
-    let modalClose = () => this.setState({ modalShow: false });
-    return (
-      <ButtonToolbar>
-        <Button
-          variant="primary"
-          onClick={() => this.setState({ modalShow: true })}
-          style={btnStyle}
-        >
-          Add Event
-    			</Button>
-
-        <Event
-          show={this.state.modalShow}
-          onHide={modalClose}
-          tripId={this.props.tripId}
-          handleEventAdd={this.props.handleEventAdd}
-        />
-      </ButtonToolbar>
-    );
-  }
-}
-
-
-class EditEvent extends React.Component {
-  constructor(...args) {
-    super(...args);
-
-    this.state = { modalShow: false };
-  }
-
-  render() {
-    // console.log(this.props)
-    let modalClose = () => this.setState({ modalShow: false });
-
-    return (
-      <ButtonToolbar>
-        <Button
-          variant="primary"
-          onClick={() => this.setState({ modalShow: true })}
-          style={btnStyle}
-        >
-          Edit Event
-    			</Button>
-
-        <Event
-          name={this.props.name}
-          startDate={this.props.startDate}
-          endDate={this.props.endDate}
-          type={this.props.type}
-          show={this.state.modalShow}
-          onHide={modalClose}
-        />
-      </ButtonToolbar>
-    );
-  }
-}
-
-
-class AddNearby extends React.Component {
-  constructor(...args) {
-    super(...args);
-
-    this.state = { modalShow: false };
-  }
-
-  render() {
-    let modalClose = () => this.setState({ modalShow: false });
-
-    return (
-      <ButtonToolbar>
-        <Button
-          variant="primary"
-          onClick={() => this.setState({ modalShow: true })}
-          style={btnStyle}
-        >
-          Search Nearby
-    			</Button>
-
-        <NearbyModal
-          show={this.state.modalShow}
-          onHide={modalClose}
-        />
-      </ButtonToolbar>
-    );
-  }
-}
 
 export default Timeline;

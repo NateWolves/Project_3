@@ -2,14 +2,13 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 // import API from '../../utils/api';
 
-class Event extends React.Component {
+class AddEventModal extends React.Component {
 	state = {
 		tripId: this.props.tripId,
 		event: this.props.name,
 		start: this.props.startDate,
 		end: this.props.endDate
 	};
-
 
 	handleChange = event => {
 		const { name, value } = event.target;
@@ -21,7 +20,6 @@ class Event extends React.Component {
 
 	handleSubmit = event => {
 		event.preventDefault();
-		console.log(this.state);
 
 		this.props.onHide();
 
@@ -41,7 +39,6 @@ class Event extends React.Component {
 	};
 
 	render() {
-		console.log(this.state.startDate);
 		return (
 			<Modal
 				onHide={this.props.onHide}
@@ -114,5 +111,4 @@ const dateStyle = {
 	width: "50%"
 }
 
-
-export default Event;
+export default AddEventModal;
