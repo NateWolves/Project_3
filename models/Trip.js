@@ -24,6 +24,9 @@ const TripSchema = new Schema({
       ref: "Event"
     }
   ]
+}, 
+{
+  timestamps: true
 });
 
 const Trip = mongoose.model("Trip", TripSchema);

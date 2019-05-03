@@ -60,12 +60,18 @@ class Timeline extends Component {
   };
 
   divideIntoDays = () => {
+    if (this.state.events.length === 0) return [];
+
     let days = [];
-    let events = this.state.events.slice();
+    let events = [...this.state.events];
 
     let newDay = [events[0]];    
     let dayStartMoment = moment(events[0].startDate);
     let newDayMoment;
+
+    if (events.length === 1) {
+      return [newDay];
+    }
 
     for (let i = 1; i < events.length; i++) {
       newDayMoment =  moment(events[i].startDate);
@@ -87,8 +93,24 @@ class Timeline extends Component {
   };
 
   handleEventAdd = eventObj => {
+    let newEvents = [];
+
+    if ( this.state.events > 0) {
+      newEvents = [...this.state.events];
+
+      for (let i = 0; i < newEvents.length; i++) {
+        if (new Date(eventObj.startDate).getTime() < 
+            new Date(newEvents[i].startDate).getTime()) {
+          newEvents.splice(i, 0, eventObj)
+          break;
+        }
+      }  
+    } else {
+      newEvents = [eventObj];
+    }
+  
     this.setState({
-      events: [...this.state.events, eventObj]
+      events: newEvents
     }, () => {
       this.setState({
         days: this.divideIntoDays()
@@ -117,11 +139,11 @@ class Timeline extends Component {
   };
 
   componentDidMount() {
-    API.findTripsByUser("testUser")
+    API.findEventsByTrip(this.props.match.params.id)
       .then(res => {
         this.setState({
-          tripId: res.data.trips[0]._id,
-          events: res.data.trips[0].events
+          tripId: res.data._id,
+          events: res.data.events
         }, () => {
           this.setState({
             days: this.divideIntoDays()
@@ -150,11 +172,11 @@ class Timeline extends Component {
               );
             })
           ) : (
-
-            <AddEvent />
-            
-          )
-
+            <div>
+              <br></br><br></br><br></br><br></br>
+              <AddEvent tripId={this.state.tripId} handleEventAdd={this.handleEventAdd}/>
+            </div>
+            )
         }
       </div>
     );

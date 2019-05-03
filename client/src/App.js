@@ -11,6 +11,7 @@ import Timeline from './components/Timeline';
 import Callback from './components/Callback';
 import SecuredRoute from './components/SecuredRoute';
 import Footer from './components/Footer';
+import Trips from './pages/Trips';
 
 class App extends Component {
   render() {
@@ -22,6 +23,8 @@ class App extends Component {
           <Route exact path='/login' component={Login} />
           <Route exact path='/timeline' component={Timeline} />
           <Route exact path='/callback' component={Callback} />
+          <Route exact path='/trips' component={Trips} />
+          <Route exact path='/trips/:id' component={Timeline} />
           <SecuredRoute exact path='/user' component={User} />
           <Footer />
         </Router>
