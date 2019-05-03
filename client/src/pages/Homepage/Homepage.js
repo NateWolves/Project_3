@@ -6,6 +6,7 @@ import traveller from './images/traveller.jpg';
 import Home from '../../components/Home';
 
 import './Homepage.css';
+
 const styles = {
     root:{
         backgroundImage: `url(${compass})`,

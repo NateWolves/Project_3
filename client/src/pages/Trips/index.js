@@ -21,10 +21,14 @@ class Trips extends Component {
 
   handleSubmitTrip = tripObj => {
     this.setState({
-      trips: [tripObj, ...this.state.trips],
       modalShow: false
     });
-    API.createTrip(tripObj);
+    API.createTrip(tripObj)
+      .then(res => {
+        this.setState({
+          trips: [res.data, ...this.state.trips]
+        });
+      });
   };
 
   handleDeleteTrip = id => {
@@ -73,7 +77,10 @@ class Trips extends Component {
                     <Link to={`/trips/${trip._id}`}>
                       <h2>{trip.name}</h2>
                     </Link>
-                    <p>{moment(trip.startDate).format("M/D")}-{moment(trip.endDate).format("M/D")}</p>
+                    {
+                      trip.startDate && trip.endDate && 
+                      <p>{moment(trip.startDate).format("M/D")}-{moment(trip.endDate).format("M/D")}</p>
+                    }
                     <button onClick={() => this.handleDeleteTrip(trip._id)}>Remove</button>
                   </li>
                 );

@@ -14,7 +14,6 @@ class Event extends React.Component {
 	handleChange = event => {
 		const { name, value } = event.target;
 
-
 		this.setState({
 			[name]: value
 		});
@@ -42,7 +41,7 @@ class Event extends React.Component {
 	};
 
 	render() {
-		// console.log(this.state)
+		console.log(this.state.startDate);
 		return (
 			<Modal
 				onHide={this.props.onHide}
@@ -66,12 +65,12 @@ class Event extends React.Component {
 						<br/>
 
 						<div style={dateStyle}>
-							<label htmlFor="Start" className="col-6 col-form-label">Start Time</label>
+							<label htmlFor="Start" className="col-6 col-form-label">Start date</label>
 							<div className="col-5">
 								<input
 									name="startDate"
 									className="form-control"
-									type="time"
+									type="datetime-local"
 									value={this.state.startDate}
 									onChange={this.handleChange}
 									id="start-date-input">
@@ -81,12 +80,12 @@ class Event extends React.Component {
 						</div>
 
 						<div style={dateStyle}>
-							<label htmlFor="End" className="col-6 col-form-label">End Time</label>
+							<label htmlFor="End" className="col-6 col-form-label">End date</label>
 							<div className="col-5">
 								<input
 									name="endDate"
 									className="form-control"
-									type="time"
+									type="datetime-local"
 									value={this.state.endDate}
 									onChange={this.handleChange}
 									id="end-date-input">

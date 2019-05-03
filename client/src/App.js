@@ -7,7 +7,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Homepage';
 import Login from './components/Login';
 import User from './components/User';
-import Timeline from './components/Timeline';
+import Timeline from './pages/Timeline';
 import Callback from './components/Callback';
 import SecuredRoute from './components/SecuredRoute';
 import Footer from './components/Footer';

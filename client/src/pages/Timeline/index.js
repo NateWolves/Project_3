@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import './timeline.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import moment from 'moment';
-import Event from '../Event';
-// import Meal from '../Meal';
-import NearbyModal from '../Nearby';
-import SearchModal from '../Search'
+import Event from '../../components/Event';
+import NearbyModal from '../../components/Nearby';
+import SearchModal from '../../components/Search';
 import explore from './images/explore.png';
 import meal from './images/meal.png';
 import monument from './images/monument.png';
@@ -65,7 +64,7 @@ class Timeline extends Component {
     let days = [];
     let events = [...this.state.events];
 
-    let newDay = [events[0]];    
+    let newDay = [events[0]];
     let dayStartMoment = moment(events[0].startDate);
     let newDayMoment;
 
@@ -74,8 +73,8 @@ class Timeline extends Component {
     }
 
     for (let i = 1; i < events.length; i++) {
-      newDayMoment =  moment(events[i].startDate);
-      
+      newDayMoment = moment(events[i].startDate);
+
       if (dayStartMoment.isSame(newDayMoment, 'day')) {
         newDay.push(events[i])
       } else {
@@ -95,20 +94,20 @@ class Timeline extends Component {
   handleEventAdd = eventObj => {
     let newEvents = [];
 
-    if ( this.state.events > 0) {
+    if (this.state.events > 0) {
       newEvents = [...this.state.events];
 
       for (let i = 0; i < newEvents.length; i++) {
-        if (new Date(eventObj.startDate).getTime() < 
-            new Date(newEvents[i].startDate).getTime()) {
+        if (new Date(eventObj.startDate).getTime() <
+          new Date(newEvents[i].startDate).getTime()) {
           newEvents.splice(i, 0, eventObj)
           break;
         }
-      }  
+      }
     } else {
       newEvents = [eventObj];
     }
-  
+
     this.setState({
       events: newEvents
     }, () => {
@@ -172,10 +171,10 @@ class Timeline extends Component {
               );
             })
           ) : (
-            <div>
-              <br></br><br></br><br></br><br></br>
-              <AddEvent tripId={this.state.tripId} handleEventAdd={this.handleEventAdd}/>
-            </div>
+              <div>
+                <br></br><br></br><br></br><br></br>
+                <AddEvent tripId={this.state.tripId} handleEventAdd={this.handleEventAdd} />
+              </div>
             )
         }
       </div>
@@ -205,13 +204,8 @@ class TimelineItem extends Component {
             );
           })}
 
-          {/* <Link to="/event">
-                    <button>Add an Event</button>
-                </Link> */}
-
-
           <AddEvent tripId={this.props.tripId} handleEventAdd={this.props.handleEventAdd} />
-          <AddNearby tripId={this.props.tripID} />      
+          <AddNearby tripId={this.props.tripID} />
 
           <span className="circle" />
         </div>
@@ -231,17 +225,17 @@ const EventItem = props => {
         <time>{moment(props.startDate).format('h:mma')}-{moment(props.endDate).format('h:mma')}</time>
         <div className="event-item-btns">
 
-          <EditEvent 
+          <EditEvent
             name={props.name}
             startDate={props.startDate}
             endDate={props.endDate}
             type={props.type}
-            />
+          />
 
           <span>  </span>
 
-          <button  className="btn" onClick={() => props.handleDelete(props.eventId)} style={btnStyle}>Remove</button>
-          <AddNearby  />  
+          <button className="btn" onClick={() => props.handleDelete(props.eventId)} style={btnStyle}>Remove</button>
+          <AddNearby />
 
         </div>
       </div>
