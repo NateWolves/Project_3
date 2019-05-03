@@ -56,6 +56,7 @@ class Event extends React.Component {
         		    </Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
+<<<<<<< HEAD
 
 					<form onSubmit={this.handleSubmit}>
 						<label htmlFor="event">What are you doing?</label>
@@ -92,6 +93,20 @@ class Event extends React.Component {
 								</input>
 							</div>
 
+=======
+					<h4>Add an Event</h4>
+
+					<form onSubmit={this.handleSubmit}>
+						<label htmlFor="event">What are you doing?</label>
+						<input name="event" value={this.state.event} onChange={this.handleChange}></input>
+						<label htmlFor="start">What time does it start?</label>
+						<div className="col-4">
+								<input name="start" value={this.state.start} onChange={this.handleChange} className="form-control" type="time" id="start-time-input"></input>
+						</div>
+						<label htmlFor="end">What time does it end?</label>
+						<div className="col-4">
+								<input name="end" value={this.state.end} onChange={this.handleChange} className="form-control" type="time"  id="end-time-input"></input>
+>>>>>>> 3f953fe258d62150ea986394bb45386e2d7fcbf0
 						</div>
 					</form>
 				</Modal.Body>
