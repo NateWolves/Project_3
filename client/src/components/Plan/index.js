@@ -22,35 +22,22 @@ class Plan extends React.Component {
 	handleSubmit = event => {
 		event.preventDefault();
 
-		// saves state to its own variables
-		const startDate = moment(this.state.startDate);
-		const endDate = moment(this.state.endDate);
+		let newTrip = {
+			userId: this.props.userId,
+			name: this.state.place,
+			startDate: this.state.startDate,
+			endDate: this.state.endDate
+		};
 
-		// converts dates to date objects
-		var startDateType = new Date(this.state.startDate);
-		var endDateType = new Date(this.state.endDate);
-
-		// saves the number of days between start and end
-		var days = endDate.diff(startDate, "days");
-
-		// just to console log to see what the data looks like
-		var sendToDatabase = {
-			location: this.state.place,
-			time: {
-				start: startDateType,
-				end: endDateType,
-				days: days
-			}
-		}
-
-		console.log(sendToDatabase);
-	}
+		this.props.handleSubmit(newTrip);
+	};
 
 	render() {
 
 		return (
 			<Modal
-				{...this.props}
+				show={this.props.show}
+				onHide={this.props.onHide}
 				size="lg"
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
@@ -112,7 +99,7 @@ class Plan extends React.Component {
 				<Modal.Footer>
 					<Button style={btnStyle} onClick={this.props.onHide}>Close</Button>
 					<Button style={btnStyle} onClick={this.handleSubmit} >
-						<Link style={saveStyle} to="/timeline">
+						<Link style={saveStyle} to="/trips">
 							Save
                         </Link>
 					</Button>

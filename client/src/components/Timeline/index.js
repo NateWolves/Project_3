@@ -60,12 +60,18 @@ class Timeline extends Component {
   };
 
   divideIntoDays = () => {
+    if (this.state.events.length === 0) return [];
+
     let days = [];
-    let events = this.state.events.slice();
+    let events = [...this.state.events];
 
     let newDay = [events[0]];    
     let dayStartMoment = moment(events[0].startDate);
     let newDayMoment;
+
+    if (events.length === 1) {
+      return [newDay];
+    }
 
     for (let i = 1; i < events.length; i++) {
       newDayMoment =  moment(events[i].startDate);
@@ -87,16 +93,22 @@ class Timeline extends Component {
   };
 
   handleEventAdd = eventObj => {
-    let newEvents = [...this.state.events]
-    
-    for (let i = 0; i < newEvents.length; i++) {
-      if (new Date(eventObj.startDate).getTime() < 
-          new Date(newEvents[i].startDate).getTime()) {
-        newEvents.splice(i, 0, eventObj)
-        break;
-      }
-    }
+    let newEvents = [];
 
+    if ( this.state.events > 0) {
+      newEvents = [...this.state.events];
+
+      for (let i = 0; i < newEvents.length; i++) {
+        if (new Date(eventObj.startDate).getTime() < 
+            new Date(newEvents[i].startDate).getTime()) {
+          newEvents.splice(i, 0, eventObj)
+          break;
+        }
+      }  
+    } else {
+      newEvents = [eventObj];
+    }
+  
     this.setState({
       events: newEvents
     }, () => {
@@ -152,7 +164,10 @@ class Timeline extends Component {
               );
             })
           ) : (
-              <AddEvent />
+            <div>
+              <br></br><br></br><br></br><br></br>
+              <AddEvent tripId={this.state.tripId} handleEventAdd={this.handleEventAdd}/>
+            </div>
             )
         }
       </div>

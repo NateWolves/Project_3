@@ -3,7 +3,6 @@ import { Modal, Button } from 'react-bootstrap';
 
 class Event extends React.Component {
 	state = {
-		tripId: this.props.tripId,
 		event: "",
 		start: "",
 		end: ""
@@ -24,7 +23,7 @@ class Event extends React.Component {
 
 		this.props.handleEventAdd({
 			name: this.state.event,
-			tripId: this.state.tripId,
+			tripId: this.props.tripId,
 			type: "event",
 			startDate: this.state.start || Date.now(),
 			endDate: this.state.end || Date.now()
