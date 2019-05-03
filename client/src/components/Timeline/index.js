@@ -3,7 +3,7 @@ import './timeline.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import moment from 'moment';
 import Event from '../Event';
-import Meal from '../Meal';
+// import Meal from '../Meal';
 import NearbyModal from '../Nearby';
 
 import explore from './images/explore.png';
@@ -101,9 +101,6 @@ class Timeline extends Component {
     this.setState({
       events: this.state.events.filter(event => event._id !== id)
     }, () => {
-      this.setState({
-        days: this.divideIntoDays()
-      });
       API.updateEvent(id)
     })
   }
@@ -267,6 +264,7 @@ class EditEvent extends React.Component {
   }
 
   render() {
+    // console.log(this.props)
     let modalClose = () => this.setState({ modalShow: false });
 
     return (

@@ -39,6 +39,9 @@
 /* Font Sizes */
 .hdrText{
   font-size: 80px !important;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-style: italic;
 }
 .subText{
   font-size: 40px !important;
