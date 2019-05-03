@@ -3,9 +3,9 @@ import './timeline.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import moment from 'moment';
 import Event from '../Event';
-import Meal from '../Meal';
+// import Meal from '../Meal';
 import NearbyModal from '../Nearby';
-
+import SearchModal from '../Search'
 import explore from './images/explore.png';
 import meal from './images/meal.png';
 import monument from './images/monument.png';
@@ -119,6 +119,14 @@ class Timeline extends Component {
     });
   };
 
+  handleEventEdit = id => {
+    this.setState({
+      events: this.state.events.filter(event => event._id !== id)
+    }, () => {
+      API.updateEvent(id)
+    })
+  }
+
   handleEventDelete = id => {
     this.setState({
       events: this.state.events.filter(event => event._id !== id)
@@ -201,9 +209,10 @@ class TimelineItem extends Component {
                     <button>Add an Event</button>
                 </Link> */}
 
+
           <AddEvent tripId={this.props.tripId} handleEventAdd={this.props.handleEventAdd} />
-          <AddMeal />
           <AddNearby tripId={this.props.tripID} />      
+
           <span className="circle" />
         </div>
       </div>
@@ -221,9 +230,19 @@ const EventItem = props => {
         <h4>{props.name}</h4>
         <time>{moment(props.startDate).format('h:mma')}-{moment(props.endDate).format('h:mma')}</time>
         <div className="event-item-btns">
-          <button>Edit</button>
+
+          <EditEvent 
+            name={props.name}
+            startDate={props.startDate}
+            endDate={props.endDate}
+            type={props.type}
+            />
+
           <span>  </span>
-          <button onClick={() => props.handleEventDelete(props.eventId)}>Remove</button>
+
+          <button  className="btn" onClick={() => props.handleDelete(props.eventId)} style={btnStyle}>Remove</button>
+          <AddNearby  />  
+
         </div>
       </div>
 
@@ -269,7 +288,8 @@ class AddEvent extends React.Component {
   }
 }
 
-class AddMeal extends React.Component {
+
+class EditEvent extends React.Component {
   constructor(...args) {
     super(...args);
 
@@ -277,6 +297,7 @@ class AddMeal extends React.Component {
   }
 
   render() {
+    // console.log(this.props)
     let modalClose = () => this.setState({ modalShow: false });
 
     return (
@@ -286,10 +307,14 @@ class AddMeal extends React.Component {
           onClick={() => this.setState({ modalShow: true })}
           style={btnStyle}
         >
-          Add Meal
+          Edit Event
     			</Button>
 
-        <Meal
+        <Event
+          name={this.props.name}
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
+          type={this.props.type}
           show={this.state.modalShow}
           onHide={modalClose}
         />
@@ -297,6 +322,7 @@ class AddMeal extends React.Component {
     );
   }
 }
+
 
 class AddNearby extends React.Component {
   constructor(...args) {
