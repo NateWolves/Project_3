@@ -36,7 +36,7 @@ export default {
   deleteEvent: function(eventId) {
     return axios.delete(`/api/events/${eventId}`);
   },
-
+  // Google API methods
   nearbySearch: function(search) {
     return axios.get(`/api/googleSearch/nearby/${search}`)
   },
