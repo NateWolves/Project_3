@@ -4,11 +4,15 @@ import { Modal, Button } from 'react-bootstrap';
 
 class EditEventModal extends React.Component {
   state = {
-    tripId: this.props.tripId,
-    event: this.props.name,
-    startDate: moment(this.props.startDate).format("YYYY-MM-DDTHH:mm"),
-    endDate: moment(this.props.endDate).format("YYYY-MM-DDTHH:mm")
+    tripId: "",
+    name: "",
+    startDate: "",
+    endDate: ""
   };
+  parseDate = date => {
+    let arr = date.split(/\D/);
+    return new Date(arr[0], --arr[1], arr[2]);
+  }
 
   handleChange = event => {
     const { name, value } = event.target;
@@ -23,15 +27,22 @@ class EditEventModal extends React.Component {
 
     this.props.onHide();
 
-    this.props.handleTripEdit(
-      this.props.eventId,
-      {
-        _id: this.props.eventId,
-        name: this.state.event,
-        startDate: this.state.startDate,
-        endDate: this.state.endDate
-      });
+    this.props.handleEditTrip({
+      _id: this.props.tripId,
+      name: this.state.name,
+      startDate: this.parseDate(this.state.startDate),
+      endDate: this.parseDate(this.state.endDate)
+    });
   };
+
+  componentWillReceiveProps() {
+    this.setState({
+      tripId: this.props.tripId,
+      name: this.props.name,
+      startDate: moment(this.props.startDate).format("YYYY-MM-DD"),
+      endDate: moment(this.props.endDate).format("YYYY-MM-DD")
+    });
+  }
 
   render() {
     return (
@@ -52,7 +63,7 @@ class EditEventModal extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <label htmlFor="event">What are you doing?</label>
             <br />
-            <input style={inputStyle} name="event" value={this.state.event} onChange={this.handleChange}></input>
+            <input style={inputStyle} name="name" value={this.state.name} onChange={this.handleChange}></input>
 
             <br />
 
@@ -62,7 +73,7 @@ class EditEventModal extends React.Component {
                 <input
                   name="startDate"
                   className="form-control"
-                  type="datetime-local"
+                  type="date"
                   value={this.state.startDate}
                   onChange={this.handleChange}
                   id="start-date-input">
@@ -77,7 +88,7 @@ class EditEventModal extends React.Component {
                 <input
                   name="endDate"
                   className="form-control"
-                  type="datetime-local"
+                  type="date"
                   value={this.state.endDate}
                   onChange={this.handleChange}
                   id="end-date-input">
