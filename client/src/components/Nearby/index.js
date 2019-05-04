@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button, ButtonToolbar} from 'react-bootstrap';
 import api from '../../utils/api';
-import Event from '../Event';
+import Event from '../AddEventModal';
 
 class NearbyModal extends React.Component {
 

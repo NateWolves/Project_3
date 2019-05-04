@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 // import API from '../../utils/api';
 
-class Event extends React.Component {
+class AddEventModal extends React.Component {
 	state = {
 		tripId: this.props.tripId,
 		event: this.props.name,
@@ -10,10 +10,8 @@ class Event extends React.Component {
 		end: this.props.endDate
 	};
 
-
 	handleChange = event => {
 		const { name, value } = event.target;
-
 
 		this.setState({
 			[name]: value
@@ -22,7 +20,6 @@ class Event extends React.Component {
 
 	handleSubmit = event => {
 		event.preventDefault();
-		console.log(this.state);
 
 		this.props.onHide();
 
@@ -42,7 +39,6 @@ class Event extends React.Component {
 	};
 
 	render() {
-		// console.log(this.state)
 		return (
 			<Modal
 				onHide={this.props.onHide}
@@ -60,18 +56,18 @@ class Event extends React.Component {
 
 					<form onSubmit={this.handleSubmit}>
 						<label htmlFor="event">What are you doing?</label>
-						<br/>
+						<br />
 						<input style={inputStyle} name="event" value={this.state.event} onChange={this.handleChange}></input>
 
-						<br/>
+						<br />
 
 						<div style={dateStyle}>
-							<label htmlFor="Start" className="col-6 col-form-label">Start Time</label>
-							<div className="col-5">
+							<label htmlFor="Start" className="col-6 col-form-label">Start date</label>
+							<div className="col-7">
 								<input
 									name="startDate"
 									className="form-control"
-									type="time"
+									type="datetime-local"
 									value={this.state.startDate}
 									onChange={this.handleChange}
 									id="start-date-input">
@@ -81,12 +77,12 @@ class Event extends React.Component {
 						</div>
 
 						<div style={dateStyle}>
-							<label htmlFor="End" className="col-6 col-form-label">End Time</label>
-							<div className="col-5">
+							<label htmlFor="End" className="col-6 col-form-label">End date</label>
+							<div className="col-7">
 								<input
 									name="endDate"
 									className="form-control"
-									type="time"
+									type="datetime-local"
 									value={this.state.endDate}
 									onChange={this.handleChange}
 									id="end-date-input">
@@ -115,5 +111,4 @@ const dateStyle = {
 	width: "50%"
 }
 
-
-export default Event;
+export default AddEventModal;
