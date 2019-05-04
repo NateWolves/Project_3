@@ -23,7 +23,7 @@ class EditEventModal extends React.Component {
 
     this.props.onHide();
 
-    this.props.handleEventEdit(
+    this.props.handleTripEdit(
       this.props.eventId,
       {
         _id: this.props.eventId,
@@ -44,7 +44,7 @@ class EditEventModal extends React.Component {
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter">
-            Edit Event
+            Edit Trip
         	</Modal.Title>
         </Modal.Header>
         <Modal.Body>

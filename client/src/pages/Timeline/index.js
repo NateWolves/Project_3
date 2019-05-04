@@ -140,27 +140,24 @@ class Timeline extends Component {
       <div className="timeline-container">
         <br /><br /><br /><br />
         {
-          this.state.events.length > 0 ? (
-            this.state.days.map((events, i) => {
-              return (
-                <TimelineItem
-                  key={`ti-${i}`}
-                  dayNum={i + 1}
-                  events={events}
-                  tripId={this.state.tripId}
-                  handleEventDelete={this.handleEventDelete}
-                  handleEventAdd={this.handleEventAdd}
-                  handleEventEdit={this.handleEventEdit}
-                />
-              );
-            })
-          ) : (
-              <div>
-                <br></br><br></br><br></br><br></br>
-                <AddEventButton tripId={this.state.tripId} handleEventAdd={this.handleEventAdd} />
-              </div>
-            )
+          this.state.days.map((events, i) => {
+            return (
+              <TimelineItem
+                key={`ti-${i}`}
+                dayNum={i + 1}
+                events={events}
+                tripId={this.state.tripId}
+                handleEventDelete={this.handleEventDelete}
+                handleEventAdd={this.handleEventAdd}
+                handleEventEdit={this.handleEventEdit}
+              />
+            );
+          })
         }
+        <AddEventButton
+          tripId={this.state.tripId}
+          handleEventAdd={this.handleEventAdd}
+        />
       </div>
     );
   }

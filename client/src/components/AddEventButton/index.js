@@ -26,6 +26,8 @@ class AddEventButton extends Component {
           onHide={modalClose}
           tripId={this.props.tripId}
           handleEventAdd={this.props.handleEventAdd}
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
         />
       </ButtonToolbar>
     );

@@ -31,6 +31,15 @@ class Trips extends Component {
       });
   };
 
+  handleEditTrip = tripObj => {
+    let newTrips = this.state.trips.filter(trip => trip._id !== tripObj._id)
+    
+    this.setState({
+      trips: newTrips.push(tripObj)
+    });
+    API.updateTrip(tripObj._id, tripObj);
+  };
+
   handleDeleteTrip = id => {
     this.setState({
       trips: this.state.trips.filter(trip => trip._id !== id)
