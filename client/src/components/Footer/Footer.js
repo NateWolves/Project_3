@@ -4,7 +4,7 @@ import './Footer.css';
 
 function Footer(){
     return(
-        <Container fluid={true}>
+        <Container id="footer" fluid={true}>
             <Row className="contentRow">
                 <Col/>
                 <Col md="3" className="text-center text-md-left">
