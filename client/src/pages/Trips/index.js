@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react"
 import moment from "moment";
 import { Link } from "react-router-dom";
-import { Container } from "react-bootstrap"
+import { Container, Table } from "react-bootstrap"
 import Plan from "../../components/Plan";
 
 import API from "../../utils/api";
@@ -14,8 +14,8 @@ class Trips extends Component {
   };
 
   handleAddTripClick = () => {
-    this.setState({ 
-      modalShow: true 
+    this.setState({
+      modalShow: true
     });
   };
 
@@ -48,8 +48,8 @@ class Trips extends Component {
   };
 
   modalClose = () => {
-    this.setState({ 
-      modalShow: false 
+    this.setState({
+      modalShow: false
     });
   };
 
@@ -75,27 +75,9 @@ class Trips extends Component {
     return (
       <Fragment>
         <Container>
-          <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+          <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
           <h1>My Trips</h1>
           <button onClick={this.handleAddTripClick}>Add trip</button>
-          <ul>
-            {
-              this.state.trips.map(trip => {
-                return (
-                  <li key={`trip-${trip._id}`}>
-                    <Link to={`/trips/${trip._id}`}>
-                      <h2>{trip.name}</h2>
-                    </Link>
-                    {
-                      trip.startDate && trip.endDate && 
-                      <p>{moment(trip.startDate).format("M/D")}-{moment(trip.endDate).format("M/D")}</p>
-                    }
-                    <button onClick={() => this.handleDeleteTrip(trip._id)}>Remove</button>
-                  </li>
-                );
-              })
-            }
-          </ul>
         </Container>
         <Plan
           onHide={this.modalClose}
@@ -103,6 +85,45 @@ class Trips extends Component {
           handleSubmit={this.handleSubmitTrip}
           userId={this.state.userId}
         />
+        <Container>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Trip</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+            {this.state.trips.map(trip => {
+              return (
+                <tr key={`trip-${trip._id}`}>
+                  <td>
+                    <Link to={`/trips/${trip._id}`}>
+                      <h2>{trip.name}</h2>
+                    </Link>
+                  </td>
+                  <td>
+                    {moment(trip.startDate).format("M/D")}
+                  </td>
+                  <td>
+                    {moment(trip.endDate).format("M/D")}
+                  </td>
+                  <td>
+                    <button onClick={() => {
+                      return this.handleDeleteTrip(trip._id);
+                    }}>
+                      Remove Trip
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+            </tbody>
+          </Table>
+        </Container>
+        
       </Fragment>
     );
   }
