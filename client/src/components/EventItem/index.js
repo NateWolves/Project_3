@@ -28,6 +28,7 @@ import theater from '../../pages/Timeline/images/theater.png';
 import themepark from '../../pages/Timeline/images/themepark.png';
 import train from '../../pages/Timeline/images/train.png';
 import zoo from '../../pages/Timeline/images/zoo.png';
+import { ButtonToolbar } from "react-bootstrap";
 
 const getEventIcon = (type) => {
   switch (type) {
@@ -96,24 +97,28 @@ const EventItem = props => {
         <h4>{props.name}</h4>
         <time>{moment(props.startDate).format('h:mma')}-{moment(props.endDate).format('h:mma')}</time>
         <div className="event-item-btns">
+          <ButtonToolbar>
+            <EditEventButton
+              name={props.name}
+              startDate={props.startDate}
+              endDate={props.endDate}
+              type={props.type}
+              eventId={props.eventId}
+              handleEventEdit={props.handleEventEdit}
+              style={btnStyles}
+            />
 
-          <EditEventButton
-            name={props.name}
-            startDate={props.startDate}
-            endDate={props.endDate}
-            type={props.type}
-            eventId={props.eventId}
-            handleEventEdit={props.handleEventEdit}
-          />
+            <button
+              className="btn"
+              style={btnStyles}
+              onClick={() => props.handleEventDelete(props.eventId)}
+            >
+              Remove
+            </button>
 
-          <button
-            className="btn"
-            style={styles}
-            onClick={() => props.handleEventDelete(props.eventId)}
-          >
-            Remove
-          </button>
-          <AddNearbyButton />
+            <AddNearbyButton style={btnStyles} />
+
+          </ButtonToolbar>
 
         </div>
       </div>
@@ -123,11 +128,14 @@ const EventItem = props => {
   );
 };
 
-const styles = {
+const btnStyles = {
   background: "none",
   color: "black",
   border: "1px solid black",
-  margin: "5px"
+  margin: "5px",
+  fontSize: "12px",
+  padding: "none",
+  lineHeight: "15px"
 };
 
 export default EventItem;

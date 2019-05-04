@@ -16,10 +16,10 @@ class AddNearbyButton extends Component {
       <ButtonToolbar>
         <Button
           variant="primary"
-          style={styles}
+          style={btnStyles}
           onClick={() => this.setState({ modalShow: true })}
         >
-          Search Nearby
+          Nearby
     			</Button>
 
         <Nearby
@@ -31,11 +31,14 @@ class AddNearbyButton extends Component {
   }
 }
 
-const styles = {   
+const btnStyles = {
   background: "none",
   color: "black",
   border: "1px solid black",
-  margin: "5px"
+  margin: "5px",
+  fontSize: "12px",
+  padding: "none",
+  lineHeight: "15px"
 };
 
 export default AddNearbyButton;
