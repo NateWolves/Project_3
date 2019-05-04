@@ -135,7 +135,10 @@ class Trips extends Component {
                       {moment(trip.endDate).format("dddd - MMMM Do")}
                     </td>
                     <td>
-                      <button onClick={() => this.handleEditTripClick(trip)}>
+                      <button 
+                        onClick={() => this.handleEditTripClick(trip)}
+                        className="mr-2"
+                      >
                         Edit
                     </button>
                       <button onClick={() => this.handleDeleteTrip(trip._id)}>
