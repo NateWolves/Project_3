@@ -21,8 +21,6 @@ Javascript, HTML, CSS, React, Bootstrap, MongoDB (with mongoose), Axios, Express
 
 ![Home](https://live.staticflickr.com/65535/40806918213_0b6cc0153f.jpg)
 
-This is the app. It consists of two main components: Header and Body.
-
 
 
 ## **Authors**
