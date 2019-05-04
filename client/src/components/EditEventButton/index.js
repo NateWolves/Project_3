@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ButtonToolbar, Button } from "react-bootstrap";
-import AddEventModal from "../AddEventModal";
+import EditEventModal from "../EditEventModal";
 
 class EditEventButton extends Component {
   constructor(...args) {
@@ -22,13 +22,15 @@ class EditEventButton extends Component {
           Edit Event
     		</Button>
 
-        <AddEventModal
+        <EditEventModal
           name={this.props.name}
           startDate={this.props.startDate}
           endDate={this.props.endDate}
           type={this.props.type}
+          eventId={this.props.eventId}
           show={this.state.modalShow}
           onHide={modalClose}
+          handleEventEdit={this.props.handleEventEdit}
         />
       </ButtonToolbar>
     );

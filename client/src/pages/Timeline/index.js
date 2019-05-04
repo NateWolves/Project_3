@@ -82,12 +82,31 @@ class Timeline extends Component {
     });
   };
 
-  handleEventEdit = id => {
+  handleEventEdit = (id, eventObj) => {
+    let newEvents = []
+
+    if (this.state.events.length > 0) {
+      newEvents = this.state.events.filter(event => event._id !== id);
+
+      for (let i = 0; i < newEvents.length; i++) {
+        if (new Date(eventObj.startDate).getTime() <
+          new Date(newEvents[i].startDate).getTime()) {
+          newEvents.splice(i, 0, eventObj)
+          break;
+        }
+      }
+    } else {
+      newEvents = [eventObj];
+    }
+
     this.setState({
-      events: this.state.events.filter(event => event._id !== id)
+      events: newEvents
     }, () => {
-      API.updateEvent(id)
-    })
+      this.setState({
+        days: this.divideIntoDays()
+      });
+      API.updateEvent(id, eventObj);
+    });
   }
 
   handleEventDelete = id => {
@@ -131,6 +150,7 @@ class Timeline extends Component {
                   tripId={this.state.tripId}
                   handleEventDelete={this.handleEventDelete}
                   handleEventAdd={this.handleEventAdd}
+                  handleEventEdit={this.handleEventEdit}
                 />
               );
             })

@@ -17,6 +17,7 @@ class TimelineItem extends Component {
                   key={`ei-${i}`}
                   handleEventDelete={this.props.handleEventDelete}
                   handleEventAdd={this.props.handleEventAdd}
+                  handleEventEdit={this.props.handleEventEdit}
                   name={event.name}
                   startDate={event.startDate}
                   endDate={event.endDate}

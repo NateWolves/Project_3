@@ -54,6 +54,8 @@ const EventItem = props => {
             startDate={props.startDate}
             endDate={props.endDate}
             type={props.type}
+            eventId={props.eventId}
+            handleEventEdit={props.handleEventEdit}
           />
 
           <button 

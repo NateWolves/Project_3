@@ -56,14 +56,14 @@ class AddEventModal extends React.Component {
 
 					<form onSubmit={this.handleSubmit}>
 						<label htmlFor="event">What are you doing?</label>
-						<br/>
+						<br />
 						<input style={inputStyle} name="event" value={this.state.event} onChange={this.handleChange}></input>
 
-						<br/>
+						<br />
 
 						<div style={dateStyle}>
 							<label htmlFor="Start" className="col-6 col-form-label">Start date</label>
-							<div className="col-5">
+							<div className="col-7">
 								<input
 									name="startDate"
 									className="form-control"
@@ -78,7 +78,7 @@ class AddEventModal extends React.Component {
 
 						<div style={dateStyle}>
 							<label htmlFor="End" className="col-6 col-form-label">End date</label>
-							<div className="col-5">
+							<div className="col-7">
 								<input
 									name="endDate"
 									className="form-control"
