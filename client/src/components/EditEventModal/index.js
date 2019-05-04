@@ -6,8 +6,8 @@ class EditEventModal extends React.Component {
   state = {
     tripId: this.props.tripId,
     event: this.props.name,
-    startDate: moment(this.props.startDate).format("YYYY-MM-DDThh:mm"),
-    endDate: moment(this.props.endDate).format("YYYY-MM-DDThh:mm")
+    startDate: moment(this.props.startDate).format("YYYY-MM-DDTHH:mm"),
+    endDate: moment(this.props.endDate).format("YYYY-MM-DDTHH:mm")
   };
 
   handleChange = event => {

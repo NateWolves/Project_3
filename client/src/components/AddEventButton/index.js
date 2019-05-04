@@ -10,6 +10,7 @@ class AddEventButton extends Component {
   }
 
   render() {
+    console.log(this.props)
     let modalClose = () => this.setState({ modalShow: false });
     return (
       <ButtonToolbar>
@@ -26,6 +27,8 @@ class AddEventButton extends Component {
           onHide={modalClose}
           tripId={this.props.tripId}
           handleEventAdd={this.props.handleEventAdd}
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
         />
       </ButtonToolbar>
     );

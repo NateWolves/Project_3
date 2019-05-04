@@ -1,13 +1,13 @@
 import React from 'react';
+import moment from 'moment';
 import { Modal, Button } from 'react-bootstrap';
-// import API from '../../utils/api';
 
 class AddEventModal extends React.Component {
 	state = {
 		tripId: this.props.tripId,
 		event: this.props.name,
-		start: this.props.startDate,
-		end: this.props.endDate
+		startDate: moment(this.props.startDate).format("YYYY-MM-DDTHH:mm"),
+    endDate: moment(this.props.endDate).format("YYYY-MM-DDTHH:mm")
 	};
 
 	handleChange = event => {
