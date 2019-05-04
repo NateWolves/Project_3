@@ -116,16 +116,24 @@ class NearbyModal extends React.Component {
                 <select name="type" onChange={this.handleInputChange} className="custom-select">
                   <option defaultValue="restaurant">Restaurant</option>
                   <option value="amusement_park">Amusement Park</option>
-                  <option value="art_gallery">Art Gallery</option>
+                  <option value="airport">Airport</option>
                   <option value="aquarium">Aquarium</option>
+                  <option value="art_gallery">Art Gallery</option>
+                  <option value="bar">Bar</option>
+                  <option value="bus_station">Bus Station</option>
                   <option value="cafe">Cafe</option>
                   <option value="campground">Camping</option>
                   <option value="casino">Casino</option>
+                  <option value="church">Church</option>
                   <option value="library">Library</option>
                   <option value="movie_theater">Movie Theater</option>
+                  <option value="museum">Museum</option>
                   <option value="night_club">Night Club</option>
+                  <option value="park">Park</option>
                   <option value="restaurant">Restaurant</option>
-                  <option value="store">Store</option>
+                  <option value="shopping_mall">Shopping Mall</option>
+                  <option value="spa">Spa</option>
+                  <option value="stadium">Stadium</option>
                   <option value="subway_station">Subway Station</option>
                   <option value="zoo">Zoo</option>
                 </select>
