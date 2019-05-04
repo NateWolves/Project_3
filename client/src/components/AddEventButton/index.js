@@ -10,7 +10,6 @@ class AddEventButton extends Component {
   }
 
   render() {
-    console.log(this.props)
     let modalClose = () => this.setState({ modalShow: false });
     return (
       <ButtonToolbar>
