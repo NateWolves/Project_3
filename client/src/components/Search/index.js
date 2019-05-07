@@ -39,15 +39,6 @@ class SearchModal extends React.Component {
         let search = this.state.search
 		this.googleSearch(search)
     }
-    // removeResult(e) {
-    //     let array = [...this.state.results]; // make a separate copy of the array
-    //     console.log(e.target.value)
-    //     let index = e.target.value
-    //     if (index !== -1) {
-    //       array.splice(index, 1);
-    //       this.setState({results: array});
-    //     }
-    //   }
 	googleSearch(query) {
 		api.textSearch(query).then(res =>{
         console.log(res.data)

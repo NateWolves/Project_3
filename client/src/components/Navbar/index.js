@@ -1,13 +1,13 @@
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
-import auth0Client from '../../utils/Auth';
-import { Nav, Navbar, Container } from 'react-bootstrap';
+import {withRouter} from 'react-router-dom';
+import {Nav, Navbar, Container} from 'react-bootstrap';
 import './Navbar.css';
 import title from './images/title.png';
+import Auth from "../../utils/Auth"
 
 function NavBar(props) {
   const signOut = () => {
-    auth0Client.signOut();
+    Auth.logout()
     props.history.replace('/');
   };
   return (
@@ -38,16 +38,16 @@ function NavBar(props) {
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link>
               {
-                !auth0Client.isAuthenticated() &&
-                <button className="navbtn" onClick={auth0Client.signIn}>Sign In</button>
+                !Auth.loggedIn() &&
+                <button className="navbtn" href="/signup" >Sign In</button>
               }
               {
-                auth0Client.isAuthenticated() &&
+                Auth.loggedIn() &&
                 <div>
                   <Link
                     to="/trips"
                     className="mr-2 text-white">
-                      {auth0Client.getProfile().name}
+                      {Auth.getProfile().name}
                   </Link>
                   <button className="navbtn" onClick={() => { signOut() }}>Sign Out</button>
                 </div>
