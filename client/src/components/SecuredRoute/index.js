@@ -1,18 +1,20 @@
 import React from 'react';
-import {Route} from 'react-router-dom';
-import auth0Client from '../../utils/Auth';
+import {Route, Redirect} from 'react-router-dom';
+import authFunctions from '../../utils/Auth'
 
-function SecuredRoute(props) {
-  const {component: Component, path} = props;
-  return (
-    <Route path={path} render={() => {
-        if (!auth0Client.isAuthenticated()) {
-          auth0Client.signIn();
-          return <div></div>;
-        }
-        return <Component />
-    }} />
-  );
-}
 
+
+
+const SecuredRoute = ({component: Component, ...rest}) => (
+ 
+    <Route {...rest} render={(props) => (
+        authFunctions.loggedIn() === true
+       ? <Component {...props} />
+       : <Redirect to={{
+         pathname: '/login',
+         state: {from: props.location}
+       }} />
+      )}
+    />
+  )
 export default SecuredRoute;
