@@ -1,14 +1,15 @@
 const router = require("express").Router();
 const tripController = require("../../controllers/tripController");
+const auth = require('../../middleware/auth')
 
 router.route("/:userId")
-  .get(tripController.findAllByUser);
+  .get(auth, tripController.findAllByUser);
 
 router.route("/")
-  .post(tripController.create);
+  .post(auth, tripController.create);
 
 router.route("/:tripId")
-  .put(tripController.update)
-  .delete(tripController.delete);
+  .put(auth, tripController.update)
+  .delete( auth, tripController.delete);
 
 module.exports = router;

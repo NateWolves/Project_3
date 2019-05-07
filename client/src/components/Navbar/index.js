@@ -1,13 +1,13 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
-import auth0Client from '../../utils/Auth';
 import {Nav, Navbar, Container} from 'react-bootstrap';
 import './Navbar.css';
 import title from './images/title.png';
+import Auth from "../../utils/Auth"
 
 function NavBar(props) {
   const signOut = () => {
-    auth0Client.signOut();
+    Auth.logout()
     props.history.replace('/');
   };
   return (
@@ -24,21 +24,10 @@ function NavBar(props) {
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav className="ml-auto">
-          <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link>
-              {
-                   !auth0Client.isAuthenticated() &&
-                   <button className="navbtn" onClick={auth0Client.signIn}>Sign In</button>
-                 }
-              {
-                   auth0Client.isAuthenticated() &&
-                   <div>
-                   <label className="mr-2 text-white">{auth0Client.getProfile().name}</label>
-                     <button className="navbtn" onClick={() => {signOut()}}>Sign Out</button>
-                   </div>
-                 }
-          </Nav.Link>
+        <Nav className="ml-auto"> 
+          
+          <Nav.Link href="/">Home</Nav.Link>  
+          <Nav.Link href="/signup">Sign up</Nav.Link>
         </Nav>
       </Navbar.Collapse>
       </Container>

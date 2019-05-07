@@ -1,12 +1,14 @@
 import API from "./api";
 
+
+
 export default {
   createData: function () {
     API.createUser({ userId: "testUser" })
       .then(res => {
-        console.log("User created: ", res.data);
+        console.log("User created: ", res.data);   
         API.createTrip({
-          userId: res.data._id,
+          userId: res.user._id,
           name: "Trip #1",
           startDate: Date.now(),
           endDate: Date.now()

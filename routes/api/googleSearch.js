@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const axios = require("axios");
-
+const auth = require('../../middleware/auth')
 //Server API routes
 const googleURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
 const apiKey = "&key=" + process.env.GOOGLE_API_KEY;
@@ -9,7 +9,7 @@ const textURL = "https://maps.googleapis.com/maps/api/place/findplacefromtext/js
 // https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Museum%20of%20Contemporary%20Art%20Australia&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=YOUR_API_KEY
 
 
-router.get("/location", (req, res) => {
+router.get("/location", auth, (req, res) => {
   console.log(req.query);
   // need to convert all spaces in strings to % and miles/kms to meters for radius
   let input = req.query
@@ -25,7 +25,7 @@ router.get("/location", (req, res) => {
 
 
 
-router.get("/nearby", (req, res) =>{
+router.get("/nearby", auth, (req, res) =>{
     // Need to convert all spaces in strings to % and miles/kms to meters for radius.
     let searchString = `${googleURL}?location=${req.query.location}&radius=${req.query.radius}&type=${req.query.type}`
     console.log(searchString + apiKey);
