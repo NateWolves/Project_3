@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react"
+import React, { Component} from "react"
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { Container, Table, Card } from "react-bootstrap"
@@ -7,7 +7,7 @@ import EditTripModal from "../../components/EditTripModal";
 
 import API from "../../utils/api";
 import EditEventModal from "../../components/EditTripModal";
-
+import "./Trips.css";
 class Trips extends Component {
   state = {
     addModalShow: false,
@@ -97,9 +97,8 @@ class Trips extends Component {
 
   render() {
     return (
-      <Fragment>
+      <Container fluid={true} className="tripsContainer">
         <Container>
-          <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
           <Card.Title>My Trips</Card.Title>
           <button onClick={this.handleAddTripClick}>Add trip</button>
         </Container>
@@ -161,7 +160,7 @@ class Trips extends Component {
           startDate={this.state.tripStartDate}
           endDate={this.state.tripEndDate}
         />
-      </Fragment>
+      </Container>
     );
   }
 };

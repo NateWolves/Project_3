@@ -3,6 +3,7 @@ import './timeline.css';
 import moment from 'moment';
 import TimelineItem from '../../components/TimelineItem';
 import AddEventButton from '../../components/AddEventButton';
+import {Container} from 'react-bootstrap';
 
 import API from '../../utils/api';
 import dummy from '../../utils/dummy';
@@ -137,8 +138,7 @@ class Timeline extends Component {
 
   render() {
     return (
-      <div className="timeline-container">
-        <br /><br /><br /><br />
+      <Container fluid={true} className="timeline-container">
         {
           this.state.days.map((events, i) => {
             return (
@@ -158,7 +158,7 @@ class Timeline extends Component {
           tripId={this.state.tripId}
           handleEventAdd={this.handleEventAdd}
         />
-      </div>
+      </Container>
     );
   }
 };

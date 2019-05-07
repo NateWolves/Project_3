@@ -1,0 +1,7 @@
+.tripsContainer {
+    position: absolute;
+    top: 25%;
+}
+body{
+    background: hsl(33, 56%, 94%);
+}

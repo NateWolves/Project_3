@@ -4,26 +4,36 @@ import outlineTimeline from './images/outlineTimeline.png';
 import compass from './images/compass.jpg';
 import traveller from './images/traveller.jpg';
 import Home from '../../components/Home';
+import { Parallax } from 'react-scroll-parallax';
 
 import './Homepage.css';
 
 const styles = {
-    root:{
+    header:{
         backgroundImage: `url(${compass})`,
         backgroundSize: 'cover',
         width: '100%',
         height: '622px',
+    },
+    copy:{
+        margin: '0.2em 0',
+        textAlign: 'center',
+    },
+    letter:{
+        display:'inline-block',
     }
 }
+const copy='Compass'.split('');
 
 function Homepage() {
     return (
-        <div id="home" >
-            <div className="header">
+    <Container id="home" fluid={true}>
+           <div className="header">
                 <div className="header-wrap">
                     <div className="title-wrap">
-                        <div className="img-src" style={styles.root}>
+                        <div className="img-src" style={styles.header}>
                         </div>
+
                     </div>
                 </div>
                 <div className="title">
@@ -39,7 +49,9 @@ function Homepage() {
             <Container fluid={true}> 
                 <Row className="contentRow justify-content-md-center">
                     <Col xs={12} md={6} className="contentCol">
+                    <Parallax className="title-wrap" x={[-15, 15]} tagOuter="figure">
                         <Image className="contentImg" src={traveller} fluid/>
+                    </Parallax>
                     </Col>
                     <Col xs={12} md={6} className="contentCol">
                         <div className="textContainer">
@@ -58,11 +70,13 @@ function Homepage() {
                         </div>
                     </Col>
                     <Col xs={12} md={6}className="contentCol">
-                        <Image src={outlineTimeline} fluid/>
+                        <Parallax className="title-wrap" x={[15, -15]} tagOuter="figure">
+                            <Image className="contentImg" src={outlineTimeline} fluid/>
+                        </Parallax>
                     </Col>
                 </Row>
             </Container>
-        </div>
+        </Container> 
     )
 }
 

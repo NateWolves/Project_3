@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    margin: 40px 0;
+    top: 25%;
 }
 
 .timeline-container::after {
@@ -135,3 +135,7 @@
 *, ::before, ::after {
     box-sizing: content-box;
 }
+
+/* div#root{
+    height: 100vh;
+} */
