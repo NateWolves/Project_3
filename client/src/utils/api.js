@@ -6,9 +6,14 @@ export default {
     return axios.get(`/api/users/${userId}`);
   },
   createUser: function(data) {
-    return axios.post(`/api/users`, data);
+    return axios.post(`/api/auth/register`, data);
   },
-
+  loginUser: function(userData) {
+    return axios.post(`/api/auth/login`, userData);
+  },
+  googleLogin: function(googleData) {
+    return axios.post(`/api/auth/google`, googleData)
+  },
   // Trip methods
   findTripsByUser: function(userId) {
     return axios.get(`/api/trips/${userId}`);
