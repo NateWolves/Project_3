@@ -3,8 +3,9 @@ const express = require("express");
 const session = require('express-session')
 const mongoose = require("mongoose");
 const app = express();
+const path = require("path");
 const routes = require("./routes");
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3001;
 const db = require("./models");
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/project3";
 const cors = require('cors');
@@ -40,7 +41,7 @@ app.use(passport.session())
 app.use(routes);
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+  app.use(express.static(path.join(__dirname, "client/build")));
 }
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useCreateIndex: true });
