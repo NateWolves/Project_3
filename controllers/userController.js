@@ -2,7 +2,7 @@ const db = require("../models");
 
 module.exports = {
   findOne: function(req, res) {
-    db.User.findOne({ userId: req.params.userId })
+    db.User.findOne({_id: req.params._id })
       .then(dbUser => res.json(dbUser))
       .catch(err => res.status(422).json(err));
   },

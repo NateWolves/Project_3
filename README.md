@@ -26,6 +26,9 @@ Javascript, HTML, CSS, React, Bootstrap, MongoDB (with mongoose), Axios, Express
 ## **Authors**
 
 **Trevor Collins** - [Portfolio](https://trevorcollins.github.io/Portfolio/)
+
 **Nathan Wolverton** - [Portfolio](https://natewolves.com)
+
 **Curtis Simpson** - [Portfolio](https://crsimpson5.github.io)
+
 **Perla Ordonez** - [Portfolio]( https://github.com/pordonez93)
