@@ -28,6 +28,8 @@ class Plan extends React.Component {
 			endDate: this.state.endDate
 		};
 
+		console.log(newTrip)
+
 		this.props.handleSubmit(newTrip);
 	};
 
