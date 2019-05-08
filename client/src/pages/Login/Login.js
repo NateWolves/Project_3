@@ -1,6 +1,7 @@
 
 import { GoogleLogin } from 'react-google-login';
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { Button, FormGroup, FormControl, Form } from "react-bootstrap";
 import "./Login.css";
 import API from "../../utils/api"
@@ -47,7 +48,15 @@ export default class Login extends Component {
   render() {
     return (
       <div className="container">
-      <div className="Login">
+      <div className="Login col-sm-8">
+           <Link to="/" className="btn">
+               Back to home
+            </Link>
+            <div className="col-sm-12" style={{ paddingLeft: "11.250px" }}>
+              <p className="">
+               Don't have an account? <Link to="/signup">Sign up here!</Link>
+              </p>
+            </div>
       <div className="d-flex justify-content-center">
                     <GoogleLogin
                         clientId= {process.env.AUTH_CLIENT_ID}
@@ -57,7 +66,7 @@ export default class Login extends Component {
                     />
         </div>
         <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="email" bsSize="large">
+          <FormGroup controlId="email" >
             <Form.Label>Email</Form.Label>
             <FormControl
               autoFocus
@@ -66,7 +75,7 @@ export default class Login extends Component {
               onChange={this.handleChange}
             />
           </FormGroup>
-          <FormGroup controlId="password" bsSize="large">
+          <FormGroup controlId="password" >
             <Form.Label>Password</Form.Label>
             <FormControl
               value={this.state.password}
@@ -76,7 +85,6 @@ export default class Login extends Component {
           </FormGroup>
           <Button
             block
-            bsSize="large"
             disabled={!this.validateForm()}
             type="submit"
           >
