@@ -1,0 +1,26 @@
+nav.navbar{
+    /* position: absolute; */
+    top: 5%;
+    right: 0;
+    bottom: 15px;
+    left: 0;
+    height: 100px;
+    padding: 30px;
+    z-index: 2;
+    background: transparent !important;
+} 
+a.nav-link, .navbtn{
+    font-size: 25px;
+    color: white !important;
+    text-shadow: 2px 2px 4px #000000;
+
+}
+.navbtn{
+    background: transparent;
+    border: none;
+}
+.navContainer{
+    width: 75%;
+    margin: auto;
+    border-bottom: 2px solid rgba(255,255,255,.2);
+}

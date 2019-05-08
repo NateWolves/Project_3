@@ -1,0 +1,21 @@
+/* #footer {
+    position: fixed;
+    bottom: 0;
+    padding: 10px;
+    background-color: white;
+} */
+
+.heading, .footerList{
+    color:#5b5546;
+}
+.heading{
+    font-size: 20px;
+}
+.footerList{
+    display: inline-block;
+    line-height: 1.5;
+}
+.copyRight{
+    color:#5b5546;
+    text-align:  center;
+}
