@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
   "name": "mern",
-=======
-  "name": "client",
->>>>>>> b
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3001/",
@@ -24,18 +20,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-<<<<<<< HEAD
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-=======
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
->>>>>>> b
   "browserslist": [
     ">0.2%",
     "not dead",
