@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './timeline.css';
 import moment from 'moment';
-import TimelineItem from '../../components/TimelineItem';
-import AddEventButton from '../../components/AddEventButton';
+import TimelineItem from './TimelineItem';
+import AddEventButton from './AddEventButton';
 import {Container} from 'react-bootstrap';
 
 import API from '../../utils/api';

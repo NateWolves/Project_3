@@ -2,12 +2,13 @@ import React, { Component} from "react"
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { Container, Table, Card } from "react-bootstrap"
-import Plan from "../../components/Plan";
-import EditTripModal from "../../components/EditTripModal";
+import Plan from "../../modals/Plan";
+import EditTripModal from "../../modals/EditTripModal";
 
 import API from "../../utils/api";
-import EditEventModal from "../../components/EditTripModal";
+import EditEventModal from "../../modals/EditEventModal";
 import "./Trips.css";
+
 class Trips extends Component {
   state = {
     addModalShow: false,

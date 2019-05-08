@@ -3,7 +3,7 @@ import { Row, Col, Image, Container} from 'react-bootstrap';
 import outlineTimeline from './images/outlineTimeline.png';
 import compass from './images/compass.jpg';
 import traveller from './images/traveller.jpg';
-import Home from '../../components/Home';
+import Home from './Home';
 import { Parallax } from 'react-scroll-parallax';
 
 import './Homepage.css';

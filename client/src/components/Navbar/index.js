@@ -1,5 +1,5 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 import {Nav, Navbar, Container} from 'react-bootstrap';
 import './Navbar.css';
 import title from './images/title.png';

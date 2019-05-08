@@ -7,7 +7,7 @@ import './index.css'
 import Navbar from './components/Navbar';
 import Home from './pages/Homepage';
 import Login from './pages/Login';
-import User from './components/User';
+// import User from './components/User';
 import Timeline from './pages/Timeline';
 import Callback from './components/Callback';
 import SecuredRoute from './components/SecuredRoute';
@@ -63,7 +63,7 @@ render() {
           <Route exact path='/callback' component={Callback} />
           <Route exact path='/trips' component={Trips} />
           <Route exact path='/trips/:id' component={Timeline} />
-          <SecuredRoute exact path='/user' component={User} />
+          {/* <SecuredRoute exact path='/user' component={User} /> */}
           <Footer />
         </Router>
       </ParallaxProvider>
