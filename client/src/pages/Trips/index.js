@@ -2,8 +2,8 @@ import React, { Component, Fragment } from "react"
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { Container, Table, Card } from "react-bootstrap"
-import Plan from "../../components/Plan";
-import EditTripModal from "../../components/EditTripModal";
+import Plan from "../../modals/Plan";
+import EditTripModal from "../../modals/EditTripModal";
 
 import API from "../../utils/api";
 

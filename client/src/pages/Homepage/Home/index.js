@@ -1,5 +1,5 @@
 import React from 'react';
-import Plan from '../Plan';
+import Plan from '../../../modals/Plan';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import API from '../../utils/api';
 

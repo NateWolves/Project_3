@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { ButtonToolbar, Button } from "react-bootstrap";
-import Nearby from "../Nearby"
+import AddEventModal from "../../../modals/AddEventModal";
 
-class AddNearbyButton extends Component {
+class AddEventButton extends Component {
   constructor(...args) {
     super(...args);
 
@@ -11,7 +11,6 @@ class AddNearbyButton extends Component {
 
   render() {
     let modalClose = () => this.setState({ modalShow: false });
-
     return (
       <ButtonToolbar>
         <Button
@@ -19,12 +18,16 @@ class AddNearbyButton extends Component {
           style={styles}
           onClick={() => this.setState({ modalShow: true })}
         >
-          Search Nearby
-    			</Button>
+          Add Event
+    		</Button>
 
-        <Nearby
+        <AddEventModal
           show={this.state.modalShow}
           onHide={modalClose}
+          tripId={this.props.tripId}
+          handleEventAdd={this.props.handleEventAdd}
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
         />
       </ButtonToolbar>
     );
@@ -38,4 +41,4 @@ const styles = {
   margin: "5px"
 };
 
-export default AddNearbyButton;
+export default AddEventButton;
