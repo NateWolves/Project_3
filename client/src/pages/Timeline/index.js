@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './timeline.css';
 import moment from 'moment';
-import TimelineItem from '../../components/TimelineItem';
-import AddEventButton from '../../components/AddEventButton';
+import TimelineItem from './TimelineItem';
+import AddEventButton from './AddEventButton';
 
 import API from '../../utils/api';
 import dummy from '../../utils/dummy';

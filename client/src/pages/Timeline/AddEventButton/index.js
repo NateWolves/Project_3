@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { ButtonToolbar, Button } from "react-bootstrap";
-import EditEventModal from "../EditEventModal";
+import AddEventModal from "../../../modals/AddEventModal";
 
-class EditEventButton extends Component {
+class AddEventButton extends Component {
   constructor(...args) {
     super(...args);
 
@@ -11,40 +11,34 @@ class EditEventButton extends Component {
 
   render() {
     let modalClose = () => this.setState({ modalShow: false });
-
     return (
       <ButtonToolbar>
         <Button
           variant="primary"
-          style={btnStyles}
+          style={styles}
           onClick={() => this.setState({ modalShow: true })}
         >
-          Edit
+          Add Event
     		</Button>
 
-        <EditEventModal
-          name={this.props.name}
-          startDate={this.props.startDate}
-          endDate={this.props.endDate}
-          type={this.props.type}
-          eventId={this.props.eventId}
+        <AddEventModal
           show={this.state.modalShow}
           onHide={modalClose}
-          handleEventEdit={this.props.handleEventEdit}
+          tripId={this.props.tripId}
+          handleEventAdd={this.props.handleEventAdd}
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
         />
       </ButtonToolbar>
     );
   }
 }
 
-const btnStyles = {
+const styles = {   
   background: "none",
   color: "black",
   border: "1px solid black",
-  margin: "5px",
-  fontSize: "12px",
-  padding: "none",
-  lineHeight: "15px"
+  margin: "5px"
 };
 
-export default EditEventButton;
+export default AddEventButton;

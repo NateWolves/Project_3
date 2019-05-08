@@ -3,31 +3,31 @@ import moment from "moment";
 import EditEventButton from "../EditEventButton";
 import AddNearbyButton from "../AddNearbyButton";
 
-import airport from '../../pages/Timeline/images/airport.png';
-import aquarium from '../../pages/Timeline/images/aquarium.png';
-import artmuseum from '../../pages/Timeline/images/artmuseum.png';
-import bar from '../../pages/Timeline/images/bar.png';
-import bus from '../../pages/Timeline/images/bus.png';
-import cafe from '../../pages/Timeline/images/cafe.png';
-import camp from '../../pages/Timeline/images/camp.png';
-import casino from '../../pages/Timeline/images/casino.png';
-import church from '../../pages/Timeline/images/church.png';
-import club from '../../pages/Timeline/images/club.png';
-import concert from '../../pages/Timeline/images/concert.png';
-import explore from '../../pages/Timeline/images/explore.png';
-import library from '../../pages/Timeline/images/library.png';
-import meal from '../../pages/Timeline/images/meal.png';
-import monument from '../../pages/Timeline/images/monument.png';
-import movie from '../../pages/Timeline/images/movie.png';
-import museum from '../../pages/Timeline/images/museum.png';
-import park from '../../pages/Timeline/images/park.png'
-import shopping from '../../pages/Timeline/images/shopping.png';
-import spa from '../../pages/Timeline/images/spa.png';
-import sports from '../../pages/Timeline/images/sports.png';
-import theater from '../../pages/Timeline/images/theater.png';
-import themepark from '../../pages/Timeline/images/themepark.png';
-import train from '../../pages/Timeline/images/train.png';
-import zoo from '../../pages/Timeline/images/zoo.png';
+import airport from '../images/airport.png';
+import aquarium from '../images/aquarium.png';
+import artmuseum from '../images/artmuseum.png';
+import bar from '../images/bar.png';
+import bus from '../images/bus.png';
+import cafe from '../images/cafe.png';
+import camp from '../images/camp.png';
+import casino from '../images/casino.png';
+import church from '../images/church.png';
+import club from '../images/club.png';
+import concert from '../images/concert.png';
+import explore from '../images/explore.png';
+import library from '../images/library.png';
+import meal from '../images/meal.png';
+import monument from '../images/monument.png';
+import movie from '../images/movie.png';
+import museum from '../images/museum.png';
+import park from '../images/park.png'
+import shopping from '../images/shopping.png';
+import spa from '../images/spa.png';
+import sports from '../images/sports.png';
+import theater from '../images/theater.png';
+import themepark from '../images/themepark.png';
+import train from '../images/train.png';
+import zoo from '../images/zoo.png';
 import { ButtonToolbar } from "react-bootstrap";
 
 const getEventIcon = (type) => {
