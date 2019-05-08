@@ -1,64 +1,107 @@
-import auth0 from 'auth0-js';
+import decode from 'jwt-decode';
+import Cookie from "js-cookie";
+const secret = process.env.JWT_SECRET;
 
-class Auth {
-  constructor() {
-    this.auth0 = new auth0.WebAuth({
-      // the following three lines MUST be updated
-      domain: process.env.REACT_APP_AUTH0_DOMAIN,
-      audience: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/userinfo`,
-      clientID: process.env.REACT_APP_AUTH0_CLIENTID,
-      redirectUri: 'http://localhost:3000/callback',
-      responseType: 'id_token',
-      scope: 'openid profile'
-    });
 
-    this.getProfile = this.getProfile.bind(this);
-    this.handleAuthentication = this.handleAuthentication.bind(this);
-    this.isAuthenticated = this.isAuthenticated.bind(this);
-    this.signIn = this.signIn.bind(this);
-    this.signOut = this.signOut.bind(this);
-  }
 
-  getProfile() {
-    return this.profile;
-  }
 
-  getIdToken() {
-    return this.idToken;
-  }
+class AuthService {
+    // Initializing important variables
+    constructor(domain) {
+        this.domain = domain || 'http://localhost:8080' // API server domain
+        this.fetch = this.fetch.bind(this) // React binding stuff
+        this.login = this.login.bind(this)
+        this.getProfile = this.getProfile.bind(this)
+    }
 
-  isAuthenticated() {
-    return new Date().getTime() < this.expiresAt;
-  }
+    login(user) {
+        // Get a token from api server using the fetch api
+        return this.fetch(`${this.domain}/api/auth/login`, {
+            method: 'POST',
+            body: {
+                email: user.email,
+                password: user.password
+            }
+        }).then(res => {
+            this.setToken(res.data.token) // Setting the token in cookies
+            return Promise.resolve(res);
+        })
+    }
 
-  signIn() {
-    this.auth0.authorize();
-  }
+    loggedIn() {
+        // Checks if there is a saved token and it's still valid
+        const token = this.getToken() // Getting token from cookies
+        return !!token && !this.isTokenExpired(token) // handwaiving here
+    }
 
-  handleAuthentication() {
-    return new Promise((resolve, reject) => {
-      this.auth0.parseHash((err, authResult) => {
-        if (err) return reject(err);
-        if (!authResult || !authResult.idToken) {
-          return reject(err);
+    isTokenExpired(token) {
+        try {
+            const decoded = decode(token);
+            if (decoded.exp < Date.now() / 1000) { // Checking if token is expired
+                return true;
+            }
+            else
+                return false;
         }
-        this.idToken = authResult.idToken;
-        this.profile = authResult.idTokenPayload;
-        // set the time that the id token will expire at
-        this.expiresAt = authResult.idTokenPayload.exp * 1000;
-        resolve();
-      });
-    })
-  }
+        catch (err) {
+            return false;
+        }
+    }
 
-  signOut() {
-    // clear id token, profile, and expiration
-    this.idToken = null;
-    this.profile = null;
-    this.expiresAt = null;
-  }
+    setToken(idToken) {
+        // Saves user token to cookies
+        Cookie.set('user', idToken)
+    }
+
+    getToken() {
+        // Retrieves the user token from cookies
+        return Cookie.get('user')
+    }
+
+    logout() {
+        // Clear user token and profile data from cookies
+        Cookie.remove('user');
+    }
+
+    getProfile() {
+        // Using jwt-decode npm package to decode the token
+        return decode(this.getToken());
+    }
+
+
+    fetch(url, options) {
+        // performs api calls sending the required authentication headers
+        const headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+
+        // Setting Authorization header
+        // Authorization: Bearer xxxxxxx.xxxxxxxx.xxxxxx
+        if (this.loggedIn()) {
+            headers['Authorization'] = 'Bearer ' + this.getToken()
+        }
+
+        return fetch(url, {
+            headers,
+            ...options
+        })
+            .then(this._checkStatus)
+            .then(response => response.json())
+    }
+
+    _checkStatus(response) {
+        // raises an error in case response status is not a success
+        if (response.status >= 200 && response.status < 300) { // Success status lies between 200 to 300
+            return response
+        } else {
+            var error = new Error(response.statusText)
+            error.response = response
+            throw error
+        }
+    }
 }
 
-const auth0Client = new Auth();
+const authFunctions = new AuthService();
 
-export default auth0Client;
+export default authFunctions;
