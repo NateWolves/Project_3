@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { GoogleLogin } from 'react-google-login';
+import { Button, FormGroup, FormControl, Form } from "react-bootstrap";
 import authFunctions from '../../utils/Auth'
 import API from '../../utils/api';
 
@@ -12,13 +13,16 @@ class Signup extends Component {
       email: "",
       password: "",
       password2: "",
-      errors: {}
     };
   }
-
-onChange = e => {
-    this.setState({ [e.target.id]: e.target.value });
-  };
+  validateForm() {
+    return this.state.email.length > 0 && this.state.password.length > 0;
+  }
+  handleChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
 
 onSubmit = e => {
     e.preventDefault();
@@ -28,14 +32,16 @@ const newUser = {
       password: this.state.password,
       password2: this.state.password2
     };
-console.log(newUser);
+
     API.createUser(newUser).then(res => {
       authFunctions.setToken(res.data.token)
+      console.log(this.props)
+      this.props.history.push("/user", {})
     }).catch(err => console.log(err))
   };
 
 render() {
-    const { errors } = this.state;
+
 return (
       <div className="container">
         <div className="row">
@@ -51,69 +57,62 @@ return (
                 Already have an account? <Link to="/login">Log in</Link>
               </p>
             </div>
-            <GoogleLogin
+                <div className="container">
+      <div className="Login">
+      <div className="d-flex justify-content-center">
+                    <GoogleLogin
                         clientId= {process.env.AUTH_CLIENT_ID}
                         buttonText="Login with Google"
                         onSuccess={this.googleResponse}
                         onFailure={this.googleResponse}
+                    />
+        </div>
+        <form onSubmit={this.onSubmit}>
+        <FormGroup controlId="name" >
+            <Form.Label>User Name</Form.Label>
+            <FormControl
+              autoFocus
+              type="name"
+              value={this.state.name}
+              onChange={this.handleChange}
             />
-            <form noValidate onSubmit={this.onSubmit}>
-              <div className="input col-sm-12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.name}
-                  error={errors.name}
-                  id="name"
-                  type="text"
-                >
-                </input>
-                <label htmlFor="name">Name</label>
-              </div>
-              <div className="input col-sm-12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.email}
-                  error={errors.email}
-                  id="email"
-                  type="email"
-                />
-                <label htmlFor="email">Email</label>
-              </div>
-              <div className="input-field col-sm-12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.password}
-                  error={errors.password}
-                  id="password"
-                  type="password"
-                />
-                <label htmlFor="password">Password</label>
-              </div>
-              <div className="input-field col-sm-12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.password2}
-                  error={errors.password2}
-                  id="password2"
-                  type="password"
-                />
-                <label htmlFor="password2">Confirm Password</label>
-              </div>
-              <div className="col-sm-12" style={{ paddingLeft: "11.250px" }}>
-                <button
-                  style={{
-                    width: "150px",
-                    borderRadius: "3px",
-                    letterSpacing: "1.5px",
-                    marginTop: "1rem"
-                  }}
-                  type="submit"
-                  className="btn "
-                >
-                  Sign up
-                </button>
-              </div>
-            </form>
+          </FormGroup>
+          <FormGroup controlId="email" >
+            <Form.Label>Email</Form.Label>
+            <FormControl
+              autoFocus
+              type="email"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+          </FormGroup>
+          <FormGroup controlId="password" >
+            <Form.Label>Password</Form.Label>
+            <FormControl
+              value={this.state.password}
+              onChange={this.handleChange}
+              type="password"
+            />
+          </FormGroup>
+          <FormGroup controlId="password2" >
+            <Form.Label>Re-Enter Password</Form.Label>
+            <FormControl
+              value={this.state.password2}
+              onChange={this.handleChange}
+              type="password"
+            />
+          </FormGroup>
+          <Button
+            block
+           
+            disabled={!this.validateForm()}
+            type="submit"
+          >
+            Login
+          </Button>
+        </form>
+      </div>
+      </div>
           </div>
         </div>
       </div>

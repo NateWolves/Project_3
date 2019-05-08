@@ -1,12 +1,13 @@
 import React from 'react';
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 
 class Plan extends React.Component {
 	state = {
 		place: "",
-		startDate: "",
-		endDate: ""
+		startDate: moment().add(1, "d").format("YYYY-MM-DD"),
+		endDate: moment().add(2, "d").format("YYYY-MM-DD")
 	}
 
 	handleChange = event => {
