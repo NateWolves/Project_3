@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
-import API from '../../utils/api';
 
 class Plan extends React.Component {
 	state = {
