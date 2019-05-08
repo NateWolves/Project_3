@@ -14,16 +14,8 @@ const styles = {
         backgroundSize: 'cover',
         width: '100%',
         height: '622px',
-    },
-    copy:{
-        margin: '0.2em 0',
-        textAlign: 'center',
-    },
-    letter:{
-        display:'inline-block',
     }
 }
-const copy='Compass'.split('');
 
 function Homepage() {
     return (

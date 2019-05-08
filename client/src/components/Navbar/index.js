@@ -16,7 +16,7 @@ function NavBar(props) {
         <Navbar.Brand href="/">
         <span className="icon" data-icon-name="explore">
             <svg version="1.1" className="icon-compass" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-              width="40px" height="40px" viewBox="0 0 100 100" enable-background="new 0 0 100 100">
+              width="40px" height="40px" viewBox="0 0 100 100" enableBackground="new 0 0 100 100">
               <g>
                 <rect x="16.787" y="48.787" fill="#FFFFFF" width="8.582" height="2.292"/>
                 <rect x="48.853" y="74.562" fill="#FFFFFF" width="2.26" height="8.58"/>

@@ -1,6 +1,7 @@
 #footer{
     position: relative;
-    height: 140px;
+    bottom:0;
+    min-height: 140px;
     margin-top: 150px;
 }
 .footerContainer{
@@ -8,7 +9,8 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 120px;
+    min-height: 120px;
+    overflow: hidden;
 }
 .heading, .footerList{
     color:#5b5546;
