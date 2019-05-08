@@ -6,10 +6,10 @@ router.route("/:tripId")
   .get(eventController.findAllByTrip);
 
 router.route("/")
-  .post(auth, eventController.create);
+  .post(eventController.create);
 
 router.route("/:eventId")
-  .put(eventController.update)
-  .delete(eventController.delete);
+  .put(auth, eventController.update)
+  .delete(auth, eventController.delete);
 
 module.exports = router;

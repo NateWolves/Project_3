@@ -4,10 +4,21 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../../models/User')
+const passport = require('passport')
+const { generateToken, sendToken } = require('../../utils/token.utils');
 
-// const { generateToken, sendToken } = require('../../utils/token.utils');
+router.route('/auth/google')
+    .post(passport.authenticate('google-token', {session: false}), function(req, res, next) {
+        if (!req.user) {
+            return res.send(401, 'User Not Authenticated');
+        }
+        req.auth = {
+            id: req.user.id,
+            name: req.user.id
+        };
 
-
+        next();
+    }, generateToken, sendToken);
 
 
 router.post('/register', (req, res) => {
@@ -87,6 +98,9 @@ router.post('/login', (req, res) => {
 
 // // For future use of Twitter and Facebook logins
 // ---------------------------------------------------------------------------
+
+
+
 // router.route('/twitter/reverse')
 //     .post(function(req, res) {
 //         request.post({
