@@ -13,6 +13,7 @@ import Callback from './components/Callback';
 import SecuredRoute from './components/SecuredRoute';
 import Footer from './components/Footer';
 import Trips from './pages/Trips';
+import {ParallaxProvider} from 'react-scroll-parallax';
 import Signup from './pages/Signup'
 import Auth from './utils/Auth'
 import AuthService from './utils/Auth';
@@ -52,7 +53,7 @@ googleResponse = (response) => {
 render() {
 
     return (
-      <div>
+      <ParallaxProvider>
         <Router>
           <Navbar />
           <Route exact path='/' component={Home} />
@@ -65,7 +66,7 @@ render() {
           {/* <SecuredRoute exact path='/user' component={User} /> */}
           <Footer />
         </Router>
-      </div>
+      </ParallaxProvider>
     );
   }
 }
