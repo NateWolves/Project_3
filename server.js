@@ -20,11 +20,7 @@ const corsOption = {
 };
 
 // Define middleware here
-app.use(cors(corsOption));
-
 app.use(logger('dev'))
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 app.use(cookieParser());
 
 // Passport.js setup
