@@ -6,7 +6,6 @@ import Plan from "../../components/Plan";
 import EditTripModal from "../../components/EditTripModal";
 
 import API from "../../utils/api";
-import EditEventModal from "../../components/EditTripModal";
 
 class Trips extends Component {
   state = {
@@ -151,7 +150,7 @@ class Trips extends Component {
             </tbody>
           </Table>
         </Container>
-        <EditEventModal
+        <EditTripModal
           onHide={this.modalClose}
           show={this.state.editModalShow}
           handleEditTrip={this.handleEditTrip}

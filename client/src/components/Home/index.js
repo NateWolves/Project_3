@@ -1,21 +1,32 @@
 import React from 'react';
 import Plan from '../Plan';
 import { Button, ButtonToolbar } from 'react-bootstrap';
-
-// function Home() {
-//     return (
-//         <div id="home">
-// 		<br/><br/><br/>
-//             <PlanTrip />
-//         </div>
-//     )
-// }
+import API from '../../utils/api';
 
 class Home extends React.Component {
 	constructor(...args) {
 		super(...args);
 
-		this.state = { modalShow: false };
+		this.state = { 
+			modalShow: false,
+			userId: ""
+		}
+	}
+
+	handleSubmitTrip = tripObj => {
+    this.setState({
+      addModalShow: false
+    });
+    API.createTrip(tripObj);
+  };
+
+	componentDidMount() {
+		API.findUser("testUser")
+			.then(res => {
+				this.setState({
+					userId: res.data._id
+				});
+			});
 	}
 
 	render() {
@@ -34,6 +45,8 @@ class Home extends React.Component {
 				<Plan
 					show={this.state.modalShow}
 					onHide={modalClose}
+					userId={this.state.userId}
+					handleSubmit={this.handleSubmitTrip}
 				/>
 			</ButtonToolbar>
 		);
