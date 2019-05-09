@@ -1,28 +1,12 @@
-#footer{
-    position: relative;
-    bottom:0;
-    min-height: 140px;
-    margin-top: 150px;
-}
 .footerContainer{
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    min-height: 120px;
-    overflow: hidden;
-}
-.heading, .footerList{
-    color:#5b5546;
-}
-.heading{
-    font-size: 20px;
-}
-.footerList{
-    display: inline-block;
-    line-height: 1.5;
 }
 .copyRight{
-    color:#5b5546;
+    color: white;
+    font-size: 24px;
+    text-shadow: 2px 2px 4px #000000;
     text-align:  center;
 }

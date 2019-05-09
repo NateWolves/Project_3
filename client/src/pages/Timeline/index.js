@@ -4,6 +4,8 @@ import moment from 'moment';
 import TimelineItem from './TimelineItem';
 import AddEventButton from './AddEventButton';
 import {Container, Row, Col} from 'react-bootstrap';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 
 import API from '../../utils/api';
 import dummy from '../../utils/dummy';
@@ -138,35 +140,44 @@ class Timeline extends Component {
 
   render() {
     return (
+    <Container fluid={true} className="timelineWrapper">
+        <Container fluid={true} className="navBackground">
+            <Navbar/>
+        </Container>
+        <br/>
+        <br/>
       <Container fluid={true} className="timeline-container">
-      <Row className="timelineRow">
-      <Col className="timelineCol">
-      <AddEventButton
-            tripId={this.state.tripId}
-            handleEventAdd={this.handleEventAdd}
-          />
-      </Col>
+        <Row className="timelineRow">
+          <Col className="timelineCol">
+            <AddEventButton
+              tripId={this.state.tripId}
+              handleEventAdd={this.handleEventAdd}
+            />
+            </Col>
         
-      </Row>
-      <Row className="timelineRow">
-        <Col className="timelineCol">
-        {
-          this.state.days.map((events, i) => {
-            return (
-              <TimelineItem
-                key={`ti-${i}`}
-                dayNum={i + 1}
-                events={events}
-                tripId={this.state.tripId}
-                handleEventDelete={this.handleEventDelete}
-                handleEventAdd={this.handleEventAdd}
-                handleEventEdit={this.handleEventEdit}
-              />
-            );
-          })
-        }
-        </Col>
-      </Row>
+          </Row>
+
+          <Row className="timelineRow">
+            <Col className="timelineCol">
+              {
+                this.state.days.map((events, i) => {
+                  return (
+                    <TimelineItem
+                      key={`ti-${i}`}
+                      dayNum={i + 1}
+                      events={events}
+                      tripId={this.state.tripId}
+                      handleEventDelete={this.handleEventDelete}
+                      handleEventAdd={this.handleEventAdd}
+                      handleEventEdit={this.handleEventEdit}
+                    />
+                  );
+                })
+              }
+              </Col>
+            </Row>
+        </Container>
+        <Footer/>
       </Container>
     );
   }

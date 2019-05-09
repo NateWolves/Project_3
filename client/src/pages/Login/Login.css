@@ -1,8 +1,18 @@
 .loginCol{
     padding: 0 !important;
 }
-
 .loginContainer{
-    position: absolute;
-    top: 25%;
+background: #292b33;
+}
+.navBackground{
+    min-height: 200px;
+    overflow: hidden;
+}
+.footerBackground{
+    position: relative;
+    min-height: 150px;
+    overflow: hidden;
+}
+.formText{
+    color:white;
 }
