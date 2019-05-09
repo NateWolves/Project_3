@@ -66,12 +66,12 @@ return (
             </div>
         </Col>
         <Col xs={12} md={3} className="loginCol justify-content-md-left">
-          <GoogleLogin
+          {/* <GoogleLogin
               clientId= {process.env.AUTH_CLIENT_ID}
               buttonText="Login with Google"
               onSuccess={this.googleResponse}
               onFailure={this.googleResponse}
-          />
+          /> */}
         </Col>
     </Row>
       <br/>
