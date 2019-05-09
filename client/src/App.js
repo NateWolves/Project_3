@@ -13,6 +13,7 @@ import Callback from './components/Callback';
 import SecuredRoute from './components/SecuredRoute';
 import Footer from './components/Footer';
 import Trips from './pages/Trips';
+import {ParallaxProvider} from 'react-scroll-parallax';
 import Signup from './pages/Signup'
 
 
@@ -51,7 +52,7 @@ class App extends Component {
 render() {
 
     return (
-      <div>
+      <ParallaxProvider>
         <Router>
           <Navbar />
           <Route exact path='/' component={Home} />
@@ -63,7 +64,7 @@ render() {
           <Route exact path='/trips/:id' component={Timeline} />
           <Footer />
         </Router>
-      </div>
+      </ParallaxProvider>
     );
   }
 }

@@ -3,6 +3,7 @@ import './timeline.css';
 import moment from 'moment';
 import TimelineItem from './TimelineItem';
 import AddEventButton from './AddEventButton';
+import {Container, Row, Col} from 'react-bootstrap';
 
 import API from '../../utils/api';
 import AddSearchButton from './AddSearchButton';
@@ -133,12 +134,19 @@ class Timeline extends Component {
 
   render() {
     return (
-      <div>
-        {/* creating a buffer to clear the navbar */}
-      <div style={{height: "200px"}}> </div>
-      <div className="timeline-container">
-      
-       
+
+      <Container fluid={true} className="timeline-container">
+      <Row className="timelineRow">
+      <Col className="timelineCol">
+      <AddEventButton
+            tripId={this.state.tripId}
+            handleEventAdd={this.handleEventAdd}
+          />
+      </Col>
+        
+      </Row>
+      <Row className="timelineRow">
+        <Col className="timelineCol">
         {
           this.state.days.map((events, i) => {
             return (
@@ -155,15 +163,17 @@ class Timeline extends Component {
             );
           })
         }
+
         <AddSearchButton />
         <AddEventButton
           tripId={this.state.tripId}
           tripLocation={this.state.tripLocation}
           handleEventAdd={this.handleEventAdd}
         />
+        </Col>
+      </Row>
+      </Container>
 
-      </div>
-      </div>
     );
   }
 };

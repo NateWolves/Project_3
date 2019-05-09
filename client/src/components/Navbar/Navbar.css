@@ -24,3 +24,21 @@ a.nav-link, .navbtn{
     margin: auto;
     border-bottom: 2px solid rgba(255,255,255,.2);
 }
+/* compass css */
+svg {
+    overflow: visible;
+}
+.icon-compass .needle {
+    transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+    transform-origin: center;
+    transform: rotate(0);
+}
+.icon-compass:hover .needle {
+    transition: all 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: rotate(360deg);
+}
+.icon-compass:hover .circle-1 {
+    transform: scale(1.2);
+    stroke-width: 50%;
+    stroke-opacity: 0;
+}

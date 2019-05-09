@@ -2,7 +2,7 @@
 import { GoogleLogin } from 'react-google-login';
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Button, FormGroup, FormControl, Form } from "react-bootstrap";
+import { Button, FormGroup, FormControl, Form, Container, Col, Row } from "react-bootstrap";
 import "./Login.css";
 import API from "../../utils/api"
 import Cookies from "js-cookie"
@@ -48,26 +48,33 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div className="container">
-      <div className="bufferForNav"></div>
-      <div className="Login col-sm-8">
+
+      <Container fluid={true} className="loginContainer">
+      <Row className="contentRow justify-content-md-center">
+        <Col xs={12} md={3} className="loginCol">
            <Link to="/" className="btn">
                Back to home
             </Link>
-            <div className="col-sm-12" style={{ paddingLeft: "11.250px" }}>
-              <p className="">
+            <div style={{ paddingLeft: "11.250px" }}>
+              <p>
                Don't have an account? <Link to="/signup">Sign up here!</Link>
               </p>
             </div>
-      <div className="d-flex justify-content-center">
-                    {/* <GoogleLogin
-                        clientId= {process.env.AUTH_CLIENT_ID}
-                        buttonText="Login with Google"
-                        onSuccess={this.googleResponse}
-                        onFailure={this.googleResponse}
-                    /> */}
-        </div>
-        <form onSubmit={this.handleSubmit}>
+
+        </Col>
+        <Col xs={12} md={3} className="loginCol justify-content-md-left">
+//           <GoogleLogin
+//               clientId= {process.env.AUTH_CLIENT_ID}
+//               buttonText="Login with Google"
+//               onSuccess={this.googleResponse}
+//               onFailure={this.googleResponse}
+//           />
+        </Col>
+      </Row>
+      <br/>
+      <Row className="contentRow justify-content-md-center">
+        <Col xs={12} md={6} className="loginCol">
+          <form onSubmit={this.handleSubmit}>
           <FormGroup controlId="email" >
             <Form.Label>Email</Form.Label>
             <FormControl
@@ -93,8 +100,9 @@ export default class Login extends Component {
             Login
           </Button>
         </form>
-      </div>
-      </div>
+        </Col>   
+      </Row>
+      </Container>
     );
   }
 }

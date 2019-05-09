@@ -1,3 +1,9 @@
-.bufferForNav {
-    height: 200px
+
+.loginCol{
+    padding: 0 !important;
+}
+
+.loginContainer{
+    position: absolute;
+    top: 25%;
 }
