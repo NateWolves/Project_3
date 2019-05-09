@@ -3,6 +3,8 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import { Container, Table, Card } from "react-bootstrap"
 import Plan from "../../modals/Plan";
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 import EditTripModal from "../../modals/EditTripModal";
 import Auth from "../../utils/Auth";
 import API from "../../utils/api";
@@ -92,6 +94,12 @@ class Trips extends Component {
 
   render() {
     return (
+    <Container fluid={true} className="tripsWrapper">
+        <Container fluid={true} className="navBackground">
+          <Navbar/>
+        </Container>
+        <br/>
+        <br/>
       <Container fluid={true} className="tripsContainer">
         <Container>
           <Card.Title>My Trips</Card.Title>
@@ -156,6 +164,9 @@ class Trips extends Component {
           endDate={this.state.tripEndDate}
         />
       </Container>
+        <Footer/>
+    </Container>
+
     );
   }
 };
