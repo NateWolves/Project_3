@@ -2,10 +2,10 @@ const db = require("../models");
 
 module.exports = {
   findAllByUser: function (req, res) {
-    db.User.findOne({ userId: req.params.userId })
+    db.User.findOne({ _id: req.params.userId })
       .populate({ 
         path: "trips", 
-        options: { sort: { date: -1 } }, 
+        options: { sort: { date: -1 } },
         populate: { path: "events", options: { sort: { date: 1 } }}
       })
       .then(dbUserData => res.json(dbUserData))

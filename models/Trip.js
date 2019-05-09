@@ -18,6 +18,17 @@ const TripSchema = new Schema({
   endDate: {
     type: Date
   },
+  tripLocation:{
+      address: {
+        type: String
+      },
+      lat: {
+        type: Number
+      },
+      lon: {
+        type: Number
+      }
+  },
   events: [
     {
       type: ObjectId,
