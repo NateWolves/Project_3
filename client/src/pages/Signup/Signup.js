@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { GoogleLogin } from 'react-google-login';
-import { Button, FormGroup, FormControl, Form } from "react-bootstrap";
+import { Button, FormGroup, FormControl, Form, Container, Col, Row } from "react-bootstrap";
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 import authFunctions from '../../utils/Auth'
 import API from '../../utils/api';
 
@@ -36,39 +38,47 @@ const newUser = {
     API.createUser(newUser).then(res => {
       authFunctions.setToken(res.data.token)
       console.log(this.props)
-      this.props.history.push("/user", {})
+      this.props.history.push("/", {})
     }).catch(err => console.log(err))
   };
 
 render() {
 
 return (
-      <div className="container">
-        <div className="row">
-          <div className="col-sm-8 offset-s2">
-            <Link to="/" className="btn">
+  <Container fluid={true} className="loginContainer">
+    <Container fluid={true} className="navBackground">
+      <Navbar/>
+    </Container>
+      <br/>
+      <br/>
+    <Row className="contentRow justify-content-md-center">
+        <Col xs={12} md={3} className="loginCol">
+            <Link to="/" className="btn formText">
                Back to home
             </Link>
-            <div className="col-sm-12" style={{ paddingLeft: "11.250px" }}>
+            <div className="formText" style={{ paddingLeft: "11.250px" }}>
               <h4>
                 <b>Register</b> below
               </h4>
-              <p className="">
+              <p>
                 Already have an account? <Link to="/login">Log in</Link>
               </p>
             </div>
-                <div className="container">
-      <div className="Login">
-      <div className="d-flex justify-content-center">
-                    <GoogleLogin
-                        clientId= {process.env.AUTH_CLIENT_ID}
-                        buttonText="Login with Google"
-                        onSuccess={this.googleResponse}
-                        onFailure={this.googleResponse}
-                    />
-        </div>
-        <form onSubmit={this.onSubmit}>
-        <FormGroup controlId="name" >
+        </Col>
+        <Col xs={12} md={3} className="loginCol justify-content-md-left">
+          {/* <GoogleLogin
+              clientId= {process.env.AUTH_CLIENT_ID}
+              buttonText="Login with Google"
+              onSuccess={this.googleResponse}
+              onFailure={this.googleResponse}
+          /> */}
+        </Col>
+    </Row>
+      <br/>
+    <Row className="contentRow justify-content-md-center">
+        <Col xs={12} md={6} className="loginCol">
+          <form onSubmit={this.onSubmit}>
+          <FormGroup controlId="name" className="formText">
             <Form.Label>User Name</Form.Label>
             <FormControl
               autoFocus
@@ -77,7 +87,7 @@ return (
               onChange={this.handleChange}
             />
           </FormGroup>
-          <FormGroup controlId="email" >
+          <FormGroup controlId="email" className="formText">
             <Form.Label>Email</Form.Label>
             <FormControl
               autoFocus
@@ -86,7 +96,7 @@ return (
               onChange={this.handleChange}
             />
           </FormGroup>
-          <FormGroup controlId="password" >
+          <FormGroup controlId="password" className="formText">
             <Form.Label>Password</Form.Label>
             <FormControl
               value={this.state.password}
@@ -94,7 +104,7 @@ return (
               type="password"
             />
           </FormGroup>
-          <FormGroup controlId="password2" >
+          <FormGroup controlId="password2" className="formText">
             <Form.Label>Re-Enter Password</Form.Label>
             <FormControl
               value={this.state.password2}
@@ -111,11 +121,12 @@ return (
             Login
           </Button>
         </form>
-      </div>
-      </div>
-          </div>
-        </div>
-      </div>
+        </Col>  
+    </Row>
+        <Container fluid={true} className="footerBackground">
+          <Footer/>
+        </Container>
+  </Container>
     );
   }
 }

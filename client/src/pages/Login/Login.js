@@ -1,11 +1,12 @@
-
 import { GoogleLogin } from 'react-google-login';
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Button, FormGroup, FormControl, Form } from "react-bootstrap";
+import { Button, FormGroup, FormControl, Form, Container, Col, Row } from "react-bootstrap";
 import "./Login.css";
 import API from "../../utils/api"
 import Cookies from "js-cookie"
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 
 export default class Login extends Component {
   constructor(props) {
@@ -41,32 +42,48 @@ export default class Login extends Component {
     API.loginUser(newLogin).then(res => {
       
       Cookies.set('user', res.data.token, { expires: 5 });
+      this.props.history.push("/", {})
     }).catch(err => console.log(err))
     this.setState({email:"", password: ""})
   }
 
   render() {
     return (
-      <div className="container">
-      <div className="Login col-sm-8">
-           <Link to="/" className="btn">
+
+      <Container fluid={true} className="loginContainer">
+          <Container fluid={true} className="navBackground">
+            <Navbar/>
+          </Container>
+        <br/>
+        <br/>
+      <Row className="contentRow justify-content-md-center">
+        <Col xs={12} md={3} className="loginCol">
+           <Link to="/" className="btn formText">
                Back to home
             </Link>
-            <div className="col-sm-12" style={{ paddingLeft: "11.250px" }}>
-              <p className="">
+            <div className="formText" style={{ paddingLeft: "11.250px" }}>
+              <p>
                Don't have an account? <Link to="/signup">Sign up here!</Link>
               </p>
             </div>
-      <div className="d-flex justify-content-center">
-                    <GoogleLogin
-                        clientId= {process.env.AUTH_CLIENT_ID}
-                        buttonText="Login with Google"
-                        onSuccess={this.googleResponse}
-                        onFailure={this.googleResponse}
-                    />
-        </div>
-        <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="email" >
+
+        </Col>
+        <Col xs={12} md={3} className="loginCol justify-content-md-left">
+           {/* <GoogleLogin
+
+              clientId= {process.env.AUTH_CLIENT_ID}
+               buttonText="Login with Google"
+             onSuccess={this.googleResponse}
+             onFailure={this.googleResponse}
+         /> */}
+
+        </Col>
+      </Row>
+      <br/>
+      <Row className="contentRow justify-content-md-center">
+        <Col xs={12} md={6} className="loginCol">
+          <form onSubmit={this.handleSubmit}>
+          <FormGroup controlId="email" className="formText">
             <Form.Label>Email</Form.Label>
             <FormControl
               autoFocus
@@ -75,7 +92,7 @@ export default class Login extends Component {
               onChange={this.handleChange}
             />
           </FormGroup>
-          <FormGroup controlId="password" >
+          <FormGroup controlId="password" className="formText">
             <Form.Label>Password</Form.Label>
             <FormControl
               value={this.state.password}
@@ -91,8 +108,12 @@ export default class Login extends Component {
             Login
           </Button>
         </form>
-      </div>
-      </div>
+        </Col>  
+      </Row>
+      <Container fluid={true} className="footerBackground">
+        <Footer/>
+      </Container>
+      </Container>
     );
   }
 }

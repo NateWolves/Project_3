@@ -1,7 +1,8 @@
 import React from 'react';
 import Plan from '../../../modals/Plan';
 import { Button, ButtonToolbar } from 'react-bootstrap';
-import API from '../../utils/api';
+import Auth from '../../../utils/Auth'
+import {withRouter, Link} from 'react-router-dom'
 
 class Home extends React.Component {
 	constructor(...args) {
@@ -32,7 +33,8 @@ class Home extends React.Component {
 	render() {
 		let modalClose = () => this.setState({ modalShow: false });
 
-		return (
+		return ( Auth.loggedIn() === true 
+		?
 			<ButtonToolbar>
 				<Button
 					variant="dark"
@@ -49,6 +51,9 @@ class Home extends React.Component {
 					handleSubmit={this.handleSubmitTrip}
 				/>
 			</ButtonToolbar>
+		:<Link to="/login">
+		 <Button >Log in</Button>
+		 </Link>
 		);
 	}
 }

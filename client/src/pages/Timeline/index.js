@@ -3,21 +3,19 @@ import './timeline.css';
 import moment from 'moment';
 import TimelineItem from './TimelineItem';
 import AddEventButton from './AddEventButton';
+import {Container, Row, Col} from 'react-bootstrap';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 
 import API from '../../utils/api';
-import dummy from '../../utils/dummy';
+import AddSearchButton from './AddSearchButton';
 
-// Generate dummy data
-API.findUser("testUser")
-  .then(res => {
-    if (!res.data) {
-      dummy.createData();
-    }
-  });
+
 
 class Timeline extends Component {
   state = {
     tripId: "",
+    tripLocation: {},
     events: [],
     days: []
   };
@@ -125,7 +123,8 @@ class Timeline extends Component {
       .then(res => {
         this.setState({
           tripId: res.data._id,
-          events: res.data.events
+          events: res.data.events,
+          tripLocation: res.data.tripLocation
         }, () => {
           this.setState({
             days: this.divideIntoDays()
@@ -137,28 +136,52 @@ class Timeline extends Component {
 
   render() {
     return (
-      <div className="timeline-container">
-        <br /><br /><br /><br />
-        {
-          this.state.days.map((events, i) => {
-            return (
-              <TimelineItem
-                key={`ti-${i}`}
-                dayNum={i + 1}
-                events={events}
-                tripId={this.state.tripId}
-                handleEventDelete={this.handleEventDelete}
-                handleEventAdd={this.handleEventAdd}
-                handleEventEdit={this.handleEventEdit}
-              />
-            );
-          })
-        }
-        <AddEventButton
-          tripId={this.state.tripId}
-          handleEventAdd={this.handleEventAdd}
-        />
-      </div>
+    <Container fluid={true} className="timelineWrapper">
+        <Container fluid={true} className="navBackground">
+            <Navbar/>
+        </Container>
+        <br/>
+        <br/>
+      <Container fluid={true} className="timeline-container">
+        <Row className="timelineRow">
+          <Col className="timelineCol">
+            <AddEventButton
+              tripId={this.state.tripId}
+              handleEventAdd={this.handleEventAdd}
+            />
+            </Col>
+        
+          </Row>
+
+          <Row className="timelineRow">
+            <Col className="timelineCol">
+              {
+                this.state.days.map((events, i) => {
+                  return (
+                    <TimelineItem
+                      key={`ti-${i}`}
+                      dayNum={i + 1}
+                      events={events}
+                      tripId={this.state.tripId}
+                      handleEventDelete={this.handleEventDelete}
+                      handleEventAdd={this.handleEventAdd}
+                      handleEventEdit={this.handleEventEdit}
+                    />
+                  );
+                })
+              }
+            <AddSearchButton />
+            <AddEventButton
+              tripId={this.state.tripId}
+              tripLocation={this.state.tripLocation}
+              handleEventAdd={this.handleEventAdd}
+            />
+              </Col>
+            </Row>
+        </Container>
+        <Footer/>
+      </Container>
+
     );
   }
 };

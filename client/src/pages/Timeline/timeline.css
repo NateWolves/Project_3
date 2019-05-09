@@ -1,10 +1,11 @@
+.timelineWrapper{
+    background-image: linear-gradient(145deg, rgba(193,158,103,1),#fff 60%);
+}
 .timeline-container {
     display: flex;
     flex-direction: column;
     position: relative;
-    margin: 40px 0;
 }
-
 .timeline-container::after {
     background-color: #2e394d;
     content: '';
@@ -134,4 +135,8 @@
 
 *, ::before, ::after {
     box-sizing: content-box;
+}
+.timelineRow, .timelineCol{
+    padding: 0 !important;
+    margin: 0 !important;
 }

@@ -1,11 +1,14 @@
-import React, { Component, Fragment } from "react"
+import React, { Component} from "react"
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { Container, Table, Card } from "react-bootstrap"
 import Plan from "../../modals/Plan";
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 import EditTripModal from "../../modals/EditTripModal";
-
+import Auth from "../../utils/Auth";
 import API from "../../utils/api";
+import "./Trips.css";
 
 class Trips extends Component {
   state = {
@@ -18,6 +21,18 @@ class Trips extends Component {
     tripStartDate: "",
     tripEndDate: ""
   };
+
+  componentDidMount() {
+    const userData = Auth.getProfile()
+    this.setState({userId: userData.id}) 
+    API.findTripsByUser(userData.id)
+      .then(res => {
+        this.setState({ 
+          trips: res.data.trips
+        });
+      })
+      .catch(err => console.log(err));
+  }
 
   handleAddTripClick = () => {
     this.setState({
@@ -76,29 +91,16 @@ class Trips extends Component {
     });
   };
 
-  componentDidMount() {
-    API.findUser("testUser")
-      .then(res => {
-        this.setState({
-          userId: res.data._id
-        });
-      })
-      .catch(err => console.log(err));
-
-    API.findTripsByUser("testUser")
-      .then(res => {
-        this.setState({
-          trips: res.data.trips
-        });
-      })
-      .catch(err => console.log(err));
-  }
-
   render() {
     return (
-      <Fragment>
+    <Container fluid={true} className="tripsWrapper">
+        <Container fluid={true} className="navBackground">
+          <Navbar/>
+        </Container>
+        <br/>
+        <br/>
+      <Container fluid={true} className="tripsContainer">
         <Container>
-          <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
           <Card.Title>My Trips</Card.Title>
           <button onClick={this.handleAddTripClick}>Add trip</button>
         </Container>
@@ -160,7 +162,10 @@ class Trips extends Component {
           startDate={this.state.tripStartDate}
           endDate={this.state.tripEndDate}
         />
-      </Fragment>
+      </Container>
+        <Footer/>
+    </Container>
+
     );
   }
 };

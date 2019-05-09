@@ -4,6 +4,9 @@ const ObjectId = Schema.Types.ObjectId;
 const bcrypt = require('bcryptjs');
 
 const UserSchema = new Schema({
+  userId:{
+    type: String
+  },
   email: {
     type: String, 
     trim: true, unique: true,
