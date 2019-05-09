@@ -1,13 +1,15 @@
 import React from 'react';
 import moment from 'moment';
 import { Modal, Button } from 'react-bootstrap';
+import API from '../../utils/api'
 
 class EditEventModal extends React.Component {
   state = {
     tripId: "",
     name: "",
     startDate: "",
-    endDate: ""
+    endDate: "",
+    tripLocation: {}
   };
   parseDate = date => {
     let arr = date.split(/\D/);
@@ -25,14 +27,24 @@ class EditEventModal extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    this.props.onHide();
+    // const locationData ={}
+    // API.textSearch(this.state.name).then(res => {
+      
+    //   locationData.address = res.data.candidates[0].formatted_address;
+    //   locationData.lat = res.data.candidates[0].geometry.location.lat;
+    //   locationData.lon = res.data.candidates[0].geometry.location.lng;
+		
+    // }).catch(err => console.log(err))
 
-    this.props.handleEditTrip({
-      _id: this.props.tripId,
-      name: this.state.name,
-      startDate: this.parseDate(this.state.startDate),
-      endDate: this.parseDate(this.state.endDate)
-    });
+    this.props.onHide();
+      this.props.handleEditTrip({
+        _id: this.props.tripId,
+        name: this.state.name,
+        // tripLocation: locationData,
+        startDate: this.parseDate(this.state.startDate),
+        endDate: this.parseDate(this.state.endDate)
+      });
+   
   };
 
   componentWillReceiveProps() {
@@ -61,12 +73,12 @@ class EditEventModal extends React.Component {
         <Modal.Body>
 
           <form onSubmit={this.handleSubmit}>
-            <label htmlFor="event">What are you doing?</label>
+            <label htmlFor="event">Let us know where you'll be staying.</label>
             <br />
             <input style={inputStyle} name="name" value={this.state.name} onChange={this.handleChange}></input>
 
             <br />
-
+            <p>And for how long.</p>
             <div style={dateStyle}>
               <label htmlFor="Start" className="col-6 col-form-label">Start date</label>
               <div className="col-7">

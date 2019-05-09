@@ -8,19 +8,14 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 
 import API from '../../utils/api';
-import dummy from '../../utils/dummy';
+import AddSearchButton from './AddSearchButton';
 
-// Generate dummy data
-API.findUser("testUser")
-  .then(res => {
-    if (!res.data) {
-      dummy.createData();
-    }
-  });
+
 
 class Timeline extends Component {
   state = {
     tripId: "",
+    tripLocation: {},
     events: [],
     days: []
   };
@@ -128,7 +123,8 @@ class Timeline extends Component {
       .then(res => {
         this.setState({
           tripId: res.data._id,
-          events: res.data.events
+          events: res.data.events,
+          tripLocation: res.data.tripLocation
         }, () => {
           this.setState({
             days: this.divideIntoDays()
@@ -174,11 +170,18 @@ class Timeline extends Component {
                   );
                 })
               }
+            <AddSearchButton />
+            <AddEventButton
+              tripId={this.state.tripId}
+              tripLocation={this.state.tripLocation}
+              handleEventAdd={this.handleEventAdd}
+            />
               </Col>
             </Row>
         </Container>
         <Footer/>
       </Container>
+
     );
   }
 };

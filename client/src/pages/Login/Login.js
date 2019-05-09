@@ -42,12 +42,14 @@ export default class Login extends Component {
     API.loginUser(newLogin).then(res => {
       
       Cookies.set('user', res.data.token, { expires: 5 });
+      this.props.history.push("/", {})
     }).catch(err => console.log(err))
     this.setState({email:"", password: ""})
   }
 
   render() {
     return (
+
       <Container fluid={true} className="loginContainer">
           <Container fluid={true} className="navBackground">
             <Navbar/>
@@ -64,14 +66,15 @@ export default class Login extends Component {
                Don't have an account? <Link to="/signup">Sign up here!</Link>
               </p>
             </div>
+
         </Col>
         <Col xs={12} md={3} className="loginCol justify-content-md-left">
-          <GoogleLogin
-              clientId= {process.env.AUTH_CLIENT_ID}
-              buttonText="Login with Google"
-              onSuccess={this.googleResponse}
-              onFailure={this.googleResponse}
-          />
+//           <GoogleLogin
+//               clientId= {process.env.AUTH_CLIENT_ID}
+//               buttonText="Login with Google"
+//               onSuccess={this.googleResponse}
+//               onFailure={this.googleResponse}
+//           />
         </Col>
       </Row>
       <br/>

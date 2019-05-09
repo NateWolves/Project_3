@@ -6,7 +6,7 @@ import Plan from "../../modals/Plan";
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import EditTripModal from "../../modals/EditTripModal";
-
+import Auth from "../../utils/Auth";
 import API from "../../utils/api";
 import EditEventModal from "../../modals/EditEventModal";
 import "./Trips.css";
@@ -22,6 +22,18 @@ class Trips extends Component {
     tripStartDate: "",
     tripEndDate: ""
   };
+
+  componentDidMount() {
+    const userData = Auth.getProfile()
+    this.setState({userId: userData.id}) 
+    API.findTripsByUser(userData.id)
+      .then(res => {
+        this.setState({ 
+          trips: res.data.trips
+        });
+      })
+      .catch(err => console.log(err));
+  }
 
   handleAddTripClick = () => {
     this.setState({
@@ -79,24 +91,6 @@ class Trips extends Component {
       editModalShow: false
     });
   };
-
-  componentDidMount() {
-    API.findUser("testUser")
-      .then(res => {
-        this.setState({
-          userId: res.data._id
-        });
-      })
-      .catch(err => console.log(err));
-
-    API.findTripsByUser("testUser")
-      .then(res => {
-        this.setState({
-          trips: res.data.trips
-        });
-      })
-      .catch(err => console.log(err));
-  }
 
   render() {
     return (

@@ -38,7 +38,7 @@ const newUser = {
     API.createUser(newUser).then(res => {
       authFunctions.setToken(res.data.token)
       console.log(this.props)
-      this.props.history.push("/user", {})
+      this.props.history.push("/", {})
     }).catch(err => console.log(err))
   };
 

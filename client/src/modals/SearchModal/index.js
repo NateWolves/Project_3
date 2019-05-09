@@ -1,8 +1,7 @@
 import React from 'react';
 import { Modal, Button, ButtonToolbar } from 'react-bootstrap';
-import Event from "../modals/AddEventModal"
-import api from '../../utils/api';
-
+import API from '../../utils/api';
+import Event from '../../modals/AddEventModal';
 
 class SearchModal extends React.Component {
 
@@ -20,7 +19,7 @@ class SearchModal extends React.Component {
 			  startDate:"",
 			  endDate:""
         },
-        results: {}
+        results: []
    
 	}
 
@@ -38,9 +37,10 @@ class SearchModal extends React.Component {
 		// event.preventDefault();
         let search = this.state.search
 		this.googleSearch(search)
-    }
+		}
+		
 	googleSearch(query) {
-		api.textSearch(query).then(res =>{
+		API.textSearch(query).then(res =>{
         console.log(res.data)
          this.setState({results:  res.data.candidates})
         }).catch(err => console.log(err))
@@ -60,7 +60,7 @@ class SearchModal extends React.Component {
         		    </Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<h4>What would you like to do?</h4>
+					<h4>Search for a place you would like to visit!</h4>
 
 					<form>
                     <div className="form-group row">
@@ -70,16 +70,32 @@ class SearchModal extends React.Component {
                     </div>
                     </div>
 					</form>
+					<div className="searchResults">
+						{this.state.results.map(result => (
+							<div>
+							<p>Would you like to add this to your events?</p>
+							<p>{result.name}</p>
+							<p>{result.formatted_address}</p>
+							<p>{result.rating}</p>
+							{/* <p>{result.opening_hours}</p> */}
+							<ButtonToolbar>
+							<AddEvent
+                        style={btnStyle}
+                        className="btn"
+                        name={result.name}
+                        type={result.type}
+                        location={result.location}>
+                          Add Event
+                      </AddEvent>
+											</ButtonToolbar>
+							</div>
+						))}
+					</div>
 				</Modal.Body>
 				<Modal.Footer>
 					<Button onClick={this.props.onHide}>Close</Button>
-					<Button onClick={() => this.handleSubmit()}>Save</Button>
+					<Button onClick={() => this.handleSubmit()}>Search</Button>
 				</Modal.Footer>
-                <div className="container">
-                {this.state.results}
-                <AddEvent style={btnStyle} className="btn" >Add Event</AddEvent>
-                </div>
-
 			</Modal>
 		);
 	}
@@ -91,33 +107,37 @@ const btnStyle = {
 	color: "black"
 }
 class AddEvent extends React.Component {
-    constructor(...args) {
-      super(...args);
-  
-      this.state = { modalShow: false };
-    }
-  
-    render() {
-      let modalClose = () => this.setState({ modalShow: false });
-      return (
-        <ButtonToolbar>
-          <Button
-            variant="primary"
-            onClick={() => this.setState({ modalShow: true })}
-            style={btnStyle}
-          >
-            Add Event
-                  </Button>
-  
-          <Event
-            show={this.state.modalShow}
-            onHide={modalClose}
-            tripId={this.props.tripId}
-          />
-        </ButtonToolbar>
-      );
-    }
+  constructor(...args) {
+    super(...args);
+
+    this.state = { modalShow: false };
   }
+
+  render() {
+    let modalClose = () => this.setState({ modalShow: false });
+    return (
+      <ButtonToolbar>
+        <Button
+          variant="primary"
+          onClick={() => this.setState({ modalShow: true })}
+          style={btnStyle}
+        >
+          Add Event
+        </Button>
+
+        <Event
+          name={this.props.name}
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
+          type={this.props.type}
+          show={this.state.modalShow}
+          tripId={this.props.tripId}
+          onHide={modalClose}
+        />
+      </ButtonToolbar>
+    );
+  }
+}
 
 
 export default SearchModal;
