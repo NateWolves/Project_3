@@ -41,6 +41,7 @@ export default class Login extends Component {
     API.loginUser(newLogin).then(res => {
       
       Cookies.set('user', res.data.token, { expires: 5 });
+      this.props.history.push("/", {})
     }).catch(err => console.log(err))
     this.setState({email:"", password: ""})
   }
@@ -48,6 +49,7 @@ export default class Login extends Component {
   render() {
     return (
       <div className="container">
+      <div className="bufferForNav"></div>
       <div className="Login col-sm-8">
            <Link to="/" className="btn">
                Back to home
@@ -58,12 +60,12 @@ export default class Login extends Component {
               </p>
             </div>
       <div className="d-flex justify-content-center">
-                    <GoogleLogin
+                    {/* <GoogleLogin
                         clientId= {process.env.AUTH_CLIENT_ID}
                         buttonText="Login with Google"
                         onSuccess={this.googleResponse}
                         onFailure={this.googleResponse}
-                    />
+                    /> */}
         </div>
         <form onSubmit={this.handleSubmit}>
           <FormGroup controlId="email" >

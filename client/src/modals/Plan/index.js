@@ -2,13 +2,26 @@ import React from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
+import Auth from '../../utils/Auth'
+import API from '../../utils/api'
 
 class Plan extends React.Component {
 	state = {
 		place: "",
 		startDate: moment().add(1, "d").format("YYYY-MM-DD"),
-		endDate: moment().add(2, "d").format("YYYY-MM-DD")
+		endDate: moment().add(2, "d").format("YYYY-MM-DD"),
+		loggedIn: false,
+		user: {}
 	}
+
+	componentDidMount(){
+		const bool = Auth.loggedIn();
+		this.setState({loggedIn: bool})
+		if (bool){ 
+		const userData = Auth.getProfile()
+		this.setState({user: userData}) }
+	}
+
 
 	handleChange = event => {
 		const { name, value } = event.target;
@@ -20,17 +33,21 @@ class Plan extends React.Component {
 
 	handleSubmit = event => {
 		event.preventDefault();
-
+		API.textSearch(this.state.place).then(res => {
 		let newTrip = {
-			userId: this.props.userId,
+			userId: this.state.user.id,
 			name: this.state.place,
+			tripLocation:{
+				address: res.data.candidates[0].formatted_address,
+				lat: res.data.candidates[0].geometry.location.lat,
+				lon: res.data.candidates[0].geometry.location.lng
+			},
 			startDate: this.state.startDate,
 			endDate: this.state.endDate
-		};
-
+		};	
 		console.log(newTrip)
-
-		this.props.handleSubmit(newTrip);
+		API.createTrip(newTrip).then(res => console.log(res)).catch(err => console.log(err));
+		}).catch(err => console.log(err))
 	};
 
 	render() {
@@ -49,7 +66,7 @@ class Plan extends React.Component {
         		    </Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<h5>Where are you going?</h5>
+					<h5>Where will you going?</h5>
 
 					<form>
 						<div className="form-group">
@@ -61,7 +78,7 @@ class Plan extends React.Component {
 								className="form-control"
 								id="destinationInput"
 								onChange={this.handleChange}
-								placeholder="Paris France">
+								placeholder="The Hoxton, Paris France">
 							</input>
 						</div>
 						<div className="form-group">
@@ -100,7 +117,7 @@ class Plan extends React.Component {
 				<Modal.Footer>
 					<Button style={btnStyle} onClick={this.props.onHide}>Close</Button>
 					<Button style={btnStyle} onClick={this.handleSubmit} >
-						<Link style={saveStyle} to="/trips">
+						<Link style={saveStyle} to={`/trips`}>
 							Save
                         </Link>
 					</Button>

@@ -26,23 +26,23 @@ function NavBar(props) {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link>
+            
               {
                 !Auth.loggedIn() &&
-                <button className="navbtn" href="/signup" >Sign In</button>
+                <Nav.Link href="/login"> Sign In </Nav.Link>
               }
               {
                 Auth.loggedIn() &&
-                <div>
+                <span className="navbtn nav-link">
                   <Link
                     to="/trips"
                     className="mr-2 text-white">
                       {Auth.getProfile().name}
                   </Link>
                   <button className="navbtn" onClick={() => { signOut() }}>Sign Out</button>
-                </div>
+                </span>
               }
-            </Nav.Link>
+            
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -36,7 +36,7 @@ const newUser = {
     API.createUser(newUser).then(res => {
       authFunctions.setToken(res.data.token)
       console.log(this.props)
-      this.props.history.push("/user", {})
+      this.props.history.push("/", {})
     }).catch(err => console.log(err))
   };
 
@@ -44,6 +44,7 @@ render() {
 
 return (
       <div className="container">
+      <div className="bufferForNav" style={{height : "200px" }}></div>
         <div className="row">
           <div className="col-sm-8 offset-s2">
             <Link to="/" className="btn">
@@ -53,19 +54,19 @@ return (
               <h4>
                 <b>Register</b> below
               </h4>
-              <p className="">
+              <p style={{paddingTop:"10px"}}>
                 Already have an account? <Link to="/login">Log in</Link>
               </p>
             </div>
                 <div className="container">
       <div className="Login">
       <div className="d-flex justify-content-center">
-                    <GoogleLogin
+                    {/* <GoogleLogin
                         clientId= {process.env.AUTH_CLIENT_ID}
                         buttonText="Login with Google"
                         onSuccess={this.googleResponse}
                         onFailure={this.googleResponse}
-                    />
+                    /> */}
         </div>
         <form onSubmit={this.onSubmit}>
         <FormGroup controlId="name" >
