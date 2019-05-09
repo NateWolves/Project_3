@@ -1,15 +1,8 @@
 import React from 'react';
 import Plan from '../../../modals/Plan';
 import { Button, ButtonToolbar } from 'react-bootstrap';
-
-// function Home() {
-//     return (
-//         <div id="home">
-// 		<br/><br/><br/>
-//             <PlanTrip />
-//         </div>
-//     )
-// }
+import Auth from '../../../utils/Auth'
+import {withRouter, Link} from 'react-router-dom'
 
 class Home extends React.Component {
 	constructor(...args) {
@@ -21,7 +14,8 @@ class Home extends React.Component {
 	render() {
 		let modalClose = () => this.setState({ modalShow: false });
 
-		return (
+		return ( Auth.loggedIn() === true 
+		?
 			<ButtonToolbar>
 				<Button
 					variant="dark"
@@ -36,6 +30,9 @@ class Home extends React.Component {
 					onHide={modalClose}
 				/>
 			</ButtonToolbar>
+		:<Link to="/login">
+		 <Button >Log in</Button>
+		 </Link>
 		);
 	}
 }

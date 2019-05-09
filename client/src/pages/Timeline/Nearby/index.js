@@ -36,7 +36,7 @@ class NearbyModal extends React.Component {
 
   handleSubmit() {
     // event.preventDefault();
-
+    console.log(this.props)
     // hard coding location until we can populate previous event coords
     let defaultLocation = "-33.8670522,151.1957362"
 

@@ -46,6 +46,9 @@ export default {
     return axios.get(`/api/googleSearch/nearby/${search}`)
   },
   textSearch: function(query) {
-    return axios.get(`/api/googleSearch/location/${query}`)
+    return axios.get(`/api/googleSearch/location/?search=${query}`)
+  },
+  photoSearch: function(query){
+    return axios.get(`/api/googleSearch/photo/?photo=${query}`)
   }
 }
