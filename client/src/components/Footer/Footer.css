@@ -1,10 +1,17 @@
-/* #footer {
-    position: fixed;
+#footer{
+    position: relative;
+    bottom:0;
+    min-height: 140px;
+    margin-top: 150px;
+}
+.footerContainer{
+    position: absolute;
     bottom: 0;
-    padding: 10px;
-    background-color: white;
-} */
-
+    left: 0;
+    right: 0;
+    min-height: 120px;
+    overflow: hidden;
+}
 .heading, .footerList{
     color:#5b5546;
 }
