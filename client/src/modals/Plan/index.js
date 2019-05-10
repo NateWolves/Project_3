@@ -14,14 +14,14 @@ class Plan extends React.Component {
 		user: {}
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		const bool = Auth.loggedIn();
-		this.setState({loggedIn: bool})
-		if (bool){ 
-		const userData = Auth.getProfile()
-		this.setState({user: userData}) }
+		this.setState({ loggedIn: bool })
+		if (bool) {
+			const userData = Auth.getProfile()
+			this.setState({ user: userData })
+		}
 	}
-
 
 	handleChange = event => {
 		const { name, value } = event.target;
@@ -33,21 +33,25 @@ class Plan extends React.Component {
 
 	handleSubmit = event => {
 		event.preventDefault();
-		API.textSearch(this.state.place).then(res => {
-		let newTrip = {
-			userId: this.state.user.id,
-			name: this.state.place,
-			tripLocation:{
-				address: res.data.candidates[0].formatted_address,
-				lat: res.data.candidates[0].geometry.location.lat,
-				lon: res.data.candidates[0].geometry.location.lng
-			},
-			startDate: this.state.startDate,
-			endDate: this.state.endDate
-		};	
-		console.log(newTrip)
-		API.createTrip(newTrip).then(res => console.log(res)).catch(err => console.log(err));
-		}).catch(err => console.log(err))
+		API.textSearch(this.state.place)
+			.then(res => {
+				let newTrip = {
+					userId: this.state.user.id,
+					name: this.state.place,
+					startDate: this.state.startDate,
+					endDate: this.state.endDate
+				};
+				if (res.data.candidates[0]) {
+					newTrip.tripLocation = {
+						address: res.data.candidates[0].formatted_address,
+						lat: res.data.candidates[0].geometry.location.lat,
+						lon: res.data.candidates[0].geometry.location.lng
+					}
+				}
+				console.log(newTrip)
+				this.props.handleSubmitTrip(newTrip);
+			})
+			.catch(err => console.log(err))
 	};
 
 	render() {
