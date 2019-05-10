@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
+import { Router, Redirect, Link } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import Auth from '../../utils/Auth'
 import API from '../../utils/api'
@@ -11,17 +11,18 @@ class Plan extends React.Component {
 		startDate: moment().add(1, "d").format("YYYY-MM-DD"),
 		endDate: moment().add(2, "d").format("YYYY-MM-DD"),
 		loggedIn: false,
-		user: {}
+		user: {},
+		readyToRoute: false
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		const bool = Auth.loggedIn();
-		this.setState({loggedIn: bool})
-		if (bool){ 
-		const userData = Auth.getProfile()
-		this.setState({user: userData}) }
+		this.setState({ loggedIn: bool })
+		if (bool) {
+			const userData = Auth.getProfile()
+			this.setState({ user: userData })
+		}
 	}
-
 
 	handleChange = event => {
 		const { name, value } = event.target;
@@ -33,25 +34,37 @@ class Plan extends React.Component {
 
 	handleSubmit = event => {
 		event.preventDefault();
-		API.textSearch(this.state.place).then(res => {
-		let newTrip = {
-			userId: this.state.user.id,
-			name: this.state.place,
-			tripLocation:{
-				address: res.data.candidates[0].formatted_address,
-				lat: res.data.candidates[0].geometry.location.lat,
-				lon: res.data.candidates[0].geometry.location.lng
-			},
-			startDate: this.state.startDate,
-			endDate: this.state.endDate
-		};	
-		console.log(newTrip)
-		API.createTrip(newTrip).then(res => console.log(res)).catch(err => console.log(err));
-		}).catch(err => console.log(err))
+		API.textSearch(this.state.place)
+			.then(res => {
+				let newTrip = {
+					userId: this.state.user.id,
+					name: this.state.place,
+					startDate: this.state.startDate,
+					endDate: this.state.endDate
+				};
+				if (res.data.candidates[0]) {
+					newTrip.tripLocation = {
+						address: res.data.candidates[0].formatted_address,
+						lat: res.data.candidates[0].geometry.location.lat,
+						lon: res.data.candidates[0].geometry.location.lng
+					}
+				}
+				console.log(newTrip)
+				if (this.props.handleSubmitTrip) {
+					this.props.handleSubmitTrip(newTrip);
+				} else {
+					API.createTrip(newTrip)
+						.then(res => {
+							this.setState({
+								readyToRoute: true
+							});
+						});
+				}
+			})
+			.catch(err => console.log(err))
 	};
 
 	render() {
-
 		return (
 			<Modal
 				show={this.props.show}
@@ -116,12 +129,15 @@ class Plan extends React.Component {
 				</Modal.Body>
 				<Modal.Footer>
 					<Button style={btnStyle} onClick={this.props.onHide}>Close</Button>
-					<Button style={btnStyle} onClick={this.handleSubmit} >
-						<Link style={saveStyle} to={`/trips`}>
-							Save
-                        </Link>
+					<Button style={btnStyle} onClick={this.handleSubmit}>
+						Save
 					</Button>
 				</Modal.Footer>
+					{
+						this.state.readyToRoute && (
+							<Redirect to="/trips"/>
+						)
+					}
 			</Modal>
 		);
 	}

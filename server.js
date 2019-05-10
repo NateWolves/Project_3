@@ -19,9 +19,13 @@ const corsOption = {
   exposedHeaders: ['x-auth-token']
 };
 
+app.use(cors(corsOption));
+
 // Define middleware here
 app.use(logger('dev'))
 app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Passport.js setup
 app.use(session({
@@ -40,7 +44,7 @@ if (process.env.NODE_ENV === "production") {
 app.use(routes);
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/reactreadinglist", { useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/compass", { useNewUrlParser: true, useCreateIndex: true });
 
 // Start the API server
 app.listen(PORT, function() {
