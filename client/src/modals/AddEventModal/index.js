@@ -6,10 +6,16 @@ class AddEventModal extends React.Component {
 	state = {
 		tripId: this.props.tripId,
 		event: this.props.name,
-		day: moment(this.props.startDate).format("YYYY-MM-DD"),
-		startTime: moment(this.props.startDate).format("H:mm"),
-		endTime: moment(this.props.startDate).format("H:mm")
+		day: "",
+		startTime: "10:00",
+		endTime: "11:00"
 	};
+
+	parseDate = (date, time) => {
+		let d = date.split(/\D/);
+		let t = time.split(/\D/);
+    return new Date(d[0], --d[1], d[2], t[0], t[1]);
+  }
 
 	handleChange = event => {
 		const { name, value } = event.target;
@@ -23,28 +29,27 @@ class AddEventModal extends React.Component {
 		event.preventDefault();
 
 		this.props.onHide();
+		console.log(this.parseDate(this.state.day, this.state.startTime))
 
 		this.props.handleEventAdd({
 			name: this.state.event,
 			tripId: this.props.tripId,
 			type: "event",
-			startDate: this.state.start,
-			endDate: this.state.end
+			startDate: this.parseDate(this.state.day, this.state.startTime),
+			endDate: this.parseDate(this.state.day, this.state.endTime)
 		});
 
 		this.setState({
 			event: "",
-			start: "",
-			end: ""
+			startTime: "10:00",
+			endTime: "11:00"
 		});
 	}
 
-	componentDidMount() {
+	componentWillReceiveProps() {
 		this.setState({
-			day: moment(this.props.startDate).format("YYYY-MM-DD"),
-			startTime: moment(this.props.startDate).format("H:mm"),
-			endTime: moment(this.props.startDate).format("H:mm")
-		})
+			day: moment(this.props.startDate).format("YYYY-MM-DD")
+		});
 	}
 
 	render() {

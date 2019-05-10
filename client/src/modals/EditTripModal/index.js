@@ -11,6 +11,7 @@ class EditEventModal extends React.Component {
     endDate: "",
     tripLocation: {}
   };
+  
   parseDate = date => {
     let arr = date.split(/\D/);
     return new Date(arr[0], --arr[1], arr[2]);

@@ -65,6 +65,9 @@ class Timeline extends Component {
           new Date(newEvents[i].startDate).getTime()) {
           newEvents.splice(i, 0, eventObj)
           break;
+        } 
+        if (i + 1 === newEvents.length) {
+          newEvents.splice(i, 0, eventObj)
         }
       }
     } else {
