@@ -31,7 +31,7 @@ class Home extends React.Component {
 				/>
 			</ButtonToolbar>
 		:<Link to="/login">
-		 <Button >Log in</Button>
+			<Button >Log in</Button>
 		 </Link>
 		);
 	}

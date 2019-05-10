@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
+import { Router, Redirect, Link } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import Auth from '../../utils/Auth'
 import API from '../../utils/api'
@@ -11,7 +11,8 @@ class Plan extends React.Component {
 		startDate: moment().add(1, "d").format("YYYY-MM-DD"),
 		endDate: moment().add(2, "d").format("YYYY-MM-DD"),
 		loggedIn: false,
-		user: {}
+		user: {},
+		readyToRoute: false
 	}
 
 	componentDidMount() {
@@ -49,13 +50,21 @@ class Plan extends React.Component {
 					}
 				}
 				console.log(newTrip)
-				this.props.handleSubmitTrip(newTrip);
+				if (this.props.handleSubmitTrip) {
+					this.props.handleSubmitTrip(newTrip);
+				} else {
+					API.createTrip(newTrip)
+						.then(res => {
+							this.setState({
+								readyToRoute: true
+							});
+						});
+				}
 			})
 			.catch(err => console.log(err))
 	};
 
 	render() {
-
 		return (
 			<Modal
 				show={this.props.show}
@@ -120,12 +129,15 @@ class Plan extends React.Component {
 				</Modal.Body>
 				<Modal.Footer>
 					<Button style={btnStyle} onClick={this.props.onHide}>Close</Button>
-					<Button style={btnStyle} onClick={this.handleSubmit} >
-						<Link style={saveStyle} to={`/trips`}>
-							Save
-                        </Link>
+					<Button style={btnStyle} onClick={this.handleSubmit}>
+						Save
 					</Button>
 				</Modal.Footer>
+					{
+						this.state.readyToRoute && (
+							<Redirect to="/trips"/>
+						)
+					}
 			</Modal>
 		);
 	}
