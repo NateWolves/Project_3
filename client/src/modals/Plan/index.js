@@ -24,6 +24,11 @@ class Plan extends React.Component {
 		}
 	}
 
+	parseDate = date => {
+    let arr = date.split(/\D/);
+    return new Date(arr[0], --arr[1], arr[2]);
+  }
+
 	handleChange = event => {
 		const { name, value } = event.target;
 
@@ -39,8 +44,8 @@ class Plan extends React.Component {
 				let newTrip = {
 					userId: this.state.user.id,
 					name: this.state.place,
-					startDate: this.state.startDate,
-					endDate: this.state.endDate
+					startDate: this.parseDate(this.state.startDate),
+					endDate: this.parseDate(this.state.endDate)
 				};
 				if (res.data.candidates[0]) {
 					newTrip.tripLocation = {
