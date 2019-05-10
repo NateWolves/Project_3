@@ -15,6 +15,7 @@ import AddSearchButton from './AddSearchButton';
 class Timeline extends Component {
   state = {
     tripId: "",
+    tripStartDate: "",
     tripLocation: {},
     events: [],
     days: []
@@ -123,6 +124,7 @@ class Timeline extends Component {
       .then(res => {
         this.setState({
           tripId: res.data._id,
+          tripStartDate: res.data.startDate,
           events: res.data.events,
           tripLocation: res.data.tripLocation
         }, () => {
@@ -175,6 +177,7 @@ class Timeline extends Component {
               tripId={this.state.tripId}
               tripLocation={this.state.tripLocation}
               handleEventAdd={this.handleEventAdd}
+              startDate={this.state.tripStartDate}
             />
               </Col>
             </Row>

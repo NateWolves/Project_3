@@ -6,8 +6,9 @@ class AddEventModal extends React.Component {
 	state = {
 		tripId: this.props.tripId,
 		event: this.props.name,
-		startDate: moment(this.props.startDate).format("YYYY-MM-DDTHH:mm"),
-    endDate: moment(this.props.endDate).format("YYYY-MM-DDTHH:mm")
+		day: moment(this.props.startDate).format("YYYY-MM-DD"),
+		startTime: moment(this.props.startDate).format("H:mm"),
+		endTime: moment(this.props.startDate).format("H:mm")
 	};
 
 	handleChange = event => {
@@ -27,8 +28,8 @@ class AddEventModal extends React.Component {
 			name: this.state.event,
 			tripId: this.props.tripId,
 			type: "event",
-			startDate: this.state.start || Date.now(),
-			endDate: this.state.end || Date.now()
+			startDate: this.state.start,
+			endDate: this.state.end
 		});
 
 		this.setState({
@@ -36,7 +37,15 @@ class AddEventModal extends React.Component {
 			start: "",
 			end: ""
 		});
-	};
+	}
+
+	componentDidMount() {
+		this.setState({
+			day: moment(this.props.startDate).format("YYYY-MM-DD"),
+			startTime: moment(this.props.startDate).format("H:mm"),
+			endTime: moment(this.props.startDate).format("H:mm")
+		})
+	}
 
 	render() {
 		return (
@@ -61,31 +70,44 @@ class AddEventModal extends React.Component {
 
 						<br />
 
-						<div style={dateStyle}>
-							<label htmlFor="Start" className="col-6 col-form-label">Start date</label>
-							<div className="col-7">
+						<div style={inputStyle}>
+							<label htmlFor="day-input" className="col-form-label">Date</label>
+							<div>
 								<input
-									name="startDate"
+									name="day"
 									className="form-control"
-									type="datetime-local"
-									value={this.state.startDate}
+									type="date"
+									value={this.state.day}
 									onChange={this.handleChange}
-									id="start-date-input">
+									id="day-input">
 								</input>
 							</div>
-
 						</div>
 
 						<div style={dateStyle}>
-							<label htmlFor="End" className="col-6 col-form-label">End date</label>
+							<label htmlFor="Start" className="col-6 col-form-label">Start time</label>
 							<div className="col-7">
 								<input
-									name="endDate"
+									name="startTime"
 									className="form-control"
-									type="datetime-local"
-									value={this.state.endDate}
+									type="time"
+									value={this.state.startTime}
 									onChange={this.handleChange}
-									id="end-date-input">
+									id="start-time-input">
+								</input>
+							</div>
+						</div>
+
+						<div style={dateStyle}>
+							<label htmlFor="End" className="col-6 col-form-label">End time</label>
+							<div className="col-7">
+								<input
+									name="endTime"
+									className="form-control"
+									type="time"
+									value={this.state.endTime}
+									onChange={this.handleChange}
+									id="end-time-input">
 								</input>
 							</div>
 
