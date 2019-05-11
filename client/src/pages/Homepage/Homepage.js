@@ -5,10 +5,9 @@ import Anime from 'react-anime';
 import Home from './Home';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-
 import compass from './images/compass.jpg';
-import traveller from './images/traveller.jpg';
 import Day1 from './images/Day1.png';
+import traveller from './images/traveller.jpg';
 import map from './images/map.jpg';
 import sky from './images/sky.jpg';
 
@@ -16,13 +15,12 @@ import './Homepage.css';
 
 
 class Homepage extends Component{
-
 render(){
     let animeFade={
         opacity: [0,1],
         translateZ: 0,
         easing: "easeInOutSine",
-        duration: 3550,
+        duration: 3150,
     };
     return (
         <Container fluid={true} id="top" className="mainContainer">
@@ -39,17 +37,18 @@ render(){
                     </div>
                 </Anime>
             </Parallax>
-                <br/>
+            <br/>
+            <br/>
             <Row className="contentRow justify-content-md-center" style={{minHeight: 850}}>
                 <Col xs={12} md={6} className="contentCol">
-
+                    <Image className="contentImg" src={traveller} fluid/>
+                </Col>
+                <Col xs={12} md={6} className="contentCol">
                     <div className="textContainer">
+                        <h1 className="subText">Plan</h1>
                         <h4 className="contentText">Make planning your next trip easier.</h4>
                         <h4 className="contentText">Search for top attractions, local eateries, and more!</h4>
                     </div>
-                </Col>
-                <Col xs={12} md={6} className="contentCol">
-                    <Image className="contentImg" src={traveller} fluid/>
                 </Col>
             </Row>
             <br/>
@@ -60,6 +59,7 @@ render(){
             <Row className="contentRow justify-content-md-center" style={{minHeight: 850}}>
                 <Col xs={12} md={6} className="contentCol">
                     <div className="textContainer">
+                        <h1 className="subText">Organize</h1>
                         <h4 className="contentText">Just look up your destination and enter the duration of your stay.</h4>
                         <h4 className="contentText">And Compass will generate a timeline for you to fill in and keep track
                             of your day-to-day activities.</h4>

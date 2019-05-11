@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 
 // import Header from './components/Header';
@@ -11,8 +11,8 @@ import Timeline from './pages/Timeline';
 import Callback from './components/Callback';
 import SecuredRoute from './components/SecuredRoute';
 import Trips from './pages/Trips';
-import { ParallaxProvider } from 'react-scroll-parallax';
 import Signup from './pages/Signup'
+import Anime from 'react-anime';
 
 
 class App extends Component {
@@ -44,19 +44,52 @@ class App extends Component {
   //   })
   // };
 
+
   render() {
+
+    let animeTransitions={
+      duration: 1100,
+			easing: 'easeInOutSine',
+			translateY: ['200vh',0]
+    };
+
+    let animeHome={
+      duration: 1100,
+			easing: 'easeInOutSine',
+			translateX: ['-200vh',0]
+    };
+    
+    let animeTimeline={
+      duration: 1100,
+			easing: 'easeInOutSine',
+			translateX: ['200vh',0]
+    };
     return (
-      <ParallaxProvider>
         <Router>
-          <Route exact path='/' component={Home} />
-          <Route exact path='/signup' component={Signup} />
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/timeline' component={Timeline} />
-          <Route exact path='/callback' component={Callback} />
-          <SecuredRoute exact path='/trips' component={Trips} />
-          <Route exact path='/trips/:id' component={Timeline} />
+          <Anime {...animeHome}>
+            <div>
+              <Route exact path='/' component={Home} />
+            </div>
+          </Anime>
+
+              <Route exact path='/signup' component={Signup} />
+
+          <Anime {...animeTimeline}>
+            <div>
+              <Route exact path='/timeline' component={Timeline} />
+            </div>
+          </Anime>
+
+          <Anime {...animeTransitions}>
+            <div>
+              <Route exact path='/login' component={Login} />
+              <Route exact path='/callback' component={Callback} />
+              <SecuredRoute exact path='/trips' component={Trips} />
+              <Route exact path='/trips/:id' component={Timeline} />
+            </div>
+          </Anime>
+
         </Router>
-      </ParallaxProvider>
     );
   }
 }

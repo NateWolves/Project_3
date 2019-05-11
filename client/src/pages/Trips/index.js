@@ -93,7 +93,7 @@ class Trips extends Component {
 
   render() {
     return (
-    <Container fluid={true} className="tripsWrapper">
+    <Container fluid={true} className="tripsWrapper" style={{minHeight: '100vh'}}>
         <Container fluid={true} className="navBackground">
           <Navbar/>
         </Container>
@@ -163,7 +163,9 @@ class Trips extends Component {
           endDate={this.state.tripEndDate}
         />
       </Container>
-        <Footer/>
+      <Container fluid={true} className="footerBackground">
+          <Footer/>
+        </Container>
     </Container>
 
     );
