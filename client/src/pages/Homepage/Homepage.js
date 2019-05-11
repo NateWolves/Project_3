@@ -20,7 +20,7 @@ render(){
         opacity: [0,1],
         translateZ: 0,
         easing: "easeInOutSine",
-        duration: 2050,
+        duration: 3150,
     };
     return (
         <Container fluid={true} id="top" className="mainContainer">

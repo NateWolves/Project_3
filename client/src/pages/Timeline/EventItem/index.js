@@ -116,7 +116,7 @@ const EventItem = props => {
               Remove
             </button>
 
-            <AddNearbyButton style={btnStyles} />
+            {/* <AddNearbyButton style={btnStyles} /> */}
 
           </ButtonToolbar>
 
