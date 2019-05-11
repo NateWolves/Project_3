@@ -150,15 +150,20 @@ class Timeline extends Component {
       <Container fluid={true} className="timeline-container">
         <Row className="timelineRow">
           <Col className="timelineCol">
-            <AddEventButton
+            {/* <AddEventButton
               tripId={this.state.tripId}
               handleEventAdd={this.handleEventAdd}
+            /> */}
+            <AddSearchButton />
+            <AddEventButton
+              tripId={this.state.tripId}
+              tripLocation={this.state.tripLocation}
+              handleEventAdd={this.handleEventAdd}
+              startDate={this.state.tripStartDate}
             />
-            </Col>
-        
-          </Row>
-
-          <Row className="timelineRow">
+          </Col>
+        </Row>
+        <Row className="timelineRow">
             <Col className="timelineCol">
               {
                 this.state.days.map((events, i) => {
@@ -175,13 +180,6 @@ class Timeline extends Component {
                   );
                 })
               }
-            <AddSearchButton />
-            <AddEventButton
-              tripId={this.state.tripId}
-              tripLocation={this.state.tripLocation}
-              handleEventAdd={this.handleEventAdd}
-              startDate={this.state.tripStartDate}
-            />
               </Col>
             </Row>
         </Container>
