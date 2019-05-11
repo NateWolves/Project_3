@@ -50,7 +50,7 @@ export default class Login extends Component {
   render() {
     return (
 
-      <Container fluid={true} className="loginContainer">
+      <Container fluid={true} className="loginContainer" style={{minHeight: '100vh'}}>
           <Container fluid={true} className="navBackground">
             <Navbar/>
           </Container>

@@ -136,7 +136,7 @@ class Timeline extends Component {
 
   render() {
     return (
-    <Container fluid={true} className="timelineWrapper">
+    <Container fluid={true} className="timelineWrapper" style={{minHeight: '100vh'}}>
         <Container fluid={true} className="navBackground">
             <Navbar/>
         </Container>
@@ -179,7 +179,9 @@ class Timeline extends Component {
               </Col>
             </Row>
         </Container>
-        <Footer/>
+        <Container fluid={true} className="footerBackground">
+          <Footer/>
+        </Container>
       </Container>
 
     );

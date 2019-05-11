@@ -27,6 +27,7 @@ app.use(logger('dev'))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.json());
 
 // Passport.js setup
 app.use(session({
