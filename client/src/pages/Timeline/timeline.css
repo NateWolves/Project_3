@@ -29,6 +29,7 @@
     justify-content: flex-start;
     padding-left: 30px;
     padding-right: 0;
+    margin-left: calc(48% - 2px);
 }
 
 .timeline-item-content {

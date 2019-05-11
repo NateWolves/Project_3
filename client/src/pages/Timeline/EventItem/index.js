@@ -116,7 +116,11 @@ const EventItem = props => {
               Remove
             </button>
 
-            <AddNearbyButton style={btnStyles} />
+            <AddNearbyButton
+            handleEventAdd={props.handleEventAdd}
+            triplocation={props.triplocation}
+            tripId={props.tripId}
+          />
 
           </ButtonToolbar>
 

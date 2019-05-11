@@ -8,12 +8,13 @@ const textURL = "https://maps.googleapis.com/maps/api/place/findplacefromtext/js
 const photoURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
 // example search string below
 // https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Museum%20of%20Contemporary%20Art%20Australia&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&locationbias=circle:2000@47.6918452,-122.2226413&key=YOUR_API_KEY
-
+// &locationbias=circle:2000@47.6918452,-122.2226413
 
 router.get("/location", (req, res) => {
   let input = req.query.search
+  let param = req.query.coords
   console.log(input)
-  let searchString= textURL + input + "&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry"
+  let searchString= textURL + input + "&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&locationbias=circle:4000@" + param;
   axios.get(searchString + apiKey).then( response => {
     console.log(response.data)
     let responseData = response.data
@@ -24,7 +25,7 @@ router.get("/location", (req, res) => {
 
 
 
-router.get("/nearby", auth, (req, res) =>{
+router.get("/nearby", (req, res) =>{
     // Need to convert all miles/kms to meters for radius.
     let searchString = `${googleURL}?location=${req.query.location}&radius=${req.query.radius}&type=${req.query.type}`
     console.log(searchString + apiKey);

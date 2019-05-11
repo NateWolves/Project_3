@@ -2,26 +2,23 @@ import React from 'react';
 import moment from 'moment';
 import { Modal, Button } from 'react-bootstrap';
 
-class AddEventModal extends React.Component {
+class FromNearbyModal extends React.Component {
 	state = {
 		tripId: this.props.tripId,
 		event: this.props.name,
-		type: "explore",
-		date: moment(this.props.startDate).format("MM/DD/ YYYY"),
-		day: "",
-		startTime: "10:00",
-		endTime: "11:00"
+		type: this.props.type,
+		startDate: moment(this.props.startDate).format("YYYY-MM-DDTHH:mm"),
+		endDate: moment(this.props.endDate).format("YYYY-MM-DDTHH:mm"),
+		date: moment(this.props.startDate).format("MM/DD/YYYY"),
+		endTime: "",
+		startTime: ""
 	};
-
-	parseDate = (date, time) => {
-		let d = date.split(/\D/);
-		let t = time.split(/\D/);
-    return new Date(d[0], --d[1], d[2], t[0], t[1]);
-  }
+	componentDidMount(){
+		console.log(this.props)
+	}
 
 	handleChange = event => {
 		const { name, value } = event.target;
-
 		this.setState({
 			[name]: value
 		});
@@ -31,28 +28,26 @@ class AddEventModal extends React.Component {
 		event.preventDefault();
 
 		this.props.onHide();
-		console.log(this.parseDate(this.state.day, this.state.startTime))
-
+		let sDate = `${this.state.date} ${this.state.startTime}`
+		sDate = moment(sDate).format("YYYY-MM-DDTHH:mm");
+		let eDate = `${this.state.date} ${this.state.endTime}`
+		eDate = moment(eDate).format("YYYY-MM-DDTHH:mm");
+	
 		this.props.handleEventAdd({
 			name: this.state.event,
 			tripId: this.props.tripId,
 			type: this.state.type,
-			startDate: this.parseDate(this.state.day, this.state.startTime),
-			endDate: this.parseDate(this.state.day, this.state.endTime)
+			location: this.props.nearbylocation,
+			startDate: sDate || Date.now(),
+			endDate: eDate || moment(this.props.endDate).format("YYYY-MM-DDTHH:mm")
 		});
 
 		this.setState({
 			event: "",
-			startTime: "10:00",
-			endTime: "11:00"
+			startDate: "",
+			endDate: ""
 		});
-	}
-
-	componentWillReceiveProps() {
-		this.setState({
-			day: moment(this.props.startDate).format("YYYY-MM-DD")
-		});
-	}
+	};
 
 	render() {
 		return (
@@ -70,7 +65,7 @@ class AddEventModal extends React.Component {
 				</Modal.Header>
 				<Modal.Body>
 
-				<form onSubmit={this.handleSubmit}>
+					<form onSubmit={this.handleSubmit}>
 					<div className="container">
 					<div style={inputStyle}>
 						<label htmlFor="event" className="col-form-label">What are you doing?</label>
@@ -83,10 +78,10 @@ class AddEventModal extends React.Component {
 							<label htmlFor="Start" className="col-6 col-form-label">Date</label>
 							<div className="col-7">
 								<input
-									name="day"
+									name="date"
 									className="form-control"
 									type="date"
-									value={this.state.day}
+									value={this.state.date}
 									onChange={this.handleChange}
 									id="start-date-input">
 								</input>
@@ -120,7 +115,7 @@ class AddEventModal extends React.Component {
                             <option value="subway_station">Subway Station</option>
                             <option value="themepark">Amusement Park</option>
                             <option value="zoo">Zoo</option>
-                </select>
+                            </select>
 							</div>					
 						</div>
 						</div>
@@ -176,4 +171,4 @@ const dateStyle = {
 	width: "50%"
 }
 
-export default AddEventModal;
+export default FromNearbyModal;

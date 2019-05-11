@@ -9,6 +9,10 @@ class AddSearchButton extends Component {
     this.state = { modalShow: false };
   }
 
+
+  componentDidMount() {
+    console.log(this.props)
+  }
   render() {
     let modalClose = () => this.setState({ modalShow: false });
 
@@ -25,20 +29,20 @@ class AddSearchButton extends Component {
         <Search
           show={this.state.modalShow}
           onHide={modalClose}
+          tripid={this.props.tripId}
+          triplocation={this.props.tripLocation}
+          startdate={this.props.startDate}
         />
       </ButtonToolbar>
     );
   }
 }
 
-const btnStyles = {
-  background: "none",
-  color: "black",
-  border: "1px solid black",
-  margin: "5px",
-  fontSize: "12px",
-  padding: "none",
-  lineHeight: "15px"
-};
+const btnStyles = { 
+    background: "none",
+    color: "black",
+    border: "1px solid black",
+    margin: "5px"
+  };
 
 export default AddSearchButton;

@@ -150,10 +150,18 @@ class Timeline extends Component {
       <Container fluid={true} className="timeline-container">
         <Row className="timelineRow">
           <Col className="timelineCol">
-            <AddEventButton
+          <AddEventButton
               tripId={this.state.tripId}
+              triplocation={this.state.tripLocation}
               handleEventAdd={this.handleEventAdd}
+              startDate={this.state.tripStartDate}
             />
+          <AddSearchButton
+            tripId={this.state.tripId}
+            tripLocation={this.state.tripLocation}
+            startDate={this.state.tripStartDate}
+             />
+
             </Col>
         
           </Row>
@@ -168,20 +176,16 @@ class Timeline extends Component {
                       dayNum={i + 1}
                       events={events}
                       tripId={this.state.tripId}
+                      triplocation={this.state.tripLocation}
                       handleEventDelete={this.handleEventDelete}
                       handleEventAdd={this.handleEventAdd}
                       handleEventEdit={this.handleEventEdit}
+                      startDate={this.state.tripStartDate}
                     />
                   );
                 })
               }
-            <AddSearchButton />
-            <AddEventButton
-              tripId={this.state.tripId}
-              tripLocation={this.state.tripLocation}
-              handleEventAdd={this.handleEventAdd}
-              startDate={this.state.tripStartDate}
-            />
+
               </Col>
             </Row>
         </Container>

@@ -1,12 +1,14 @@
 import React from 'react';
 import { Modal, Button, ButtonToolbar, Table, Card } from 'react-bootstrap';
-import api from '../../../utils/api';
-import Event from '../../../modals/AddEventModal';
+import api from '../../utils/api';
+import Event from '../AddEventModal';
+import FromNearbyButton from '../FromNearbyButton'
+
 
 class NearbyModal extends React.Component {
 
   state = {
-    tripId: "",
+    tripId: "",  
     radius: "1000",
     type: "restaurant",
     event: {
@@ -28,25 +30,23 @@ class NearbyModal extends React.Component {
   handleInputChange = event => {
     // Getting the value and name of the input which triggered the change
     const { name, value } = event.target;
-
     // Updating the input's state
     this.setState({
       [name]: value
     });
   };
 
+
   handleSubmit() {
     // event.preventDefault();
- 
+    // setting default location to trip starting point
     let defaultLocation = `${this.props.triplocation.lat},${this.props.triplocation.lon}`
-
     let search = `?location=${defaultLocation}&radius=${this.state.radius}&type=${this.state.type}`
-
     this.nearbySearch(search)
   }
+
   removeResult(e) {
     let array = [...this.state.results]; // make a separate copy of the array
-    console.log(e.target.value)
     let index = e.target.value
     if (index !== -1) {
       array.splice(index, 1);
@@ -77,21 +77,30 @@ class NearbyModal extends React.Component {
         return resultObject
       })
       this.setState({ results: formatArray })
-      console.log(res.data)
+      console.log(this.state.results)
+      
     }).catch(err => console.log(err))
   }
 
-  addSearchToEvent(e) {
-    let index = e.target.value;
-    let newEvent = {}
-    newEvent.name = this.state.results[index].name;
-    newEvent.type = this.state.results[index].type;
-    newEvent.location = { name: this.state.results[index].location.name, lat: this.state.results[index].location.lat, lon: this.state.results[index].lon };
-    newEvent.startDate = this.state.results[index].startDate;
-    newEvent.endDate = this.state.results[index].endDate;
-    console.log(newEvent)
-    api.createEvent(newEvent).then(res => console.log(res)).catch(err => console.log(err))
+  hidingOldModal() {
+   return this.props.onHide
   }
+
+  componentDidMount(){
+    console.log(this.props)
+  }
+
+  // addSearchToEvent(e) {
+  //   let index = e.target.value;
+  //   let newEvent = {}
+  //   newEvent.name = this.state.results[index].name;
+  //   newEvent.type = this.state.results[index].type;
+  //   newEvent.location = { name: this.state.results[index].location.name, lat: this.state.results[index].location.lat, lon: this.state.results[index].lon };
+  //   newEvent.startDate = this.state.results[index].startDate;
+  //   newEvent.endDate = this.state.results[index].endDate;
+  //   console.log(newEvent)
+  //   api.createEvent(newEvent).then(res => console.log(res)).catch(err => console.log(err))
+  // }
 
   render() {
     return (
@@ -121,7 +130,7 @@ class NearbyModal extends React.Component {
                   <option value="art_gallery">Art Gallery</option>
                   <option value="bar">Bar</option>
                   <option value="bus_station">Bus Station</option>
-                  <option value="cafe">Cafe</option>
+                  <option value="cafe">Cafe</option> 
                   <option value="campground">Camping</option>
                   <option value="casino">Casino</option>
                   <option value="church">Church</option>
@@ -134,7 +143,6 @@ class NearbyModal extends React.Component {
                   <option value="shopping_mall">Shopping Mall</option>
                   <option value="spa">Spa</option>
                   <option value="stadium">Stadium</option>
-                  <option value="subway_station">Subway Station</option>
                   <option value="zoo">Zoo</option>
                 </select>
               </div>
@@ -160,7 +168,7 @@ class NearbyModal extends React.Component {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.props.onHide}>Close</Button>
-          <Button onClick={() => this.handleSubmit()}>Save</Button>
+          <Button onClick={() => this.handleSubmit()}>Search</Button>
         </Modal.Footer>
         <div className="container">
           <Table striped bordered hover>
@@ -179,17 +187,18 @@ class NearbyModal extends React.Component {
                   
                   <td>
                     <ButtonToolbar>
-                      <AddEvent
-                        onClick= {this.props.onHide}
-                        handleEventAdd={this.props.handleEventAdd}
+                 
+                      <FromNearbyButton
+                        onClick={()=> this.hidingOldModal()}
                         style={btnStyle}
-                        className="btn"
                         name={result.name}
                         type={result.type}
-                        location={result.location}>
+                        nearbylocation={result.location}
+                        startDate={this.props.startDate}
+                        handleEventAdd={this.props.handleEventAdd}>
                           Add Event
-                      </AddEvent>
-  
+                      </FromNearbyButton>
+                      
                       <Button
                         className="btn btn-danger"
                         style={removeBtnStyle}
@@ -228,38 +237,38 @@ const removeBtnStyle = {
   right: "10px"
 }
 
-class AddEvent extends React.Component {
-  constructor(...args) {
-    super(...args);
+// class AddEvent extends React.Component {
+//   constructor(...args) {
+//     super(...args);
 
-    this.state = { modalShow: false };
-  }
+//     this.state = { modalShow: false };
+//   }
 
-  render() {
-    let modalClose = () => this.setState({ modalShow: false });
-    return (
-      <ButtonToolbar>
-        <Button
-          variant="primary"
-          onClick={() => this.setState({ modalShow: true })}
-          style={btnStyle}
-        >
-          Add Event
-        </Button>
+//   render() {
+//     let modalClose = () => this.setState({ modalShow: false });
+//     return (
+//       <ButtonToolbar>
+//         <Button
+//           variant="primary"
+//           onClick={() => this.setState({ modalShow: true })}
+//           style={btnStyle}
+//         >
+//           Add Event
+//         </Button>
 
-        <Event
-          handleEventAdd={this.props.handleEventAdd}
-          name={this.props.name}
-          startDate={this.props.startDate}
-          endDate={this.props.endDate}
-          type={this.props.type}
-          show={this.state.modalShow}
-          tripId={this.props.tripId}
-          onHide={modalClose}
-        />
-      </ButtonToolbar>
-    );
-  }
-}
+//         <Event
+//           name={this.props.name}
+//           startDate={this.props.startDate}
+//           endDate={this.props.endDate}
+//           type={this.props.type}
+//           show={this.state.modalShow}
+//           tripId={this.props.tripId}
+//           onHide={modalClose}
+ 
+//         />
+//       </ButtonToolbar>
+//     );
+//   }
+// }
 
 export default NearbyModal;
