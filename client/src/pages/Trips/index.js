@@ -8,7 +8,6 @@ import Footer from '../../components/Footer';
 import EditTripModal from "../../modals/EditTripModal";
 import Auth from "../../utils/Auth";
 import API from "../../utils/api";
-import EditEventModal from "../../modals/EditEventModal";
 import "./Trips.css";
 
 class Trips extends Component {
@@ -109,7 +108,7 @@ class Trips extends Component {
         <Plan
           onHide={this.modalClose}
           show={this.state.addModalShow}
-          handleSubmit={this.handleSubmitTrip}
+          handleSubmitTrip={this.handleSubmitTrip}
           userId={this.state.userId}
         />
         <Container>
@@ -154,7 +153,7 @@ class Trips extends Component {
             </tbody>
           </Table>
         </Container>
-        <EditEventModal
+        <EditTripModal
           onHide={this.modalClose}
           show={this.state.editModalShow}
           handleEditTrip={this.handleEditTrip}
