@@ -1,50 +1,45 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { ButtonToolbar, Button } from "react-bootstrap";
-import Nearby from "../Nearby"
+import FromNearbyModal from "../FromNearbyModal";
 
-class AddNearbyButton extends Component {
+class FromNearbyButton extends Component {
   constructor(...args) {
     super(...args);
 
     this.state = { modalShow: false };
   }
-  componentDidMount(){
-    console.log(this.props)
-  }
 
   render() {
     let modalClose = () => this.setState({ modalShow: false });
-
     return (
       <ButtonToolbar>
         <Button
           variant="primary"
-          style={btnStyles}
+          style={styles}
           onClick={() => this.setState({ modalShow: true })}
         >
-          Nearby
-    			</Button>
+          Add Event
+    		</Button>
 
-        <Nearby
+        <FromNearbyModal
           show={this.state.modalShow}
           onHide={modalClose}
-          handleEventAdd={this.props.handleEventAdd}
-          triplocation={this.props.triplocation}
           tripId={this.props.tripId}
+          handleEventAdd={this.props.handleEventAdd}
+          nearbylocation={this.props.nearbylocation}
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
         />
       </ButtonToolbar>
     );
   }
 }
 
-const btnStyles = {
+const styles = {   
   background: "none",
   color: "black",
   border: "1px solid black",
-  margin: "5px",
-  fontSize: "12px",
-  padding: "none",
-  lineHeight: "15px"
+  margin: "5px"
 };
 
-export default AddNearbyButton;
+export default FromNearbyButton;

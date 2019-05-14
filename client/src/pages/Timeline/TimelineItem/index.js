@@ -23,20 +23,21 @@ class TimelineItem extends Component {
                   endDate={event.endDate}
                   type={event.type}
                   eventId={event._id}
+                 
+                  triplocation={this.props.triplocation}
+                  tripId={this.props.tripId}
                 />
               );
             })
           }
 
-          <AddEventButton
+          {/* <AddEventButton
             tripId={this.props.tripId}
             handleEventAdd={this.props.handleEventAdd}
             startDate={[...this.props.events].pop().startDate}
             endDate={[...this.props.events].pop().endDate}
-          />
-          <AddNearbyButton
-            tripId={this.props.tripID}
-          />
+          /> */}
+
 
           <span className="circle" />
         </div>

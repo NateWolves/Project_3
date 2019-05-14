@@ -74,10 +74,11 @@ class EditEventModal extends React.Component {
         <Modal.Body>
 
           <form onSubmit={this.handleSubmit}>
-            <label htmlFor="event">Let us know where you'll be staying.</label>
+            <div style={inputStyle}>
+            <label htmlFor="event" className="col-6 col-form-label">Let us know where you'll be staying.</label>
             <br />
-            <input style={inputStyle} name="name" value={this.state.name} onChange={this.handleChange}></input>
-
+            <input className="form-control" style= {inputStyle}  name="name" value={this.state.name} onChange={this.handleChange}></input>
+            </div>
             <br />
             <p>And for how long.</p>
             <div style={dateStyle}>

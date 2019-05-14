@@ -9,7 +9,7 @@ router.route("/")
   .post(eventController.create);
 
 router.route("/:eventId")
-  .put(auth, eventController.update)
-  .delete(auth, eventController.delete);
+  .put(eventController.update)
+  .delete( eventController.delete);
 
 module.exports = router;
