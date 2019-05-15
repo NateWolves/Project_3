@@ -3,7 +3,7 @@ import './timeline.css';
 import moment from 'moment';
 import TimelineItem from './TimelineItem';
 import AddEventButton from './AddEventButton';
-import {Container, Row, Col} from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 
@@ -55,60 +55,39 @@ class Timeline extends Component {
   };
 
   handleEventAdd = eventObj => {
-    let newEvents = [];
-
-    if (this.state.events.length > 0) {
-      newEvents = [...this.state.events];
-
-      for (let i = 0; i < newEvents.length; i++) {
-        if (new Date(eventObj.startDate).getTime() <
-          new Date(newEvents[i].startDate).getTime()) {
-          newEvents.splice(i, 0, eventObj)
-          break;
-        } 
-        if (i + 1 === newEvents.length) {
-          newEvents.splice(i, 0, eventObj)
-        }
-      }
-    } else {
-      newEvents = [eventObj];
-    }
-
-    this.setState({
-      events: newEvents
-    }, () => {
-      this.setState({
-        days: this.divideIntoDays()
-      });
-      API.createEvent(eventObj);
-    });
+    API.createEvent(eventObj)
+      .then(dbEvent => {
+        API.findEventsByTrip(this.props.match.params.id)
+          .then(res => {
+            this.setState({
+              events: res.data.events
+            }, () => {
+              this.setState({
+                days: this.divideIntoDays()
+              });
+            });
+          })
+          .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
   };
 
   handleEventEdit = (id, eventObj) => {
-    let newEvents = []
-
-    if (this.state.events.length > 0) {
-      newEvents = this.state.events.filter(event => event._id !== id);
-
-      for (let i = 0; i < newEvents.length; i++) {
-        if (new Date(eventObj.startDate).getTime() <
-          new Date(newEvents[i].startDate).getTime()) {
-          newEvents.splice(i, 0, eventObj)
-          break;
-        }
-      }
-    } else {
-      newEvents = [eventObj];
-    }
-
-    this.setState({
-      events: newEvents
-    }, () => {
-      this.setState({
-        days: this.divideIntoDays()
-      });
-      API.updateEvent(id, eventObj);
-    });
+    API.updateEvent(id, eventObj)
+      .then(dbEvent => {
+        API.findEventsByTrip(this.props.match.params.id)
+          .then(res => {
+            this.setState({
+              events: res.data.events
+            }, () => {
+              this.setState({
+                days: this.divideIntoDays()
+              });
+            });
+          })
+          .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
   }
 
   handleEventDelete = id => {
@@ -141,31 +120,28 @@ class Timeline extends Component {
 
   render() {
     return (
-    <Container fluid={true} className="timelineWrapper" style={{minHeight: '100vh'}}>
+      <Container fluid={true} className="timelineWrapper" style={{ minHeight: '100vh' }}>
         <Container fluid={true} className="navBackground">
-            <Navbar/>
+          <Navbar />
         </Container>
-        <br/>
-        <br/>
-      <Container fluid={true} className="timeline-container">
-        <Row className="timelineRow">
-          <Col className="timelineCol">
-          <AddEventButton
-              tripId={this.state.tripId}
-              triplocation={this.state.tripLocation}
-              handleEventAdd={this.handleEventAdd}
-              startDate={this.state.tripStartDate}
-            />
-          <AddSearchButton
-            tripId={this.state.tripId}
-            tripLocation={this.state.tripLocation}
-            startDate={this.state.tripStartDate}
-             />
-
+        <br />
+        <br />
+        <Container fluid={true} className="timeline-container">
+          <Row className="timelineRow">
+            <Col className="timelineCol">
+              <AddEventButton
+                tripId={this.state.tripId}
+                triplocation={this.state.tripLocation}
+                handleEventAdd={this.handleEventAdd}
+                startDate={this.state.tripStartDate}
+              />
+              <AddSearchButton
+                tripId={this.state.tripId}
+                tripLocation={this.state.tripLocation}
+                startDate={this.state.tripStartDate}
+              />
             </Col>
-        
           </Row>
-
           <Row className="timelineRow">
             <Col className="timelineCol">
               {
@@ -185,11 +161,11 @@ class Timeline extends Component {
                   );
                 })
               }
-              </Col>
-            </Row>
+            </Col>
+          </Row>
         </Container>
         <Container fluid={true} className="footerBackground">
-          <Footer/>
+          <Footer />
         </Container>
       </Container>
 
